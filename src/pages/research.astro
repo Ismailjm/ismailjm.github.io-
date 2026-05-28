@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Research" description="Ismail El Jamiy's PhD research on Handwritten Text Recognition of medieval Arabic scientific manuscripts and dedicated LLMs.">
+
+  <article class="page-container">
+
+    <header class="page-header">
+      <h1 class="page-title">Research</h1>
+      <div class="page-rule" aria-hidden="true"></div>
+      <p class="page-subtitle">
+        PhD in Artificial Intelligence · University of Toulouse (IRIT / IMT / CLLE) · 2025–2028
+      </p>
+    </header>
+
+    <div class="prose">
+
+      <p class="drop-cap">
+        The Arabic scientific tradition produced an extraordinary body of knowledge between
+        the 8th and 15th centuries — treatises on algebra, optics, astronomy, and medicine
+        that shaped European Renaissance thought. Thousands of these manuscripts survive in
+        libraries across the Maghreb and the Middle East, largely undigitised and
+        computationally inaccessible. My PhD aims to change that.
+      </p>
+
+      <h2>The Problem</h2>
+      <p>
+        Handwritten Text Recognition (HTR) has made remarkable progress on Latin scripts,
+        but Arabic presents a distinct set of challenges:
+      </p>
+      <ul>
+        <li><strong>Cursive connectivity</strong> — Arabic letters join within words in script-dependent ways, making segmentation non-trivial.</li>
+        <li><strong>Contextual letterforms</strong> — Each character has up to four distinct shapes depending on its position in a word.</li>
+        <li><strong>Historical variation</strong> — Medieval scribes used diverse regional hands (Maghribi, Mashriqi, Andalusian) with idiosyncratic ligatures and abbreviations.</li>
+        <li><strong>Document degradation</strong> — Ink oxidation, water damage, worm holes, and palimpsest layering corrupt the visual signal.</li>
+      </ul>
+      <p>
+        Existing HTR systems trained on modern Arabic text fail on historical manuscripts,
+        and even specialised historical HTR models rarely achieve the accuracy needed for
+        downstream use in digital humanities research.
+      </p>
+
+      <h2>My Approach</h2>
+      <p>
+        My research pursues three complementary directions:
+      </p>
+
+      <div class="research-pillar">
+        <div class="pillar-number">01</div>
+        <div class="pillar-body">
+          <h3>Robust HTR for historical Arabic</h3>
+          <p>
+            Training and fine-tuning deep neural architectures — including Vision-Language
+            Models (VLMs) and Transformer-based sequence models — on curated corpora of
+            digitised manuscripts. A key contribution is the construction of ground-truth
+            datasets through collaboration with palaeographers and historians.
+          </p>
+        </div>
+      </div>
+
+      <div class="research-pillar">
+        <div class="pillar-number">02</div>
+        <div class="pillar-body">
+          <h3>Dedicated language models for medieval Arabic</h3>
+          <p>
+            Once text is recognised, the goal is to build LLMs pre-trained on medieval
+            Arabic scientific prose. Standard Arabic LLMs are trained predominantly on
+            modern text and struggle with archaic vocabulary, orthographic conventions,
+            and domain-specific terminology. A dedicated model enables accurate translation,
+            summarisation, and semantic search over manuscript corpora.
+          </p>
+        </div>
+      </div>
+
+      <div class="research-pillar">
+        <div class="pillar-number">03</div>
+        <div class="pillar-body">
+          <h3>End-to-end pipeline for digital humanities</h3>
+          <p>
+            The research aims to deliver not only models but a usable pipeline that
+            historians can apply to new manuscripts: image pre-processing, HTR, correction
+            assistance, and structured search. Accessibility and interpretability are
+            first-class concerns.
+          </p>
+        </div>
+      </div>
+
+      <h2>Supervision</h2>
+      <p>
+        The PhD is conducted at IRIT (Institut de Recherche en Informatique de Toulouse),
+        IMT (Institut de Mathématiques de Toulouse), and CLLE (Cognition, Langues, Langage,
+        Ergonomie), under the University of Toulouse. This cross-disciplinary context
+        brings together computer science, mathematics, and cognitive linguistics.
+      </p>
+
+      <h2>Why this matters</h2>
+      <p>
+        The manuscripts I study are not museum objects — they are primary sources for
+        the history of science. Making them computationally accessible accelerates
+        scholarship, enables cross-referencing at scale, and preserves endangered cultural
+        heritage in digital form. It is technical research with a humanistic purpose.
+      </p>
+
+    </div>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-olive), transparent);
+    border-radius: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .page-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  /* ── Prose ────────────────────────────────────────────────── */
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--fg);
+  }
+
+  .prose p { margin-bottom: 1.4em; }
+
+  .prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-olive);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  .prose h3 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0 0 0.5rem;
+  }
+
+  .prose ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.4em;
+  }
+
+  .prose ul li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6em;
+  }
+
+  .prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-terracotta);
+  }
+
+  .drop-cap::first-letter {
+    font-size: 4.5em;
+    line-height: 0.78;
+    float: left;
+    margin-right: 0.08em;
+    color: var(--color-terracotta);
+    font-weight: 600;
+    font-family: var(--font-serif);
+  }
+
+  /* ── Research pillars ─────────────────────────────────────── */
+  .research-pillar {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.75rem 0;
+    padding: 1.5rem;
+    border-left: 3px solid var(--color-olive);
+    background: var(--bg-panel);
+    border-radius: 0 0.375rem 0.375rem 0;
+  }
+
+  .pillar-number {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-olive);
+    opacity: 0.35;
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+
+  .pillar-body {
+    flex: 1;
+  }
+
+  .pillar-body p {
+    margin-bottom: 0;
+    font-size: 1rem;
+  }
+
+  [data-theme="dark"] .prose h2,
+  [data-theme="dark"] .pillar-number {
+    color: var(--color-gold);
+  }
+</style>

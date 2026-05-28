@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+const events = (await getCollection('events')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const typeLabel: Record<string, string> = {
+  hackathon: 'Hackathon',
+  workshop: 'Workshop',
+  conference: 'Conference',
+  talk: 'Talk',
+  community: 'Community',
+};
+---
+
+<BaseLayout title="Events" description="Hackathons, workshops, and community events attended by Ismail El Jamiy.">
+  <div class="page-container">
+
+    <header class="page-header">
+      <h1 class="page-title">Events</h1>
+      <div class="page-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="events-list">
+      {events.map(async event => {
+        const { Content } = await render(event);
+        return (
+          <article class="event-card">
+            <div class="event-header">
+              <div>
+                <h2 class="event-title">{event.data.title}</h2>
+                <div class="event-meta">
+                  <span class="event-type">{typeLabel[event.data.type]}</span>
+                  <span class="event-sep" aria-hidden="true">·</span>
+                  <span>{event.data.role}</span>
+                  <span class="event-sep" aria-hidden="true">·</span>
+                  <span>{event.data.location}</span>
+                </div>
+              </div>
+              <span class="event-date">{event.data.date.slice(0, 7)}</span>
+            </div>
+            {event.data.result && (
+              <div class="event-result">{event.data.result}</div>
+            )}
+            <div class="event-body">
+              <Content />
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header { margin-bottom: 2.5rem; }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-olive), transparent);
+    border-radius: 1px;
+  }
+
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .event-card {
+    padding: 1.5rem 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--bg-panel);
+  }
+
+  .event-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+  }
+
+  .event-title {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+  }
+
+  .event-meta {
+    font-family: var(--font-sans);
+    font-size: 0.83rem;
+    color: var(--fg-muted);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  .event-type {
+    padding: 0.125rem 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .event-sep { opacity: 0.4; }
+
+  .event-date {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+
+  .event-result {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-terracotta);
+    margin-bottom: 0.75rem;
+    padding: 0.2rem 0.75rem;
+    background: color-mix(in srgb, var(--color-terracotta) 10%, transparent);
+    border-radius: 0.25rem;
+  }
+
+  .event-body {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--fg-muted);
+  }
+
+  .event-body :global(p) { margin: 0; }
+</style>

@@ -1,0 +1,407 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const education = [
+  {
+    institution: "University of Toulouse (IRIT, IMT, CLLE)",
+    degree: "PhD in Artificial Intelligence",
+    period: "Nov. 2025 – Nov. 2028",
+    location: "Toulouse, France",
+    note: "Topic: Handwritten Text Recognition of medieval Arabic scientific manuscripts and development of dedicated LLM.",
+  },
+  {
+    institution: "École Nationale Supérieure d'Arts et Métiers",
+    degree: "State Engineer's Degree — AI & Computer Science Engineering",
+    period: "Sep. 2022 – Sep. 2025",
+    location: "Casablanca, Morocco",
+    note: "Selective access based on average. Graduated with Highest Distinction.",
+  },
+  {
+    institution: "Euclid High School",
+    degree: "Baccalaureate in Mathematical Sciences (French option)",
+    period: "Sep. 2019 – Jul. 2020",
+    location: "Mohammedia, Morocco",
+    note: "Highest Distinction.",
+  },
+];
+
+const experience = [
+  {
+    role: "Research Intern — AI & Medical Imaging",
+    org: "Institut de Recherche en Informatique de Toulouse (IRIT)",
+    period: "Mar. 2025 – Sep. 2025",
+    location: "Toulouse, France",
+    objective: "Medical image segmentation using few-shot learning techniques.",
+    bullets: [
+      "Conducted a state-of-the-art review of segmentation algorithms with limited data and few-shot learning.",
+      "Processed MRI and CT images, understanding their specificity and formats.",
+      "Developed a segmentation model based on the U-Net architecture in a few-shot learning configuration.",
+    ],
+  },
+  {
+    role: "Volunteer Computer Vision Developer",
+    org: "Youth For Challenge Association",
+    period: "Aug. 2024 – Dec. 2024",
+    location: "Casablanca, Morocco",
+    objective: "Intelligent platform for real-time sign-language to text translation for deaf and mute people.",
+    bullets: [
+      "Conducted a state-of-the-art review of hand detection and segmentation methods.",
+      "Developed a CNN-based algorithm for hand gesture recognition.",
+      "Created an interface and deployed developed algorithms using Flask and OpenCV.",
+    ],
+  },
+  {
+    role: "Computer Vision Intern",
+    org: "SYGMA.AI (InsurTech Company)",
+    period: "Apr. 2024 – Jun. 2024",
+    location: "Casablanca, Morocco",
+    objective: "Intelligent solution for segmentation of damaged vehicle areas to automatically assess insurance coverage.",
+    bullets: [
+      "Collected and processed car images using Python, Selenium, and Scrapy.",
+      "Implemented a CNN for classification of damaged vehicles using PyTorch.",
+      "Developed a licence plate verification algorithm combining CNNs and OCR.",
+    ],
+  },
+  {
+    role: "AI & Image Processing Intern",
+    org: "Lesieur Cristal",
+    period: "Jul. 2023",
+    location: "Casablanca, Morocco",
+    objective: "Detection of personal protective equipment (PPE) from video to minimise operational risks in industrial environments.",
+    bullets: [
+      "Built a structured dataset containing various PPE classes from diverse sources.",
+      "Designed a PPE detection and recognition algorithm based on CNNs.",
+    ],
+  },
+];
+
+const skills = {
+  "Data Science": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
+  "AI / ML Tools": ["Scikit-learn", "Keras", "TensorFlow", "PyTorch", "MONAI", "SimpleITK", "OpenCV", "HF Transformers", "spaCy", "NLTK", "pyarabic"],
+  "Architectures": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM"],
+  "Languages": ["Python", "JavaScript", "SQL", "Bash"],
+};
+
+const certs = [
+  { name: "Data Scientist Associate (90h)", issuer: "DataCamp", date: "Nov. 2024" },
+  { name: "Advanced Learning Algorithms (34h)", issuer: "DeepLearning.AI", date: "Apr. 2023" },
+  { name: "Supervised Machine Learning: Regression & Classification (33h)", issuer: "DeepLearning.AI", date: "Mar. 2023" },
+  { name: "Machine Learning for Time Series Data in Python (4h)", issuer: "DataCamp", date: "Nov. 2024" },
+];
+---
+
+<BaseLayout title="Experience" description="Ismail El Jamiy's education, work experience, and technical skills.">
+  <div class="page-container">
+
+    <header class="page-header">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Experience</h1>
+          <div class="page-rule" aria-hidden="true"></div>
+        </div>
+        <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download CV
+        </a>
+      </div>
+    </header>
+
+    <!-- Education -->
+    <section class="cv-section">
+      <h2 class="section-title">Education</h2>
+      <div class="timeline">
+        {education.map(item => (
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <strong class="timeline-role">{item.degree}</strong>
+                <span class="timeline-period">{item.period}</span>
+              </div>
+              <div class="timeline-org">{item.institution} · {item.location}</div>
+              {item.note && <p class="timeline-note">{item.note}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="cv-section">
+      <h2 class="section-title">Work Experience</h2>
+      <div class="timeline">
+        {experience.map(item => (
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <strong class="timeline-role">{item.role}</strong>
+                <span class="timeline-period">{item.period}</span>
+              </div>
+              <div class="timeline-org">{item.org} · {item.location}</div>
+              <p class="timeline-objective">{item.objective}</p>
+              <ul class="timeline-bullets">
+                {item.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="cv-section">
+      <h2 class="section-title">Technical Skills</h2>
+      <div class="skills-grid">
+        {Object.entries(skills).map(([category, items]) => (
+          <div class="skill-group">
+            <h3 class="skill-category">{category}</h3>
+            <div class="skill-tags">
+              {items.map(tag => <span class="skill-tag">{tag}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="cv-section">
+      <h2 class="section-title">Certifications</h2>
+      <ul class="cert-list">
+        {certs.map(c => (
+          <li class="cert-item">
+            <span class="cert-name">{c.name}</span>
+            <span class="cert-meta">{c.issuer} · {c.date}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header { margin-bottom: 2.5rem; }
+
+  .page-header-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-olive), transparent);
+    border-radius: 1px;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.25rem;
+    border: 1.5px solid var(--color-olive);
+    color: var(--color-olive);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+    margin-top: 0.5rem;
+  }
+  .cv-btn:hover { background: var(--color-olive); color: #fff; }
+
+  /* ── Sections ─────────────────────────────────────────────── */
+  .cv-section { margin-bottom: 3rem; }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── Timeline ─────────────────────────────────────────────── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 2px solid var(--border);
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -1.625rem;
+    top: 0.35rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--color-olive);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-role {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .timeline-period {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+
+  .timeline-org {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--color-olive);
+    margin-bottom: 0.5rem;
+  }
+
+  [data-theme="dark"] .timeline-org { color: var(--color-gold); }
+
+  .timeline-note,
+  .timeline-objective {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    color: var(--fg-muted);
+    margin: 0.25rem 0 0.5rem;
+    font-style: italic;
+  }
+
+  .timeline-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+  }
+
+  .timeline-bullets li {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+    line-height: 1.55;
+  }
+
+  .timeline-bullets li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: var(--color-terracotta);
+    font-weight: 700;
+  }
+
+  /* ── Skills ───────────────────────────────────────────────── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-category {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    margin-bottom: 0.625rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .skill-tag {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    color: var(--fg);
+  }
+
+  /* ── Certs ────────────────────────────────────────────────── */
+  .cert-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .cert-item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cert-name {
+    font-family: var(--font-serif);
+    font-size: 0.975rem;
+    color: var(--fg);
+  }
+
+  .cert-meta {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    white-space: nowrap;
+  }
+</style>

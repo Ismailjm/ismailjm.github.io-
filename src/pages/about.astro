@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" description="About Ismail El Jamiy — PhD candidate in AI, engineer, and photographer from Morocco, based in Toulouse.">
+
+  <article class="page-container">
+
+    <header class="page-header">
+      <h1 class="page-title">About</h1>
+      <div class="page-rule" aria-hidden="true"></div>
+    </header>
+
+    <div class="prose">
+
+      <p class="drop-cap">
+        I'm a PhD candidate in Artificial Intelligence at the University of Toulouse
+        (IRIT / IMT / CLLE), working on the automatic recognition of handwritten text
+        in medieval Arabic scientific manuscripts. My research sits at a rare intersection:
+        modern deep learning applied to a heritage that spans centuries of Islamic scholarship
+        in mathematics, astronomy, and medicine.
+      </p>
+
+      <p>
+        Before Toulouse, I trained as a State Engineer in AI and Computer Science at the
+        École Nationale Supérieure d'Arts et Métiers in Casablanca — graduating with
+        Highest Distinction in 2025. Those years shaped my instinct for rigorous engineering
+        and gave me a grounding in both the theoretical and applied sides of machine learning.
+      </p>
+
+      <h2>Research</h2>
+      <p>
+        My PhD topic combines two challenges that individually push the state of the art:
+        handwritten text recognition (HTR) in degraded historical documents, and the
+        specificities of classical Arabic script — a cursive, context-dependent writing
+        system with rich morphology. The manuscripts I work with are often centuries old,
+        written by multiple hands, and held in collections across Morocco, Algeria, and
+        Europe. Unlocking them computationally means making them searchable, citable,
+        and accessible to researchers worldwide.
+      </p>
+      <p>
+        Beyond recognition, I am interested in training dedicated language models on the
+        recognised text — models that understand the vocabulary, grammar, and semantic
+        patterns of medieval Arabic scientific prose. Think of it as building a specialised
+        AI collaborator for historians of science.
+      </p>
+
+      <h2>Background</h2>
+      <p>
+        I grew up in Mohammedia, Morocco. Arabic is my mother tongue; French is a second
+        language I have spoken since childhood (TCF C1, score 543). I moved to France in
+        late 2025 for the PhD and now live in Toulouse. Before that, I completed internships
+        in medical image segmentation at IRIT, computer vision for insurance claims at
+        SYGMA.AI, and PPE detection for industrial safety at Lesieur Cristal.
+      </p>
+
+      <h2>Beyond the lab</h2>
+      <p>
+        I photograph. Not as a side hobby but as a genuine practice — I am drawn to
+        street scenes, light at the edges of day, and the geometry of cities. I also
+        follow football closely (tactical maps feel less abstract when you have watched
+        enough matches), and I travel whenever the PhD budget allows.
+      </p>
+
+      <h2>Languages</h2>
+      <ul>
+        <li><strong>Arabic</strong> — Native</li>
+        <li><strong>French</strong> — Bilingual (TCF C1, score 543)</li>
+        <li><strong>English</strong> — Advanced</li>
+      </ul>
+
+    </div>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 1rem;
+  }
+
+  .page-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-olive), transparent);
+    border-radius: 1px;
+  }
+
+  /* ── Prose ────────────────────────────────────────────────── */
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--fg);
+  }
+
+  .prose p {
+    margin-bottom: 1.4em;
+  }
+
+  .prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-olive);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  [data-theme="dark"] .prose h2 {
+    color: var(--color-gold);
+  }
+
+  .prose ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.4em;
+  }
+
+  .prose ul li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.4em;
+  }
+
+  .prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-terracotta);
+  }
+
+  /* Drop cap on first paragraph */
+  .drop-cap::first-letter {
+    font-size: 4.5em;
+    line-height: 0.78;
+    float: left;
+    margin-right: 0.08em;
+    color: var(--color-terracotta);
+    font-weight: 600;
+    font-family: var(--font-serif);
+  }
+</style>
