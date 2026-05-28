@@ -1,0 +1,18 @@
+{
+  "nav.home": "الرئيسية",
+  "nav.about": "عن الباحث",
+  "nav.research": "البحث",
+  "nav.publications": "المنشورات",
+  "nav.projects": "المشاريع",
+  "nav.experience": "الخبرة",
+  "nav.events": "الفعاليات",
+  "nav.photography": "التصوير",
+  "nav.blog": "المدوّنة",
+  "nav.contact": "التواصل",
+  "hero.role": "طالب دكتوراه في الذكاء الاصطناعي",
+  "hero.tagline": "التعرف على الخط المخطوط في المخطوطات العلمية العربية الوسيطة.",
+  "footer.rights": "جميع الحقوق محفوظة.",
+  "theme.light": "فاتح",
+  "theme.parchment": "رقّ",
+  "theme.dark": "داكن"
+}

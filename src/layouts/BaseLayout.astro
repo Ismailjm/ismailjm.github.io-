@@ -1,0 +1,35 @@
+---
+import '../styles/global.css';
+import { getLangFromUrl } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Ismail El Jamiy — PhD candidate in AI, University of Toulouse.' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const dir = lang === 'ar' ? 'rtl' : 'ltr';
+---
+
+<!doctype html>
+<html lang={lang} dir={dir} data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} — Ismail El Jamiy</title>
+  </head>
+  <body class="min-h-screen transition-colors duration-300">
+    <slot />
+
+    <script is:inline>
+      // Restore reading mode from localStorage before first paint
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved ?? (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+  </body>
+</html>

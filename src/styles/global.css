@@ -1,0 +1,46 @@
+/* Google Fonts — Latin */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&family=JetBrains+Mono&display=swap');
+
+/* Google Fonts — Arabic */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Reem+Kufi:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Palette */
+  --color-ivory: #F6F1E4;
+  --color-parchment: #EFE4CB;
+  --color-ink: #2A2118;
+  --color-olive: #556B2F;
+  --color-terracotta: #C65D2E;
+  --color-gold: #B8860B;
+  --color-charcoal: #1B1A17;
+  --color-night: #14130F;
+
+  /* Typography */
+  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-arabic: 'Amiri', 'Reem Kufi', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Base */
+html {
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+}
+
+html[lang="ar"] {
+  font-family: var(--font-arabic);
+  direction: rtl;
+}
+
+[data-theme="parchment"] {
+  background-color: var(--color-parchment);
+}
+
+[data-theme="dark"] {
+  background-color: var(--color-night);
+  color: var(--color-ivory);
+}

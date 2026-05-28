@@ -1,0 +1,18 @@
+{
+  "nav.home": "Accueil",
+  "nav.about": "À propos",
+  "nav.research": "Recherche",
+  "nav.publications": "Publications",
+  "nav.projects": "Projets",
+  "nav.experience": "Expérience",
+  "nav.events": "Événements",
+  "nav.photography": "Photographie",
+  "nav.blog": "Blog",
+  "nav.contact": "Contact",
+  "hero.role": "Doctorant en IA",
+  "hero.tagline": "Reconnaissance de l'écriture manuscrite dans les manuscrits scientifiques arabes médiévaux.",
+  "footer.rights": "Tous droits réservés.",
+  "theme.light": "Clair",
+  "theme.parchment": "Parchemin",
+  "theme.dark": "Sombre"
+}
