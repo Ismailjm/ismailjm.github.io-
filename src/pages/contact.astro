@@ -33,8 +33,9 @@ const links = [
   <div class="page-container">
 
     <header class="page-header">
+      <div class="page-eyebrow">Get in touch</div>
       <h1 class="page-title">Contact</h1>
-      <div class="page-rule" aria-hidden="true"></div>
+      <div class="page-rule-short" aria-hidden="true"></div>
     </header>
 
     <p class="intro">
@@ -46,7 +47,7 @@ const links = [
       {links.map(link => (
         <a href={link.href} target={link.href.startsWith('mailto') ? undefined : '_blank'}
            rel={link.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-           class="contact-row">
+           class="contact-row card">
           <span class="contact-icon" set:html={link.icon} />
           <div class="contact-text">
             <span class="contact-label">{link.label}</span>
@@ -90,12 +91,6 @@ const links = [
     margin-bottom: 0.75rem;
   }
 
-  .page-rule {
-    height: 2px;
-    background: linear-gradient(to right, var(--color-olive), transparent);
-    border-radius: 1px;
-  }
-
   .intro {
     font-family: var(--font-serif);
     font-size: 1.1rem;
@@ -116,17 +111,12 @@ const links = [
     align-items: center;
     gap: 1.25rem;
     padding: 1.125rem 1.25rem;
-    border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    background: var(--bg-panel);
     text-decoration: none;
-    transition: border-color 0.2s, transform 0.15s;
     color: var(--fg);
   }
 
   .contact-row:hover {
-    border-color: var(--accent);
-    transform: translateX(3px);
+    transform: translateX(3px) translateY(0);
   }
 
   .contact-icon {

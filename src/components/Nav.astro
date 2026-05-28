@@ -89,4 +89,9 @@ function isActive(path: string) {
     const open = menu.classList.toggle('hidden') === false;
     btn.setAttribute('aria-expanded', open ? 'true' : 'false');
   });
+
+  const header = document.querySelector('.site-header') as HTMLElement;
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 10);
+  }, { passive: true });
 </script>

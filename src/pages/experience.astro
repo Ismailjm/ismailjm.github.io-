@@ -96,8 +96,9 @@ const certs = [
     <header class="page-header">
       <div class="page-header-row">
         <div>
+          <div class="page-eyebrow">CV &amp; Background</div>
           <h1 class="page-title">Experience</h1>
-          <div class="page-rule" aria-hidden="true"></div>
+          <div class="page-rule-short" aria-hidden="true"></div>
         </div>
         <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none"
@@ -210,12 +211,6 @@ const certs = [
     margin-bottom: 0.75rem;
   }
 
-  .page-rule {
-    height: 2px;
-    background: linear-gradient(to right, var(--color-olive), transparent);
-    border-radius: 1px;
-  }
-
   .cv-btn {
     display: inline-flex;
     align-items: center;
@@ -266,13 +261,14 @@ const certs = [
 
   .timeline-dot {
     position: absolute;
-    left: -1.625rem;
-    top: 0.35rem;
-    width: 10px;
-    height: 10px;
+    left: -1.75rem;
+    top: 0.3rem;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
-    background: var(--color-olive);
+    background: linear-gradient(135deg, var(--color-olive), var(--color-terracotta));
     border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-olive) 30%, transparent);
   }
 
   .timeline-header {
@@ -293,8 +289,13 @@ const certs = [
 
   .timeline-period {
     font-family: var(--font-sans);
-    font-size: 0.8rem;
-    color: var(--fg-muted);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-olive);
+    background: color-mix(in srgb, var(--color-olive) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-olive) 22%, transparent);
+    border-radius: 9999px;
+    padding: 0.15rem 0.65rem;
     white-space: nowrap;
   }
 
@@ -305,7 +306,6 @@ const certs = [
     margin-bottom: 0.5rem;
   }
 
-  [data-theme="dark"] .timeline-org { color: var(--color-gold); }
 
   .timeline-note,
   .timeline-objective {

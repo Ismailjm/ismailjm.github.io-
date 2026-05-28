@@ -7,8 +7,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <article class="page-container">
 
     <header class="page-header">
+      <div class="page-eyebrow">Ismail El Jamiy</div>
       <h1 class="page-title">About</h1>
-      <div class="page-rule" aria-hidden="true"></div>
+      <div class="page-rule-short" aria-hidden="true"></div>
     </header>
 
     <div class="prose">
@@ -28,6 +29,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         and gave me a grounding in both the theoretical and applied sides of machine learning.
       </p>
 
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>Research</h2>
       <p>
         My PhD topic combines two challenges that individually push the state of the art:
@@ -45,6 +47,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         AI collaborator for historians of science.
       </p>
 
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>Background</h2>
       <p>
         I grew up in Mohammedia, Morocco. Arabic is my mother tongue; French is a second
@@ -54,6 +57,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         SYGMA.AI, and PPE detection for industrial safety at Lesieur Cristal.
       </p>
 
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>Beyond the lab</h2>
       <p>
         I photograph. Not as a side hobby but as a genuine practice — I am drawn to
@@ -62,6 +66,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         enough matches), and I travel whenever the PhD budget allows.
       </p>
 
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>Languages</h2>
       <ul>
         <li><strong>Arabic</strong> — Native</li>
@@ -94,12 +99,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin-bottom: 1rem;
   }
 
-  .page-rule {
-    height: 2px;
-    background: linear-gradient(to right, var(--color-olive), transparent);
-    border-radius: 1px;
-  }
-
   /* ── Prose ────────────────────────────────────────────────── */
   .prose {
     font-family: var(--font-serif);
@@ -118,10 +117,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 600;
     color: var(--color-olive);
     margin: 2.5rem 0 0.75rem;
-  }
-
-  [data-theme="dark"] .prose h2 {
-    color: var(--color-gold);
   }
 
   .prose ul {
