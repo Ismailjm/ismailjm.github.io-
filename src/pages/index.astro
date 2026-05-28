@@ -1,13 +1,257 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroCalligraphy from '../components/HeroCalligraphy.astro';
+import { useTranslations } from '../i18n/utils';
+
+const t = useTranslations('en');
 ---
 
-<BaseLayout title="Home">
-  <section class="mx-auto flex max-w-6xl flex-col items-center justify-center px-6 py-32 text-center">
-    <h1 class="font-serif text-5xl font-semibold text-olive sm:text-6xl">Ismail El Jamiy</h1>
-    <p class="mt-4 font-sans text-xl text-terracotta">PhD Candidate in AI — University of Toulouse</p>
-    <p class="mt-4 max-w-xl font-serif text-lg text-ink/70">
-      Handwritten Text Recognition of medieval Arabic scientific manuscripts and dedicated Large Language Models.
-    </p>
+<BaseLayout title="Home" description="Ismail El Jamiy — PhD candidate in AI researching Handwritten Text Recognition of medieval Arabic scientific manuscripts.">
+  <section class="hero">
+    <div class="hero-inner">
+
+      <!-- Arabic calligraphy signature -->
+      <HeroCalligraphy />
+
+      <!-- Name + role -->
+      <div class="hero-text">
+        <h1 class="hero-name">Ismail El Jamiy</h1>
+        <p class="hero-role">PhD Candidate in AI — University of Toulouse</p>
+        <p class="hero-tagline">
+          Handwritten Text Recognition of medieval Arabic scientific manuscripts
+          and dedicated Large Language Models.
+        </p>
+      </div>
+
+      <!-- CTAs -->
+      <div class="hero-ctas">
+        <a href="/research" class="btn-primary">View Research</a>
+        <a href="/public/Resume.pdf" class="btn-secondary" target="_blank" rel="noopener">Download CV</a>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             class="scroll-arrow">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured section cards -->
+  <section class="featured">
+    <div class="featured-inner">
+      <a href="/research" class="feature-card">
+        <div class="feature-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"
+               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h2 class="feature-card-title">Research</h2>
+        <p class="feature-card-desc">HTR of medieval Arabic manuscripts using deep learning and dedicated LLMs.</p>
+      </a>
+
+      <a href="/publications" class="feature-card">
+        <div class="feature-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"
+               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+        </div>
+        <h2 class="feature-card-title">Publications</h2>
+        <p class="feature-card-desc">Papers, preprints, and posters from conferences and workshops.</p>
+      </a>
+
+      <a href="/projects" class="feature-card">
+        <div class="feature-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none"
+               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <h2 class="feature-card-title">Projects</h2>
+        <p class="feature-card-desc">Footvision, Marathon Photo Finder, and other engineering work.</p>
+      </a>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  /* ── Hero ─────────────────────────────────────────────────── */
+  .hero {
+    min-height: calc(100svh - 53px); /* subtract nav height */
+    display: flex;
+    align-items: center;
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  .hero-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hero-name {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 600;
+    color: var(--fg);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .hero-role {
+    font-family: var(--font-sans);
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    color: var(--color-terracotta);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-tagline {
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--fg-muted);
+    line-height: 1.65;
+    max-width: 52ch;
+  }
+
+  /* ── CTAs ─────────────────────────────────────────────────── */
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.875rem;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 0.625rem 1.5rem;
+    background: var(--color-olive);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--color-olive) 85%, black);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 0.625rem 1.5rem;
+    border: 1.5px solid var(--color-olive);
+    color: var(--color-olive);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-secondary:hover {
+    background: var(--color-olive);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* dark mode button overrides live in global.css to avoid Astro scoping */
+
+  /* ── Scroll hint ──────────────────────────────────────────── */
+  .scroll-hint {
+    color: var(--fg-muted);
+    opacity: 0;
+    animation: fade-in 0.6s ease 2.2s forwards;
+  }
+  .scroll-arrow {
+    animation: bounce 2s ease-in-out 2.2s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(6px); }
+  }
+  @keyframes fade-in {
+    to { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint { animation: none; opacity: 0.5; }
+    .scroll-arrow { animation: none; }
+  }
+
+  /* ── Feature cards ────────────────────────────────────────── */
+  .featured {
+    padding: 4rem 1.5rem 5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .featured-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.75rem;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    background: var(--bg-panel);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+
+  .feature-card-icon {
+    color: var(--accent);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .feature-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .feature-card-desc {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+</style>

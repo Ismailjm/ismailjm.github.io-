@@ -98,6 +98,31 @@ body {
   color: var(--color-gold);
 }
 
+/* Hero CTA buttons — dark mode */
+[data-theme="dark"] .btn-primary {
+  background: var(--color-gold);
+  color: var(--color-night);
+}
+[data-theme="dark"] .btn-primary:hover {
+  background: color-mix(in srgb, var(--color-gold) 85%, black);
+}
+[data-theme="dark"] .btn-secondary {
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--color-gold);
+  color: var(--color-night);
+}
+
+/* Feature cards */
+.feature-card-title {
+  color: var(--fg);
+}
+.feature-card-desc {
+  color: var(--fg-muted);
+}
+
 .wordmark {
   color: var(--fg);
   transition: color 0.2s;
