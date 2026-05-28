@@ -42,8 +42,8 @@ html[lang="ar"] {
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--fg);
+  background-color: var(--bg, var(--color-ivory));
+  color: var(--fg, var(--color-ink));
   transition: background-color 0.3s, color 0.3s;
 }
 
@@ -87,6 +87,15 @@ body {
 .site-footer {
   border-top: 1px solid var(--border);
   color: var(--fg-muted);
+}
+
+/* Footer icon links get a bit more opacity in dark to stay legible */
+[data-theme="dark"] .site-footer .nav-link {
+  opacity: 0.75;
+}
+[data-theme="dark"] .site-footer .nav-link:hover {
+  opacity: 1;
+  color: var(--color-gold);
 }
 
 .wordmark {

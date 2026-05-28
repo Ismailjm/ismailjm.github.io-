@@ -30,11 +30,11 @@
   </button>
 </div>
 
-<style>
+<style is:global>
   .theme-btn {
     padding: 0.25rem;
     border-radius: 0.25rem;
-    color: var(--color-ink);
+    color: var(--fg);
     opacity: 0.45;
     transition: opacity 0.2s, color 0.2s;
     cursor: pointer;
@@ -46,10 +46,7 @@
   .theme-btn:hover,
   .theme-btn[aria-pressed="true"] {
     opacity: 1;
-    color: var(--color-olive);
-  }
-  [data-theme="dark"] .theme-btn {
-    color: var(--color-ivory);
+    color: var(--accent);
   }
   [data-theme="dark"] .theme-btn:hover,
   [data-theme="dark"] .theme-btn[aria-pressed="true"] {
