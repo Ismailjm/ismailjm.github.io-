@@ -1,0 +1,49 @@
+---
+import { getLangFromUrl, localizePath, type Locale } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+
+function getBarePath(pathname: string): string {
+  if (pathname.startsWith('/fr') || pathname.startsWith('/ar')) {
+    return pathname.replace(/^\/(fr|ar)/, '') || '/';
+  }
+  return pathname;
+}
+
+const barePath = getBarePath(Astro.url.pathname);
+
+const locales: { code: Locale; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'fr', label: 'FR' },
+  { code: 'ar', label: 'ع' },
+];
+---
+
+<div class="flex items-center gap-1 font-sans text-sm">
+  {locales.map(({ code, label }) => (
+    <a
+      href={localizePath(barePath, code)}
+      class:list={['lang-btn', code === lang && 'lang-btn--active']}
+      aria-current={code === lang ? 'true' : undefined}
+    >
+      {label}
+    </a>
+  ))}
+</div>
+
+<style>
+  .lang-btn {
+    padding: 0.125rem 0.5rem;
+    border-radius: 0.25rem;
+    color: var(--fg-muted);
+    transition: color 0.2s;
+  }
+  .lang-btn:hover {
+    color: var(--accent);
+  }
+  .lang-btn--active {
+    color: var(--accent);
+    font-weight: 600;
+    border: 1px solid var(--accent);
+  }
+</style>

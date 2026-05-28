@@ -7,28 +7,33 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette */
-  --color-ivory: #F6F1E4;
-  --color-parchment: #EFE4CB;
-  --color-ink: #2A2118;
-  --color-olive: #556B2F;
+  --color-ivory:      #F6F1E4;
+  --color-parchment:  #EFE4CB;
+  --color-ink:        #2A2118;
+  --color-olive:      #556B2F;
   --color-terracotta: #C65D2E;
-  --color-gold: #B8860B;
-  --color-charcoal: #1B1A17;
-  --color-night: #14130F;
+  --color-gold:       #B8860B;
+  --color-charcoal:   #1B1A17;
+  --color-night:      #14130F;
 
-  /* Typography */
-  --font-serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-arabic: 'Amiri', 'Reem Kufi', serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-serif:   'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-arabic:  'Amiri', 'Reem Kufi', serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }
 
-/* Base */
+/* ── Base ─────────────────────────────────────────── */
 html {
-  background-color: var(--color-ivory);
-  color: var(--color-ink);
   font-family: var(--font-serif);
+
+  /* semantic aliases — components reference these, theme overrides them */
+  --bg:          var(--color-ivory);
+  --bg-panel:    #fff;
+  --fg:          var(--color-ink);
+  --fg-muted:    color-mix(in srgb, var(--color-ink) 60%, transparent);
+  --border:      color-mix(in srgb, var(--color-olive) 20%, transparent);
+  --accent:      var(--color-olive);
+  --accent2:     var(--color-terracotta);
 }
 
 html[lang="ar"] {
@@ -36,11 +41,58 @@ html[lang="ar"] {
   direction: rtl;
 }
 
-[data-theme="parchment"] {
-  background-color: var(--color-parchment);
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.3s, color 0.3s;
 }
 
+/* ── Parchment mode ───────────────────────────────── */
+[data-theme="parchment"] {
+  --bg:       var(--color-parchment);
+  --bg-panel: color-mix(in srgb, var(--color-parchment) 80%, white);
+}
+
+/* ── Dark mode ────────────────────────────────────── */
 [data-theme="dark"] {
-  background-color: var(--color-night);
-  color: var(--color-ivory);
+  --bg:       var(--color-night);
+  --bg-panel: var(--color-charcoal);
+  --fg:       var(--color-ivory);
+  --fg-muted: color-mix(in srgb, var(--color-ivory) 60%, transparent);
+  --border:   color-mix(in srgb, var(--color-gold) 20%, transparent);
+  --accent:   var(--color-gold);
+}
+
+/* ── Utilities using semantic aliases ─────────────── */
+.site-header {
+  background-color: color-mix(in srgb, var(--bg) 90%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.nav-link {
+  color: var(--fg-muted);
+  transition: color 0.2s;
+}
+.nav-link:hover,
+.nav-link[aria-current="page"] {
+  color: var(--accent);
+}
+.nav-link[aria-current="page"] {
+  font-weight: 500;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  color: var(--fg-muted);
+}
+
+.wordmark {
+  color: var(--fg);
+  transition: color 0.2s;
+}
+.wordmark:hover {
+  color: var(--accent);
 }
