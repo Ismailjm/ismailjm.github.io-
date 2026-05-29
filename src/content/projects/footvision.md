@@ -1,25 +1,22 @@
 ---
 title: "Footvision — Football Match Analyzer"
-date: "2024-04"
-summary: "Automatic football match analysis system that detects player movements from video, generates tactical maps, and supports strategic game analysis."
-stack: ["Python", "PyTorch", "CNNs", "Pandas", "Matplotlib", "Seaborn", "OpenCV"]
+date: "2024-07"
+summary: "Automated football match analysis system that detects and tracks players from video, generates tactical maps, and visualises team performance metrics through an interactive dashboard."
+stack: ["Python", "PyTorch", "YOLOv8", "Ultralytics", "OpenCV", "Streamlit", "Pandas", "Matplotlib", "NumPy", "Scikit-learn"]
 links:
-  github: "https://github.com/Ismailjm/footvision"
+  github: "https://github.com/Ismailjm/Football-Match-Analyzer"
+cover: "/projects/footvision-landing.png"
 featured: true
 ---
 
-Footvision is an end-to-end computer vision pipeline that turns raw match footage into structured tactical intelligence.
-
-## Motivation
-
-Football coaches and analysts spend hours rewatching footage to extract insights about player positioning and team formation. Footvision automates this process, making data-driven tactical analysis accessible without manual annotation.
+Footvision is an end-to-end computer vision pipeline that turns raw match footage into structured tactical intelligence — from raw video to interactive tactical dashboards.
 
 ## What it does
 
-- **Player detection** — CNN-based object detection identifies players and the ball in every frame of a video sequence.
-- **Tracking** — Detected bounding boxes are linked across frames to produce player trajectories throughout the match.
-- **Tactical maps** — Trajectories are projected onto a 2D pitch map. Heatmaps, formation snapshots, and passing networks are generated using Pandas, Matplotlib, and Seaborn.
+Player and ball detection runs via **YOLOv8** (Ultralytics) in real time, identifying every actor on the pitch and tracking bounding boxes across frames. Trajectories feed into Pandas for aggregation and into Matplotlib for generating tactical maps: heatmaps, pass networks, and formation snapshots. The whole thing is served through a **Streamlit** interface that lets you explore team statistics and possession data without writing a single line of code.
 
-## Technical approach
+![Footvision analysis dashboard](/projects/footvision-dashboard.png)
 
-The detection backbone is a convolutional neural network trained on football broadcast footage. Post-processing handles occlusion, camera panning, and team assignment (jersey colour clustering).
+## Technical notes
+
+Post-processing handles camera panning (homography-based pitch registration) and team assignment via jersey colour clustering. The modular pipeline design means each component — detection, tracking, visualisation — can be swapped or extended independently.
