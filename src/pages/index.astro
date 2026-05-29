@@ -1,49 +1,55 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCalligraphy from '../components/HeroCalligraphy.astro';
-import { useTranslations } from '../i18n/utils';
-
-const t = useTranslations('en');
 ---
 
 <BaseLayout title="Home" description="Ismail El Jamiy — PhD candidate in AI researching Handwritten Text Recognition of medieval Arabic scientific manuscripts.">
+
+  <!-- ── Hero ───────────────────────────────────────────────────── -->
   <section class="hero">
     <div class="hero-inner">
 
-      <!-- Arabic calligraphy signature -->
-      <div class="calligraphy-frame" aria-hidden="true">
-        <HeroCalligraphy />
-      </div>
-
-      <!-- Name + role -->
       <div class="hero-text">
-        <h1 class="hero-name">Ismail El Jamiy</h1>
-        <p class="hero-role">PhD Candidate in AI — University of Toulouse</p>
+        <p class="hero-eyebrow">PhD Candidate in AI · Toulouse</p>
+        <h1 class="hero-name">Ismail<br>El&nbsp;Jamiy</h1>
         <p class="hero-tagline">
           Handwritten Text Recognition of medieval Arabic scientific manuscripts
           and dedicated Large Language Models.
         </p>
+        <div class="hero-ctas">
+          <a href="/research" class="btn-primary">View Research</a>
+          <a href="/Resume.pdf" class="btn-secondary" target="_blank" rel="noopener">Download CV</a>
+        </div>
       </div>
 
-      <!-- CTAs -->
-      <div class="hero-ctas">
-        <a href="/research" class="btn-primary">View Research</a>
-        <a href="/public/Resume.pdf" class="btn-secondary" target="_blank" rel="noopener">Download CV</a>
-      </div>
-
-      <!-- Scroll hint -->
-      <div class="scroll-hint" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-             class="scroll-arrow">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
+      <div class="hero-calligraphy" aria-hidden="true">
+        <HeroCalligraphy />
       </div>
 
     </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="scroll-arrow">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
   </section>
 
-  <!-- Featured section cards -->
+  <!-- ── Latest publication strip ───────────────────────────────── -->
+  <div class="pub-strip">
+    <div class="pub-strip-inner">
+      <span class="pub-strip-badge">Under Review</span>
+      <span class="pub-strip-text">
+        <em class="pub-strip-title">Athaar: Towards Medieval Scientific Arabic Manuscript Recognition</em>
+        <span class="pub-strip-venue"> · HIP26 @ ICDAR 2026</span>
+      </span>
+      <a href="/publications" class="pub-strip-link">All publications →</a>
+    </div>
+  </div>
+
+  <!-- ── Featured section cards ─────────────────────────────────── -->
   <section class="featured">
     <div class="ornament-divider" aria-hidden="true">
       <span>✦</span>
@@ -58,7 +64,7 @@ const t = useTranslations('en');
           </svg>
         </div>
         <h2 class="feature-card-title">Research</h2>
-        <p class="feature-card-desc">HTR of medieval Arabic manuscripts using deep learning and dedicated LLMs.</p>
+        <p class="feature-card-desc">Building benchmarks and evaluating vision-language models for HTR of ancient Arabic scientific manuscripts.</p>
       </a>
 
       <a href="/publications" class="feature-card card fade-up">
@@ -92,95 +98,80 @@ const t = useTranslations('en');
 </BaseLayout>
 
 <style>
-  /* ── Hero ─────────────────────────────────────────────────── */
+  /* ── Hero ─────────────────────────────────────────── */
   .hero {
-    min-height: calc(100svh - 53px); /* subtract nav height */
-    display: flex;
-    align-items: center;
-    padding: 4rem 1.5rem 2rem;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, color-mix(in srgb, var(--color-olive) 6%, transparent), transparent);
-  }
-
-  .hero-inner {
-    max-width: 680px;
-    margin: 0 auto;
+    min-height: calc(100svh - 53px);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    text-align: center;
+    justify-content: center;
+    padding: 5rem 2rem 3rem;
+    background: radial-gradient(ellipse 70% 60% at 70% 40%, color-mix(in srgb, var(--color-olive) 5%, transparent), transparent);
   }
 
-  .calligraphy-frame {
+  .hero-inner {
+    max-width: 1100px;
     width: 100%;
-    max-width: 640px;
-    padding: 1.25rem 0.5rem;
-    border-top: 1.5px solid color-mix(in srgb, var(--color-olive) 30%, transparent);
-    border-bottom: 1.5px solid color-mix(in srgb, var(--color-olive) 30%, transparent);
-    position: relative;
-  }
-  .calligraphy-frame::before,
-  .calligraphy-frame::after {
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-color: color-mix(in srgb, var(--color-terracotta) 50%, transparent);
-    border-style: solid;
-  }
-  .calligraphy-frame::before {
-    top: -3px;
-    left: -3px;
-    border-width: 1.5px 0 0 1.5px;
-  }
-  .calligraphy-frame::after {
-    bottom: -3px;
-    right: -3px;
-    border-width: 0 1.5px 1.5px 0;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 5rem;
   }
 
   .hero-text {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    margin: 0;
   }
 
   .hero-name {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-size: clamp(3rem, 5.5vw, 5rem);
     font-weight: 600;
     color: var(--fg);
-    letter-spacing: -0.01em;
-    line-height: 1.15;
-  }
-
-  .hero-role {
-    font-family: var(--font-sans);
-    font-size: clamp(0.95rem, 2vw, 1.1rem);
-    color: var(--color-terracotta);
-    font-weight: 500;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.06em;
+    line-height: 1.08;
+    margin: 0;
   }
 
   .hero-tagline {
     font-family: var(--font-serif);
-    font-size: clamp(1rem, 2vw, 1.2rem);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
     color: var(--fg-muted);
-    line-height: 1.65;
-    max-width: 52ch;
+    line-height: 1.75;
+    max-width: 42ch;
+    margin: 0;
   }
 
-  /* ── CTAs ─────────────────────────────────────────────────── */
+  .hero-calligraphy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+  }
+
+  /* ── CTAs ─────────────────────────────────────────── */
   .hero-ctas {
     display: flex;
     flex-wrap: wrap;
     gap: 0.875rem;
-    justify-content: center;
   }
 
   .btn-primary {
     display: inline-block;
-    padding: 0.625rem 1.5rem;
+    padding: 0.7rem 1.75rem;
     background: var(--color-olive);
     color: #fff;
     font-family: var(--font-sans);
@@ -197,7 +188,7 @@ const t = useTranslations('en');
 
   .btn-secondary {
     display: inline-block;
-    padding: 0.625rem 1.5rem;
+    padding: 0.7rem 1.75rem;
     border: 1.5px solid var(--color-olive);
     color: var(--color-olive);
     font-family: var(--font-sans);
@@ -213,16 +204,15 @@ const t = useTranslations('en');
     transform: translateY(-1px);
   }
 
-  /* dark mode button overrides live in global.css to avoid Astro scoping */
-
-  /* ── Scroll hint ──────────────────────────────────────────── */
+  /* ── Scroll hint ──────────────────────────────────── */
   .scroll-hint {
     color: var(--fg-muted);
     opacity: 0;
-    animation: fade-in 0.6s ease 2.2s forwards;
+    margin-top: 3rem;
+    animation: fade-in 0.6s ease 2.4s forwards;
   }
   .scroll-arrow {
-    animation: bounce 2s ease-in-out 2.2s infinite;
+    animation: bounce 2s ease-in-out 2.4s infinite;
   }
   @keyframes bounce {
     0%, 100% { transform: translateY(0); }
@@ -236,29 +226,94 @@ const t = useTranslations('en');
     .scroll-arrow { animation: none; }
   }
 
-  /* ── Feature cards ────────────────────────────────────────── */
-  .featured {
-    padding: 1rem 1.5rem 5rem;
+  /* ── Publication strip ────────────────────────────── */
+  .pub-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 0.875rem 2rem;
+    background: color-mix(in srgb, var(--color-olive) 3%, transparent);
   }
 
-  .featured-inner {
-    max-width: 960px;
+  .pub-strip-inner {
+    max-width: 1100px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .pub-strip-badge {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.65rem;
+    border-radius: 9999px;
+    background: #dbeafe;
+    color: #1e40af;
+    flex-shrink: 0;
+  }
+
+  [data-theme="dark"] .pub-strip-badge {
+    background: #1e3a5f;
+    color: #93c5fd;
+  }
+
+  .pub-strip-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pub-strip-title {
+    font-family: var(--font-serif);
+    font-size: 0.92rem;
+    color: var(--fg);
+  }
+
+  .pub-strip-venue {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+
+  .pub-strip-link {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    flex-shrink: 0;
+    white-space: nowrap;
+    transition: opacity 0.15s;
+  }
+  .pub-strip-link:hover { opacity: 0.7; }
+
+  /* ── Feature cards ────────────────────────────────── */
+  .featured {
+    padding: 2rem 2rem 5rem;
   }
 
   .featured .ornament-divider {
-    max-width: 960px;
+    max-width: 1100px;
     margin: 0 auto 2.5rem;
+  }
+
+  .featured-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 
   .feature-card {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.75rem;
+    gap: 0.875rem;
+    padding: 2rem;
     border-left: 3px solid var(--accent);
     text-decoration: none;
   }
@@ -273,15 +328,61 @@ const t = useTranslations('en');
 
   .feature-card-title {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: var(--fg);
   }
 
   .feature-card-desc {
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--fg-muted);
-    line-height: 1.6;
+    line-height: 1.65;
+  }
+
+  /* dark mode overrides (Astro scoping workaround) */
+  /* live in global.css */
+
+  /* ── Mobile ───────────────────────────────────────── */
+  @media (max-width: 800px) {
+    .hero {
+      padding: 3rem 1.5rem 2rem;
+    }
+
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .hero-text {
+      order: 2;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-name {
+      font-size: clamp(2.5rem, 10vw, 3.5rem);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-tagline {
+      max-width: 100%;
+    }
+
+    .hero-calligraphy {
+      order: 1;
+    }
+
+    .hero-ctas {
+      justify-content: center;
+    }
+
+    .pub-strip {
+      padding: 0.875rem 1.5rem;
+    }
+
+    .featured {
+      padding: 2rem 1.5rem 4rem;
+    }
   }
 </style>
