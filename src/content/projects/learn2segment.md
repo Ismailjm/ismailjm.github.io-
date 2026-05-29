@@ -5,7 +5,6 @@ summary: "Meta-learning framework for few-shot medical image segmentation, enabl
 stack: ["Python", "PyTorch", "MONAI", "SimpleITK", "U-Net", "Meta-Learning", "MAML"]
 links:
   github: "https://github.com/Ismailjm/learn2segment-nova"
-cover: null
 featured: true
 ---
 
