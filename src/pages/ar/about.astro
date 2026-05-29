@@ -12,6 +12,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="page-rule-short" aria-hidden="true"></div>
     </header>
 
+    <div class="fact-row">
+      <div class="fact-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>تولوز، فرنسا</span>
+      </div>
+      <div class="fact-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <span>مغربي، من الدار البيضاء</span>
+      </div>
+      <div class="fact-chip">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        <span>ENSAM الدار البيضاء</span>
+      </div>
+    </div>
+
     <div class="prose">
 
       <p class="drop-cap">
@@ -58,6 +73,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         لمؤرخي العلوم.
       </p>
 
+      <a href="/ar/research" class="inline-link">
+        اقرأ عن بحثي
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </a>
+
       <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>خارج المختبر</h2>
       <p>
@@ -72,13 +92,49 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
         تبدو جيدة أستمع إليها، والنوع لا يهمني.
       </p>
 
+      <div class="interests-grid">
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span>التصوير</span>
+        </div>
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>العمارة</span>
+        </div>
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+          <span>الأفلام والمسلسلات</span>
+        </div>
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>ألعاب قصصية</span>
+        </div>
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>الجري</span>
+        </div>
+        <div class="interest-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          <span>الموسيقى</span>
+        </div>
+      </div>
+
       <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
       <h2>اللغات</h2>
-      <ul>
-        <li><strong>العربية</strong> — اللغة الأم</li>
-        <li><strong>الفرنسية</strong> — ثنائي اللغة (TCF C1، درجة 543)</li>
-        <li><strong>الإنجليزية</strong> — متقدم</li>
-      </ul>
+      <div class="lang-row">
+        <div class="lang-pill">
+          <span class="lang-name">العربية</span>
+          <span class="lang-level">لغة أم</span>
+        </div>
+        <div class="lang-pill">
+          <span class="lang-name">الفرنسية</span>
+          <span class="lang-level">C1 · TCF 543</span>
+        </div>
+        <div class="lang-pill">
+          <span class="lang-name">الإنجليزية</span>
+          <span class="lang-level">متقدم</span>
+        </div>
+      </div>
 
     </div>
 
@@ -120,23 +176,115 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin: 2.5rem 0 0.75rem;
   }
 
-  .prose ul {
-    list-style: none;
-    padding: 0;
+  .fact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .fact-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-arabic);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .fact-chip svg { flex-shrink: 0; display: block; }
+
+  .inline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-arabic);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    padding-bottom: 1px;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.15s;
+  }
+  .inline-link:hover { border-color: var(--accent); }
+  .inline-link svg { display: block; }
+
+  .interests-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
     margin-bottom: 1.4em;
   }
 
-  .prose ul li {
-    padding-right: 1.25rem;
-    position: relative;
-    margin-bottom: 0.4em;
+  .interest-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-arabic);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--fg);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 0.4rem 0.75rem;
+    transition: border-color 0.15s, transform 0.15s;
+    cursor: default;
   }
 
-  .prose ul li::before {
-    content: "—";
-    position: absolute;
-    right: 0;
-    color: var(--color-terracotta);
+  .interest-chip:hover {
+    border-color: var(--color-olive);
+    transform: translateY(-1px);
+  }
+
+  .interest-chip svg { display: block; flex-shrink: 0; color: var(--fg-muted); }
+  .interest-chip span { white-space: nowrap; }
+
+  .lang-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.4em;
+  }
+
+  .lang-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    min-width: 110px;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .lang-pill:hover {
+    border-color: var(--color-olive);
+    transform: translateY(-1px);
+  }
+
+  .lang-name {
+    font-family: var(--font-arabic);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--fg);
+  }
+
+  .lang-level {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--fg-muted);
   }
 
   .drop-cap::first-letter {

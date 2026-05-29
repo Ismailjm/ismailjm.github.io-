@@ -116,6 +116,7 @@ textarea:focus-visible,
 }
 [data-theme="dark"] .research-pillar {
   border-left-color: var(--color-gold);
+  border-right-color: var(--color-gold);
   box-shadow: 0 1px 3px color-mix(in srgb, var(--color-night) 50%, transparent);
 }
 [data-theme="dark"] .research-pillar:hover {
