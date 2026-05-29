@@ -4,7 +4,7 @@ date: "2024-12"
 summary: "Real-time web application that translates hand gestures into text using Mediapipe skeleton tracking and a CNN classifier, built for the Youth For Challenge association."
 stack: ["Python", "Flask", "Mediapipe", "OpenCV", "CNN"]
 links:
-  github: "https://github.com/Ismailjm/hand-sign-transator"
+  github: "https://github.com/Ismailjm/hand-sign-translator"
 cover: "/projects/sign-language-ui.png"
 featured: true
 ---

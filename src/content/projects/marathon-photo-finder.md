@@ -4,7 +4,7 @@ date: "2024-03"
 summary: "Machine learning system that helps runners find their race photos automatically using person re-identification and bib-number OCR."
 stack: ["Python", "PyTorch", "CNNs", "OCR", "Flask", "OpenCV"]
 links:
-  github: "https://github.com/Ismailjm/marathon-photo-finder"
+  github: "https://github.com/Ismailjm/Bib-number-extraction"
 featured: true
 ---
 

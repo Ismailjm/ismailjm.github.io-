@@ -4,7 +4,7 @@ date: "2024-06"
 summary: "Intelligent travel planning chatbot for Morocco, combining RAG and fine-tuned LLMs to deliver personalised itinerary recommendations through a conversational interface."
 stack: ["Python", "LangChain", "OpenAI", "Ollama", "Chainlit", "RAG"]
 links:
-  github: "https://github.com/Ismailjm/Jwl"
+  github: "https://github.com/Ismailjm/Jwal"
 cover: "/projects/jwal-ui.png"
 featured: true
 ---
