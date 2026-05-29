@@ -193,14 +193,12 @@ const certs = [
   .cv-btn:hover { background: var(--accent); color: white; }
   .cv-section { margin-bottom: 3.5rem; }
   .section-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--color-olive); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
-  .timeline::before { content: ''; position: absolute; top: 0; left: 7px; width: 2px; height: 100%; background: var(--border); }
-  .timeline-item { display: flex; gap: 1.5rem; padding-bottom: 2rem; position: relative; }
-  .timeline-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--color-olive); flex-shrink: 0; margin-top: 0.25rem; position: relative; z-index: 1; }
-  .timeline-body { flex: 1; }
+  .timeline { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--border); padding-left: 1.5rem; margin-left: 0.5rem; }
+  .timeline-item { position: relative; padding-bottom: 2rem; }
+  .timeline-dot { position: absolute; left: -1.75rem; top: 0.3rem; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, var(--color-olive), var(--color-terracotta)); border: 2px solid var(--bg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-olive) 30%, transparent); }
   .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
   .tl-role { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; color: var(--fg); }
-  .tl-period { font-family: var(--font-sans); font-size: 0.8rem; color: var(--fg-muted); white-space: nowrap; }
+  .tl-period { font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500; color: var(--color-olive); background: color-mix(in srgb, var(--color-olive) 8%, transparent); border: 1px solid color-mix(in srgb, var(--color-olive) 22%, transparent); border-radius: 9999px; padding: 0.15rem 0.65rem; white-space: nowrap; }
   .tl-org { display: block; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--accent); }
   .tl-location { display: block; font-family: var(--font-sans); font-size: 0.8rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
   .tl-objective { font-family: var(--font-sans); font-size: 0.875rem; color: var(--fg-muted); margin: 0.5rem 0; }
