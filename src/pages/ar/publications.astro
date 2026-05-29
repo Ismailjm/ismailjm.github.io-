@@ -1,43 +1,29 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const papers = [
-  {
-    title: "Automatic Recognition of Medieval Scientific Arabic Manuscripts: Dataset Creation and Large Language Models Evaluation",
-    authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
-    venue: "CORIA-TALN 2026",
-    year: 2026,
-    type: "مؤتمر",
-    status: "accepted",
-    doi: null,
-    pdf: null,
-  },
-  {
-    title: "Athaar: Towards Medieval Scientific Arabic Manuscript Recognition",
-    authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
-    venue: "HIP26 @ ICDAR 2026",
-    year: 2026,
-    type: "ورشة عمل",
-    status: "under-review",
-    doi: null,
-    pdf: null,
-  },
-  {
-    title: "Few-Shot Medical Image Segmentation with Meta-Learning: An Empirical Study on Organ Segmentation",
-    authors: ["Ismail El Jamiy", "Amel Aissaoui", "Lotfi Chaari"],
-    venue: "2025 Medical Technologies Congress (TIPTEKNO)",
-    year: 2025,
-    type: "مؤتمر",
-    status: "preprint",
-    doi: null,
-    pdf: null,
-  },
-];
+const entries = await getCollection('publications');
+const papers = entries
+  .map((e) => e.data)
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+function formatDate(d: string) {
+  return d.split('-')[0];
+}
+
+const typeLabel: Record<string, string> = {
+  journal: 'مجلة',
+  conference: 'مؤتمر',
+  workshop: 'ورشة عمل',
+  preprint: 'نسخة أولية',
+  poster: 'ملصق',
+};
 
 const statusMeta: Record<string, { label: string; color: string }> = {
-  "accepted":     { label: "مقبول",          color: "status-accepted" },
-  "under-review": { label: "قيد التحكيم",   color: "status-review" },
-  "preprint":     { label: "نسخة أولية",    color: "status-preprint" },
+  "accepted":     { label: "مقبول",        color: "status-accepted" },
+  "under-review": { label: "قيد التحكيم",  color: "status-review" },
+  "preprint":     { label: "نسخة أولية",   color: "status-preprint" },
+  "published":    { label: "منشور",        color: "status-published" },
 };
 ---
 
@@ -64,8 +50,8 @@ const statusMeta: Record<string, { label: string; color: string }> = {
           <li class="paper-item card">
             <div class="paper-meta-top">
               <span class={`status-badge ${meta.color}`}>{meta.label}</span>
-              <span class="paper-type">{paper.type}</span>
-              <span class="paper-year">{paper.year}</span>
+              <span class="paper-type">{typeLabel[paper.type]}</span>
+              <span class="paper-year">{formatDate(paper.date)}</span>
             </div>
             <h2 class="paper-title">{paper.title}</h2>
             <p class="paper-authors">
@@ -76,7 +62,20 @@ const statusMeta: Record<string, { label: string; color: string }> = {
                 </span>
               ))}
             </p>
-            <p class="paper-venue">{paper.venue}</p>
+            <p class="paper-venue">
+              {paper.venue}
+              {paper.location && <span class="paper-location"> · {paper.location}</span>}
+            </p>
+            {(paper.doi || paper.pdf) && (
+              <div class="paper-links">
+                {paper.pdf && (
+                  <a href={paper.pdf} target="_blank" rel="noopener" class="paper-link">PDF</a>
+                )}
+                {paper.doi && (
+                  <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener" class="paper-link">DOI</a>
+                )}
+              </div>
+            )}
           </li>
         );
       })}
@@ -98,13 +97,19 @@ const statusMeta: Record<string, { label: string; color: string }> = {
   .status-accepted  { background: #d1fae5; color: #065f46; }
   .status-review    { background: #dbeafe; color: #1e40af; }
   .status-preprint  { background: #fef3c7; color: #92400e; }
+  .status-published { background: #ede9fe; color: #5b21b6; }
   [data-theme="dark"] .status-accepted  { background: #064e3b; color: #6ee7b7; }
   [data-theme="dark"] .status-review    { background: #1e3a5f; color: #93c5fd; }
   [data-theme="dark"] .status-preprint  { background: #451a03; color: #fcd34d; }
+  [data-theme="dark"] .status-published { background: #2e1065; color: #c4b5fd; }
   .paper-type, .paper-year { font-family: var(--font-arabic); font-size: 0.85rem; color: var(--fg-muted); }
   .paper-type::before, .paper-year::before { content: "·"; margin-right: 0.6rem; color: var(--border); }
   .paper-title { font-family: var(--font-sans); font-size: 1rem; font-weight: 600; line-height: 1.5; color: var(--fg); }
   .paper-authors { font-family: var(--font-sans); font-size: 0.875rem; color: var(--fg-muted); line-height: 1.5; margin: 0; }
   .author-me { color: var(--fg); font-weight: 600; }
   .paper-venue { font-family: var(--font-sans); font-size: 0.875rem; font-style: italic; color: var(--accent); margin: 0; }
+  .paper-location { font-style: normal; color: var(--fg-muted); font-size: 0.82rem; }
+  .paper-links { display: flex; gap: 0.75rem; margin-top: 0.25rem; }
+  .paper-link { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-sans); font-size: 0.775rem; font-weight: 600; color: var(--accent); text-decoration: none; border: 1px solid var(--accent); border-radius: 4px; padding: 0.2rem 0.6rem; transition: background 0.15s, color 0.15s; }
+  .paper-link:hover { background: var(--accent); color: white; }
 </style>

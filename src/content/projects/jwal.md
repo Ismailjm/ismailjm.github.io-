@@ -5,7 +5,7 @@ summary: "Intelligent travel planning chatbot for Morocco, combining RAG and fin
 stack: ["Python", "LangChain", "OpenAI", "Ollama", "Chainlit", "RAG"]
 links:
   github: "https://github.com/Ismailjm/Jwal"
-cover: "/projects/jwal-ui.png"
+cover: "../../assets/projects/jwal-ui.png"
 featured: true
 ---
 

@@ -1,41 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const papers = [
-  {
-    title: "Athaar: Towards Medieval Scientific Arabic Manuscript Recognition",
-    authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
-    venue: "HIP26 @ ICDAR 2026",
-    location: "Vienna, Austria",
-    date: "Sep. 2026",
-    type: "Workshop",
-    status: "under-review",
-    doi: null,
-    pdf: null,
-  },
-  {
-    title: "Automatic Recognition of Medieval Scientific Arabic Manuscripts: Dataset Creation and Large Language Models Evaluation",
-    authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
-    venue: "CORIA-TALN 2026",
-    location: "Nantes, France",
-    date: "Jun. 2026",
-    type: "Conference",
-    status: "accepted",
-    doi: null,
-    pdf: null,
-  },
-  {
-    title: "Few-Shot Medical Image Segmentation with Meta-Learning: An Empirical Study on Organ Segmentation",
-    authors: ["Ismail El Jamiy", "Amel Aissaoui", "Lotfi Chaari"],
-    venue: "Medical Technologies Congress (TIPTEKNO 2025)",
-    location: "Gazimağusa, Turkey",
-    date: "Oct. 2025",
-    type: "Conference",
-    status: "published",
-    doi: "10.1109/TIPTEKNO68206.2025.11270127",
-    pdf: null,
-  },
-];
+const entries = await getCollection('publications');
+const papers = entries
+  .map((e) => e.data)
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+const MONTHS = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+function formatDate(d: string) {
+  const [y, m] = d.split('-');
+  return `${MONTHS[Number(m) - 1]} ${y}`;
+}
+
+const typeLabel: Record<string, string> = {
+  journal: 'Journal',
+  conference: 'Conference',
+  workshop: 'Workshop',
+  preprint: 'Preprint',
+  poster: 'Poster',
+};
 
 const statusMeta: Record<string, { label: string; color: string }> = {
   "accepted":     { label: "Accepted",     color: "status-accepted" },
@@ -68,8 +52,8 @@ const statusMeta: Record<string, { label: string; color: string }> = {
           <li class="paper-item card">
             <div class="paper-meta-top">
               <span class={`status-badge ${meta.color}`}>{meta.label}</span>
-              <span class="paper-type">{paper.type}</span>
-              <span class="paper-year">{paper.date}</span>
+              <span class="paper-type">{typeLabel[paper.type]}</span>
+              <span class="paper-year">{formatDate(paper.date)}</span>
             </div>
 
             <h2 class="paper-title">{paper.title}</h2>

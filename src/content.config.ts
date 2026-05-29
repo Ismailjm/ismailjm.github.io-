@@ -3,7 +3,7 @@ import { glob } from 'astro/loaders';
 
 const projects = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.string(),
     date: z.string(),
     summary: z.string(),
@@ -12,7 +12,7 @@ const projects = defineCollection({
       github: z.string().optional(),
       demo: z.string().optional(),
     }).optional(),
-    cover: z.string().optional(),
+    cover: image().optional(),
     featured: z.boolean().default(false),
   }),
 });
@@ -23,8 +23,10 @@ const publications = defineCollection({
     title: z.string(),
     authors: z.array(z.string()),
     venue: z.string(),
-    year: z.number(),
+    location: z.string().optional(),
+    date: z.string(), // YYYY-MM — used for sorting and display
     type: z.enum(['journal', 'conference', 'workshop', 'preprint', 'poster']),
+    status: z.enum(['under-review', 'accepted', 'preprint', 'published']).default('published'),
     pdf: z.string().optional(),
     doi: z.string().optional(),
     arxiv: z.string().optional(),

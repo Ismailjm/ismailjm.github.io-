@@ -5,7 +5,7 @@ summary: "Real-time web application that translates hand gestures into text usin
 stack: ["Python", "Flask", "Mediapipe", "OpenCV", "CNN"]
 links:
   github: "https://github.com/Ismailjm/hand-sign-translator"
-cover: "/projects/sign-language-ui.png"
+cover: "../../assets/projects/sign-language-ui.png"
 featured: true
 ---
 
