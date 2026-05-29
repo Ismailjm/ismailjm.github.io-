@@ -7,7 +7,7 @@ const papers = [
     authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
     venue: "CORIA-TALN 2026",
     location: "Nantes, France",
-    year: 2026,
+    date: "Jun. 2026",
     type: "Conference",
     status: "accepted",
     doi: null,
@@ -18,7 +18,7 @@ const papers = [
     authors: ["Ismail El Jamiy", "Guillaume Loizelet", "Farah Benamara", "Nabil Hathout"],
     venue: "HIP26 @ ICDAR 2026",
     location: "Vienna, Austria",
-    year: 2026,
+    date: "Sep. 2026",
     type: "Workshop",
     status: "under-review",
     doi: null,
@@ -29,7 +29,7 @@ const papers = [
     authors: ["Ismail El Jamiy", "Amel Aissaoui", "Lotfi Chaari"],
     venue: "Medical Technologies Congress (TIPTEKNO 2025)",
     location: "Gazimağusa, Turkey",
-    year: 2025,
+    date: "Oct. 2025",
     type: "Conference",
     status: "published",
     doi: "10.1109/TIPTEKNO68206.2025.11270127",
@@ -69,7 +69,7 @@ const statusMeta: Record<string, { label: string; color: string }> = {
             <div class="paper-meta-top">
               <span class={`status-badge ${meta.color}`}>{meta.label}</span>
               <span class="paper-type">{paper.type}</span>
-              <span class="paper-year">{paper.year}</span>
+              <span class="paper-year">{paper.date}</span>
             </div>
 
             <h2 class="paper-title">{paper.title}</h2>

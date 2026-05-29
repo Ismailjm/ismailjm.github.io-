@@ -82,6 +82,26 @@ const skills = {
   "Languages": ["Python", "JavaScript", "SQL", "Bash"],
 };
 
+const techIcons: Record<string, string> = {
+  "Python":         "python",
+  "Pandas":         "pandas",
+  "NumPy":          "numpy",
+  "Plotly":         "plotly",
+  "Selenium":       "selenium",
+  "Scrapy":         "scrapy",
+  "Matplotlib":     "matplotlib",
+  "Scikit-learn":   "scikitlearn",
+  "Keras":          "keras",
+  "TensorFlow":     "tensorflow",
+  "PyTorch":        "pytorch",
+  "OpenCV":         "opencv",
+  "HF Transformers":"huggingface",
+  "spaCy":          "spacy",
+  "JavaScript":     "javascript",
+  "Bash":           "gnubash",
+  "SQL":            "postgresql",
+};
+
 const certs = [
   { name: "Data Scientist Associate (90h)", issuer: "DataCamp", date: "Nov. 2024" },
   { name: "Advanced Learning Algorithms (34h)", issuer: "DeepLearning.AI", date: "Apr. 2023" },
@@ -163,7 +183,24 @@ const certs = [
           <div class="skill-group">
             <h3 class="skill-category">{category}</h3>
             <div class="skill-tags">
-              {items.map(tag => <span class="skill-tag">{tag}</span>)}
+              {items.map(tag => {
+                const icon = techIcons[tag];
+                return (
+                  <span class={`skill-tag${icon ? " has-icon" : ""}`}>
+                    {icon && (
+                      <img
+                        src={`https://cdn.simpleicons.org/${icon}`}
+                        width="13"
+                        height="13"
+                        alt=""
+                        aria-hidden="true"
+                        class="skill-icon"
+                      />
+                    )}
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -371,6 +408,31 @@ const certs = [
     border: 1px solid var(--border);
     border-radius: 0.25rem;
     color: var(--fg);
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .skill-tag:hover {
+    border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .skill-tag.has-icon {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .skill-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    object-fit: contain;
+  }
+
+  [data-theme="dark"] .skill-icon {
+    filter: brightness(1.15);
   }
 
   /* ── Certs ────────────────────────────────────────────────── */
