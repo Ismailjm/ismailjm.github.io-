@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Recherche" description="Recherche doctorale d'Ismail El Jamiy sur la reconnaissance de l'écriture manuscrite dans les manuscrits arabes médiévaux et les LLMs dédiés.">
+
+  <article class="page-container">
+
+    <header class="page-header">
+      <div class="page-eyebrow">Recherche doctorale</div>
+      <h1 class="page-title">Recherche</h1>
+      <div class="page-rule-short" aria-hidden="true"></div>
+      <p class="page-subtitle">
+        <span class="page-badge">Doctorat en IA · 2025–2028</span>
+        &ensp;Université de Toulouse (IRIT / IMT / CLLE)
+      </p>
+    </header>
+
+    <div class="prose">
+
+      <p class="drop-cap">
+        La tradition scientifique arabe a produit un corpus extraordinaire de savoirs entre
+        le VIIIe et le XVe siècles — des traités d'algèbre, d'optique, d'astronomie et de
+        médecine qui ont façonné la pensée de la Renaissance européenne. Des milliers de ces
+        manuscrits subsistent dans des bibliothèques à travers le Maghreb et le Moyen-Orient,
+        en grande partie non numérisés et inaccessibles au traitement informatique. Ma thèse
+        vise à changer cela.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Le problème</h2>
+      <p>
+        La reconnaissance de texte manuscrit (HTR) a connu des avancées remarquables sur les
+        écritures latines, mais l'arabe présente un ensemble distinct de défis :
+      </p>
+      <ul>
+        <li><strong>Connectivité cursive</strong> — Les lettres arabes se joignent au sein des mots de façon dépendante du script, ce qui rend la segmentation non triviale.</li>
+        <li><strong>Formes contextuelles</strong> — Chaque caractère possède jusqu'à quatre formes distinctes selon sa position dans un mot.</li>
+        <li><strong>Variation historique</strong> — Les scribes médiévaux employaient des mains régionales diverses (maghrébine, mashriqi, andalouse) avec des ligatures et abréviations idiosyncrasiques.</li>
+        <li><strong>Dégradation des documents</strong> — L'oxydation de l'encre, les dégâts des eaux, les trous de vers et les palimpsestes corrompent le signal visuel.</li>
+      </ul>
+      <p>
+        Les systèmes HTR existants, entraînés sur l'arabe moderne, échouent sur les manuscrits
+        historiques. Même les modèles HTR historiques spécialisés atteignent rarement la précision
+        nécessaire pour une utilisation en humanités numériques.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Mon approche</h2>
+      <p>Ma recherche s'articule autour de trois axes complémentaires :</p>
+
+      <div class="research-pillar">
+        <div class="pillar-number">01</div>
+        <div class="pillar-body">
+          <h3>HTR robuste pour l'arabe historique</h3>
+          <p>
+            Entraînement et affinage d'architectures de réseaux neuronaux profonds — notamment
+            des modèles vision-langage (VLM) et des modèles séquentiels à base de Transformers —
+            sur des corpus de manuscrits numérisés. Une contribution centrale est la construction
+            de jeux de données de référence en collaboration avec des paléographes et des historiens.
+          </p>
+        </div>
+      </div>
+
+      <div class="research-pillar">
+        <div class="pillar-number">02</div>
+        <div class="pillar-body">
+          <h3>Modèles de langage dédiés à l'arabe médiéval</h3>
+          <p>
+            Une fois le texte reconnu, l'objectif est de construire des LLMs pré-entraînés sur
+            la prose scientifique arabe médiévale. Les LLMs arabes standards sont principalement
+            entraînés sur des textes modernes et peinent avec le vocabulaire archaïque, les
+            conventions orthographiques et la terminologie de domaine spécifique. Un modèle dédié
+            permet une traduction, un résumé et une recherche sémantique précis sur des corpus de
+            manuscrits.
+          </p>
+        </div>
+      </div>
+
+      <div class="research-pillar">
+        <div class="pillar-number">03</div>
+        <div class="pillar-body">
+          <h3>Pipeline de bout en bout pour les humanités numériques</h3>
+          <p>
+            La recherche vise à livrer non seulement des modèles, mais un pipeline utilisable
+            que les historiens peuvent appliquer à de nouveaux manuscrits : prétraitement d'images,
+            HTR, assistance à la correction et recherche structurée. L'accessibilité et
+            l'interprétabilité sont des préoccupations de premier ordre.
+          </p>
+        </div>
+      </div>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Encadrement</h2>
+      <p>
+        La thèse est conduite à l'IRIT (Institut de Recherche en Informatique de Toulouse),
+        l'IMT (Institut de Mathématiques de Toulouse) et le CLLE (Cognition, Langues, Langage,
+        Ergonomie), sous l'égide de l'Université de Toulouse. Ce cadre interdisciplinaire
+        réunit informatique, mathématiques et linguistique cognitive.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Pourquoi c'est important</h2>
+      <p>
+        Les manuscrits que j'étudie ne sont pas des objets de musée — ce sont des sources
+        primaires pour l'histoire des sciences. Les rendre accessibles par le calcul accélère
+        la recherche, permet des recoupements à grande échelle et préserve sous forme numérique
+        un patrimoine culturel en danger. C'est une recherche technique à finalité humaniste.
+      </p>
+
+    </div>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header { margin-bottom: 2.5rem; }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--fg);
+  }
+
+  .prose p { margin-bottom: 1.4em; }
+
+  .prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-olive);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  .prose h3 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0 0 0.5rem;
+  }
+
+  .prose ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.4em;
+  }
+
+  .prose ul li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.6em;
+  }
+
+  .prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-terracotta);
+  }
+
+  .drop-cap::first-letter {
+    font-size: 4.5em;
+    line-height: 0.78;
+    float: left;
+    margin-right: 0.08em;
+    color: var(--color-terracotta);
+    font-weight: 600;
+    font-family: var(--font-serif);
+  }
+
+  .research-pillar {
+    display: flex;
+    gap: 1.5rem;
+    margin: 1.75rem 0;
+    padding: 1.5rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--color-olive);
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--color-ink) 6%, transparent);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .research-pillar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--color-olive) 12%, transparent);
+  }
+
+  .pillar-number {
+    font-family: var(--font-sans);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gold);
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+
+  .pillar-body { flex: 1; }
+  .pillar-body p { margin-bottom: 0; font-size: 1rem; }
+</style>

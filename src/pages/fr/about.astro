@@ -1,0 +1,162 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="À propos" description="À propos d'Ismail El Jamiy — doctorant en IA, ingénieur et photographe amateur, originaire de Casablanca, basé à Toulouse.">
+
+  <article class="page-container">
+
+    <header class="page-header">
+      <div class="page-eyebrow">Ismail El Jamiy</div>
+      <h1 class="page-title">À propos</h1>
+      <div class="page-rule-short" aria-hidden="true"></div>
+    </header>
+
+    <div class="prose">
+
+      <p class="drop-cap">
+        Tout a commencé avec un ordinateur. J'étais jeune, fasciné par ce que cette machine
+        pouvait réellement accomplir — non pas simplement exécuter des programmes écrits par
+        d'autres, mais être façonnée, instruite, rendue capable de penser. Cette curiosité m'a
+        conduit vers le code, puis vers l'apprentissage automatique, puis vers la vision par
+        ordinateur, qui m'a occupé pendant près de deux ans. Lorsque j'ai commencé à la croiser
+        avec les modèles de langage, quelque chose s'est mis en place : j'avais trouvé l'intersection
+        où je voulais travailler. Cette intersection est aujourd'hui ma thèse.
+      </p>
+
+      <p>
+        Je suis doctorant en Intelligence Artificielle à l'Université de Toulouse
+        (IRIT / IMT / CLLE), à la croisée de la vision par ordinateur et des grands modèles de
+        langage — appliqués spécifiquement à la reconnaissance automatique de l'écriture manuscrite
+        dans les manuscrits scientifiques arabes médiévaux. Ce sujet me parle à tous les niveaux :
+        l'arabe est ma langue maternelle, et les manuscrits que j'étudie portent des siècles de
+        savoirs islamiques en mathématiques, astronomie et médecine. Les rendre lisibles par les
+        machines, c'est les rendre accessibles aux chercheurs du monde entier.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Parcours</h2>
+      <p>
+        Je suis marocain, originaire de Casablanca. J'ai obtenu mon baccalauréat en sciences
+        mathématiques, puis intégré l'École Nationale Supérieure d'Arts et Métiers (ENSAM
+        Casablanca), où je me suis spécialisé en IA et informatique. Ma dernière année m'a
+        amené à Toulouse pour un stage à l'IRIT, consacré à la segmentation médicale few-shot
+        avec le méta-apprentissage — et je ne suis jamais vraiment reparti. Même laboratoire,
+        équipe différente, et maintenant une thèse.
+      </p>
+      <p>
+        Avant Toulouse, j'ai également travaillé sur la vision par ordinateur appliquée aux
+        sinistres automobiles chez SYGMA.AI, et sur la détection d'équipements de protection
+        individuelle en environnement industriel chez Lesieur Cristal — deux domaines très
+        différents qui ont affiné mon sens des problèmes appliqués.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Recherche</h2>
+      <p>
+        Ma thèse combine deux défis genuinement difficiles : la reconnaissance de texte
+        manuscrit (HTR) dans des documents historiques dégradés, et les spécificités du
+        l'arabe classique — une écriture cursive, contexte-dépendante, à la morphologie
+        riche, tracée par des mains séparées par des siècles. Les manuscrits que j'étudie
+        sont conservés dans des collections au Maroc, en Algérie et en Europe.
+      </p>
+      <p>
+        Au-delà de la reconnaissance, je travaille à la construction de modèles de langage
+        entraînés sur le texte reconnu — des modèles capables de comprendre le vocabulaire,
+        la grammaire et les structures sémantiques de la prose scientifique arabe médiévale.
+        L'objectif : un collaborateur IA spécialisé pour les historiens des sciences.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>En dehors du laboratoire</h2>
+      <p>
+        Je fais de la photographie — avec mon téléphone, délibérément. Ce qui m'attire, ce
+        n'est pas la perfection technique mais l'instant : une émotion saisie à l'improviste,
+        la lumière dans une ruelle de médina, la géométrie d'une façade inattendue. L'architecture
+        m'intéresse profondément, en particulier médiévale — le poids et les proportions des
+        voûtes gothiques, l'ornement des carreaux andalous, la logique qui tient une coupole
+        Renaissance ensemble.
+      </p>
+      <p>
+        En dehors de ça : salle de sport, course à pied quand la météo le permet, beaucoup
+        de films, séries et anime, jeux vidéo narratifs (ceux où l'écriture compte), et
+        musique — si ça sonne bien, je l'écoute. Le genre n'a aucune importance.
+      </p>
+
+      <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
+      <h2>Langues</h2>
+      <ul>
+        <li><strong>Arabe</strong> — Langue maternelle</li>
+        <li><strong>Français</strong> — Bilingue (TCF C1, score 543)</li>
+        <li><strong>Anglais</strong> — Avancé</li>
+      </ul>
+
+    </div>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .page-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
+  .page-header { margin-bottom: 2.5rem; }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 1rem;
+  }
+
+  .prose {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--fg);
+  }
+
+  .prose p { margin-bottom: 1.4em; }
+
+  .prose h2 {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--color-olive);
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  .prose ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.4em;
+  }
+
+  .prose ul li {
+    padding-left: 1.25rem;
+    position: relative;
+    margin-bottom: 0.4em;
+  }
+
+  .prose ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-terracotta);
+  }
+
+  .drop-cap::first-letter {
+    font-size: 4.5em;
+    line-height: 0.78;
+    float: left;
+    margin-right: 0.08em;
+    color: var(--color-terracotta);
+    font-weight: 600;
+    font-family: var(--font-serif);
+  }
+</style>

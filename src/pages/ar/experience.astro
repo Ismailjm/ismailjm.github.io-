@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const education = [
+  {
+    institution: "جامعة تولوز (IRIT, IMT, CLLE)",
+    degree: "دكتوراه في الذكاء الاصطناعي",
+    period: "نوفمبر 2025 – نوفمبر 2028",
+    location: "تولوز، فرنسا",
+    note: "الموضوع: التعرف على الخط المخطوط في المخطوطات العلمية العربية الوسيطة وتطوير نماذج لغوية كبيرة متخصصة.",
+  },
+  {
+    institution: "المدرسة الوطنية العليا للفنون والمهن (ENSAM)",
+    degree: "شهادة مهندس دولة — ذكاء اصطناعي وهندسة حاسوبية",
+    period: "سبتمبر 2022 – سبتمبر 2025",
+    location: "الدار البيضاء، المغرب",
+    note: "قبول انتقائي على أساس المعدل. تخرج بمرتبة الشرف العليا.",
+  },
+  {
+    institution: "ثانوية إقليد",
+    degree: "البكالوريا في العلوم الرياضية (الخيار الفرنسي)",
+    period: "سبتمبر 2019 – يوليو 2020",
+    location: "المحمدية، المغرب",
+    note: "مرتبة الشرف العليا.",
+  },
+];
+
+const experience = [
+  {
+    role: "متدرب باحث — ذكاء اصطناعي وتصوير طبي",
+    org: "معهد أبحاث المعلوماتية بتولوز (IRIT)",
+    period: "مارس 2025 – سبتمبر 2025",
+    location: "تولوز، فرنسا",
+    objective: "تجزئة الصور الطبية باستخدام تقنيات التعلم المحدود.",
+    bullets: [
+      "مراجعة الأدبيات العلمية في خوارزميات التجزئة بالبيانات المحدودة وميتا-التعلم.",
+      "معالجة صور الرنين المغناطيسي والتصوير المقطعي وفهم خصائصها وصيغها.",
+      "تطوير نموذج تجزئة مبني على معمارية U-Net في تهيئة التعلم المحدود.",
+    ],
+  },
+  {
+    role: "مطوّر تطوعي في رؤية الحاسوب",
+    org: "جمعية Youth For Challenge",
+    period: "أغسطس 2024 – ديسمبر 2024",
+    location: "الدار البيضاء، المغرب",
+    objective: "منصة ذكية لترجمة لغة الإشارة إلى نص في الوقت الحقيقي للصم والبكم.",
+    bullets: [
+      "مراجعة الأدبيات في أساليب كشف اليد وتجزئتها.",
+      "تطوير خوارزمية CNN للتعرف على إيماءات اليد.",
+      "بناء واجهة مستخدم ونشر الخوارزميات باستخدام Flask وOpenCV.",
+    ],
+  },
+  {
+    role: "متدرب في رؤية الحاسوب",
+    org: "SYGMA.AI (شركة InsurTech)",
+    period: "أبريل 2024 – يونيو 2024",
+    location: "الدار البيضاء، المغرب",
+    objective: "حل ذكي لتجزئة مناطق الضرر في المركبات لتقييم التأمين تلقائياً.",
+    bullets: [
+      "جمع صور السيارات ومعالجتها باستخدام Python وSelenium وScrapy.",
+      "تنفيذ شبكة CNN لتصنيف المركبات المتضررة باستخدام PyTorch.",
+      "تطوير خوارزمية للتحقق من لوحات الترقيم تجمع CNN والتعرف البصري على الحروف.",
+    ],
+  },
+  {
+    role: "متدرب في الذكاء الاصطناعي ومعالجة الصور",
+    org: "Lesieur Cristal",
+    period: "يوليو 2023",
+    location: "الدار البيضاء، المغرب",
+    objective: "كشف معدات الحماية الشخصية من الفيديو للحد من المخاطر التشغيلية في البيئات الصناعية.",
+    bullets: [
+      "بناء مجموعة بيانات منظمة تحتوي على فئات متنوعة من معدات الحماية.",
+      "تصميم خوارزمية كشف معتمدة على CNN.",
+    ],
+  },
+];
+
+const skills = {
+  "علم البيانات": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
+  "أدوات الذكاء الاصطناعي": ["Scikit-learn", "Keras", "TensorFlow", "PyTorch", "MONAI", "SimpleITK", "OpenCV", "HF Transformers", "spaCy", "NLTK", "pyarabic"],
+  "المعماريات": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM"],
+  "لغات البرمجة": ["Python", "JavaScript", "SQL", "Bash"],
+};
+
+const certs = [
+  { name: "Data Scientist Associate (90h)", issuer: "DataCamp", date: "نوفمبر 2024" },
+  { name: "Advanced Learning Algorithms (34h)", issuer: "DeepLearning.AI", date: "أبريل 2023" },
+  { name: "Supervised Machine Learning: Regression & Classification (33h)", issuer: "DeepLearning.AI", date: "مارس 2023" },
+  { name: "Machine Learning for Time Series Data in Python (4h)", issuer: "DataCamp", date: "نوفمبر 2024" },
+];
+---
+
+<BaseLayout title="الخبرة" description="التعليم والخبرة المهنية والمهارات التقنية لإسماعيل الجامعي.">
+  <div class="page-container">
+
+    <header class="page-header">
+      <div class="page-header-row">
+        <div>
+          <div class="page-eyebrow">السيرة الذاتية والخلفية</div>
+          <h1 class="page-title">الخبرة</h1>
+          <div class="page-rule-short" aria-hidden="true"></div>
+        </div>
+        <a href="/public/Resume.pdf" target="_blank" rel="noopener" class="cv-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          تحميل السيرة الذاتية
+        </a>
+      </div>
+    </header>
+
+    <section class="cv-section">
+      <h2 class="section-title">التعليم</h2>
+      <div class="timeline">
+        {education.map(ed => (
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="tl-header">
+                <span class="tl-role">{ed.degree}</span>
+                <span class="tl-period">{ed.period}</span>
+              </div>
+              <span class="tl-org">{ed.institution}</span>
+              <span class="tl-location">{ed.location}</span>
+              {ed.note && <p class="tl-note">{ed.note}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section">
+      <h2 class="section-title">الخبرة المهنية</h2>
+      <div class="timeline">
+        {experience.map(exp => (
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-body">
+              <div class="tl-header">
+                <span class="tl-role">{exp.role}</span>
+                <span class="tl-period">{exp.period}</span>
+              </div>
+              <span class="tl-org">{exp.org}</span>
+              <span class="tl-location">{exp.location}</span>
+              {exp.objective && <p class="tl-objective"><strong>الهدف:</strong> {exp.objective}</p>}
+              <ul class="tl-bullets">
+                {exp.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section">
+      <h2 class="section-title">المهارات التقنية</h2>
+      <div class="skills-grid">
+        {Object.entries(skills).map(([cat, items]) => (
+          <div class="skill-group">
+            <h3 class="skill-cat">{cat}</h3>
+            <div class="skill-tags">
+              {items.map(s => <span class="tag">{s}</span>)}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="cv-section">
+      <h2 class="section-title">الشهادات</h2>
+      <ul class="cert-list">
+        {certs.map(c => (
+          <li class="cert-item card">
+            <span class="cert-name">{c.name}</span>
+            <span class="cert-meta">{c.issuer} · {c.date}</span>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<style>
+  .page-container { max-width: 820px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+  .page-header { margin-bottom: 3rem; }
+  .page-header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .page-title { font-family: var(--font-arabic); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; color: var(--fg); margin-bottom: 0.75rem; }
+  .cv-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-arabic); font-size: 0.9rem; font-weight: 700; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 0.375rem; padding: 0.5rem 1rem; text-decoration: none; white-space: nowrap; transition: background 0.2s, color 0.2s; margin-top: 0.5rem; }
+  .cv-btn:hover { background: var(--accent); color: white; }
+  .cv-section { margin-bottom: 3.5rem; }
+  .section-title { font-family: var(--font-arabic); font-size: 1.5rem; font-weight: 700; color: var(--color-olive); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+  .timeline::before { content: ''; position: absolute; top: 0; right: 7px; width: 2px; height: 100%; background: var(--border); }
+  .timeline-item { display: flex; flex-direction: row-reverse; gap: 1.5rem; padding-bottom: 2rem; position: relative; }
+  .timeline-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--color-olive); flex-shrink: 0; margin-top: 0.25rem; position: relative; z-index: 1; }
+  .timeline-body { flex: 1; }
+  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+  .tl-role { font-family: var(--font-arabic); font-size: 1.05rem; font-weight: 700; color: var(--fg); }
+  .tl-period { font-family: var(--font-arabic); font-size: 0.85rem; color: var(--fg-muted); white-space: nowrap; }
+  .tl-org { display: block; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--accent); direction: ltr; text-align: right; }
+  .tl-location { display: block; font-family: var(--font-arabic); font-size: 0.85rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
+  .tl-objective { font-family: var(--font-arabic); font-size: 0.9rem; color: var(--fg-muted); margin: 0.5rem 0; }
+  .tl-note { font-family: var(--font-arabic); font-size: 0.9rem; color: var(--fg-muted); font-style: italic; margin: 0.4rem 0 0; }
+  .tl-bullets { list-style: none; padding: 0; margin: 0; }
+  .tl-bullets li { font-family: var(--font-arabic); font-size: 0.9rem; color: var(--fg-muted); padding-right: 1rem; position: relative; margin-bottom: 0.3em; }
+  .tl-bullets li::before { content: "–"; position: absolute; right: 0; color: var(--color-terracotta); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+  .skill-group { padding: 1.25rem; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 0.5rem; }
+  .skill-cat { font-family: var(--font-arabic); font-size: 0.85rem; font-weight: 700; color: var(--fg-muted); margin-bottom: 0.75rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.15rem 0.5rem; background: color-mix(in srgb, var(--color-olive) 10%, transparent); color: var(--color-olive); border-radius: 4px; }
+  .cert-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .cert-item { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem 1.25rem; }
+  .cert-name { font-family: var(--font-sans); font-size: 0.975rem; font-weight: 600; color: var(--fg); }
+  .cert-meta { font-family: var(--font-arabic); font-size: 0.85rem; color: var(--fg-muted); }
+</style>
