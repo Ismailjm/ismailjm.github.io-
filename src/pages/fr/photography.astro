@@ -1,24 +1,290 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { photos, photoImages } from '../../data/photos';
+
+const ui = { photo: 'photo', photos: 'photos', from: 'à', clear: 'Réinitialiser le filtre' };
+const titleNames: Record<string, string> = {
+  'Building': 'Bâtiment',
+  'Beach': 'Plage',
+  'Casablanca from the Air': 'Casablanca vue du ciel',
+  'Mohammed VI Tower': 'Tour Mohammed VI',
+  'Porsche Museum': 'Musée Porsche',
+};
+const placeNames: Record<string, string> = {};
+const countryNames: Record<string, string> = {
+  'France': 'France',
+  'Morocco': 'Maroc',
+  'Germany': 'Allemagne',
+};
+
+const items = photos.map((p) => ({
+  file: p.file,
+  title: titleNames[p.title] ?? p.title,
+  place: placeNames[p.place] ?? p.place,
+  placeKey: p.place,
+  country: countryNames[p.country] ?? p.country,
+  lat: p.lat,
+  lng: p.lng,
+}));
 ---
-<BaseLayout title="Photographie" description="Photographie d'Ismail El Jamiy.">
+
+<BaseLayout title="Photographie" description="Photographie d'Ismail El Jamiy — architecture et voyages en France, au Maroc et en Allemagne.">
   <div class="page-container">
+
     <header class="page-header">
       <h1 class="page-title">Photographie</h1>
       <div class="page-rule" aria-hidden="true"></div>
+      <p class="page-subtitle">Instants capturés en France, au Maroc et en Allemagne.</p>
     </header>
-    <div class="notice">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      <p>Galerie à venir — les photos sont en cours de sélection et d'optimisation.</p>
+
+    <section class="map-section" aria-label="Lieux des photos">
+      <div id="photo-map"></div>
+      <div id="filter-bar" class="filter-bar" hidden>
+        <span id="filter-text"></span>
+        <button id="clear-filter" type="button">{ui.clear}</button>
+      </div>
+    </section>
+
+    <div class="masonry" id="photo-grid">
+      {items.map((p) => (
+        <div class="masonry-item" data-place={p.placeKey}>
+          <div class="photo-card">
+            <Image
+              src={photoImages[p.file]}
+              alt={`${p.title} — ${p.place}, ${p.country}`}
+              widths={[280, 560, 840]}
+              sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 340px"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="photo-overlay" aria-hidden="true">
+              <p class="photo-title">{p.title}</p>
+              <p class="photo-place">{p.place}, {p.country}</p>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
+
   </div>
 </BaseLayout>
+
+<script is:inline define:vars={{ photos: items, ui }}>
+  (function () {
+    const cssLink = document.createElement('link');
+    cssLink.rel = 'stylesheet';
+    cssLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(cssLink);
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = initMap;
+    document.body.appendChild(script);
+  })();
+
+  function initMap() {
+    const map = L.map('photo-map', { scrollWheelZoom: false }).setView([44, 2], 4);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const groups = {};
+    photos.forEach(function (p) {
+      if (!groups[p.placeKey]) {
+        groups[p.placeKey] = { placeKey: p.placeKey, place: p.place, lat: p.lat, lng: p.lng, count: 0 };
+      }
+      groups[p.placeKey].count++;
+    });
+
+    const styleDefault = { radius: 9,  fillColor: '#6b7c2e', color: '#fff', weight: 2, fillOpacity: 0.85 };
+    const styleActive  = { radius: 11, fillColor: '#b85c2e', color: '#fff', weight: 2, fillOpacity: 1   };
+    const styleFaded   = { radius: 8,  fillColor: '#6b7c2e', color: '#fff', weight: 2, fillOpacity: 0.3  };
+
+    let activePlace = null;
+    const markers = {};
+
+    Object.values(groups).forEach(function (loc) {
+      const marker = L.circleMarker([loc.lat, loc.lng], Object.assign({}, styleDefault)).addTo(map);
+
+      marker.bindTooltip(
+        '<strong>' + loc.place + '</strong><br>' + loc.count + ' ' + (loc.count > 1 ? ui.photos : ui.photo),
+        { direction: 'top', offset: L.point(0, -10) }
+      );
+
+      markers[loc.placeKey] = marker;
+
+      marker.on('click', function () {
+        if (activePlace === loc.placeKey) {
+          clearFilter();
+        } else {
+          setFilter(loc.placeKey, loc.place);
+        }
+      });
+    });
+
+    function setFilter(placeKey, placeLabel) {
+      activePlace = placeKey;
+
+      Object.entries(markers).forEach(function (entry) {
+        entry[1].setStyle(entry[0] === placeKey ? styleActive : styleFaded);
+      });
+
+      var cards = document.querySelectorAll('.masonry-item');
+      var count = 0;
+      cards.forEach(function (item) {
+        if (item.dataset.place === placeKey) {
+          item.style.display = '';
+          count++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      var bar = document.getElementById('filter-bar');
+      var text = document.getElementById('filter-text');
+      text.textContent = count + ' ' + (count !== 1 ? ui.photos : ui.photo) + ' ' + ui.from + ' ' + placeLabel;
+      bar.hidden = false;
+    }
+
+    function clearFilter() {
+      activePlace = null;
+      Object.values(markers).forEach(function (m) { m.setStyle(styleDefault); });
+      document.querySelectorAll('.masonry-item').forEach(function (item) { item.style.display = ''; });
+      document.getElementById('filter-bar').hidden = true;
+    }
+
+    document.getElementById('clear-filter').addEventListener('click', clearFilter);
+  }
+</script>
+
 <style>
-  .page-container { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+  .page-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 5rem;
+  }
+
   .page-header { margin-bottom: 2.5rem; }
-  .page-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; color: var(--fg); margin-bottom: 0.75rem; }
-  .page-rule { height: 2px; background: linear-gradient(to right, var(--color-olive), transparent); border-radius: 1px; }
-  .notice { display: flex; gap: 1rem; align-items: center; padding: 1.25rem 1.5rem; border: 1px solid var(--border); border-radius: 0.375rem; background: var(--bg-panel); color: var(--fg-muted); font-family: var(--font-sans); font-size: 0.925rem; }
-  .notice svg { flex-shrink: 0; color: var(--accent); }
-  .notice p { margin: 0; }
+
+  .page-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: 0.75rem;
+  }
+
+  .page-rule {
+    height: 2px;
+    background: linear-gradient(to right, var(--color-olive), transparent);
+    border-radius: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  .page-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  .map-section { margin-bottom: 2.5rem; }
+
+  #photo-map {
+    height: 340px;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.65rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--fg-muted);
+  }
+  .filter-bar[hidden] { display: none; }
+
+  #clear-filter {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.625rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  #clear-filter:hover {
+    border-color: var(--color-olive);
+    color: var(--fg);
+  }
+
+  .masonry {
+    columns: 3 260px;
+    column-gap: 0.875rem;
+  }
+
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: 0.875rem;
+  }
+
+  .photo-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.375rem;
+    background: var(--bg-panel);
+    cursor: zoom-in;
+  }
+
+  .photo-card img {
+    width: 100%;
+    display: block;
+    transition: transform 0.45s ease;
+  }
+
+  .photo-card:hover img {
+    transform: scale(1.05);
+  }
+
+  .photo-overlay {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 2.5rem 0.875rem 0.875rem;
+    background: linear-gradient(to top, rgba(18, 12, 4, 0.8) 0%, transparent 100%);
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .photo-card:hover .photo-overlay {
+    transform: translateY(0);
+  }
+
+  .photo-title {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f5f0e8;
+    margin: 0 0 0.2rem;
+    line-height: 1.3;
+  }
+
+  .photo-place {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: rgba(245, 240, 232, 0.72);
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 </style>

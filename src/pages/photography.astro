@@ -1,38 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import { photos, photoImages } from '../data/photos';
 
-// Eagerly import every photo so Astro can optimise (resize + WebP) at build time.
-const imageModules = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/photography/*.jpg',
-  { eager: true },
-);
-const byName: Record<string, ImageMetadata> = {};
-for (const path in imageModules) {
-  byName[path.split('/').pop()!] = imageModules[path].default;
-}
+// English page — identity maps; FR/AR pages mirror this with translated maps.
+const ui = { photo: 'photo', photos: 'photos', from: 'from', clear: 'Clear filter' };
+const titleNames: Record<string, string> = {};
+const placeNames: Record<string, string> = {};
+const countryNames: Record<string, string> = {};
 
-const photos = [
-  { file: 'tour_eiffel_paris-fr.jpg',                      title: 'Tour Eiffel',                       place: 'Paris',        country: 'France',  lat: 48.8584, lng:  2.2945 },
-  { file: 'building_toulouse-fr.jpg',                      title: 'Building',                          place: 'Toulouse',     country: 'France',  lat: 43.6047, lng:  1.4442 },
-  { file: 'basilique_st_sernin_toulouse-fr.jpg',           title: 'Basilique Saint-Sernin',            place: 'Toulouse',     country: 'France',  lat: 43.6083, lng:  1.4410 },
-  { file: 'chapelle_saint-joseph_toulouse-fr.jpg',         title: 'Chapelle Saint-Joseph de la Grave', place: 'Toulouse',     country: 'France',  lat: 43.5974, lng:  1.4315 },
-  { file: 'musee_augusting_toulouse-fr.jpg',               title: 'Musée des Augustins',               place: 'Toulouse',     country: 'France',  lat: 43.6062, lng:  1.4454 },
-  { file: 'cathedrale_notre_dame_strasbourg-fr.jpg',       title: 'Cathédrale Notre-Dame',             place: 'Strasbourg',   country: 'France',  lat: 48.5734, lng:  7.7521 },
-  { file: 'building_marseille-fr.jpg',                     title: 'Building',                          place: 'Marseille',    country: 'France',  lat: 43.2965, lng:  5.3698 },
-  { file: 'sculpture_marseille-fr.jpg',                    title: 'Sculpture',                         place: 'Marseille',    country: 'France',  lat: 43.2965, lng:  5.3698 },
-  { file: 'beach_leucate-fr.jpg',                          title: 'Beach',                             place: 'Leucate',      country: 'France',  lat: 42.9103, lng:  3.0335 },
-  { file: 'collioure-fr.jpg',                              title: 'Collioure',                         place: 'Collioure',    country: 'France',  lat: 42.5257, lng:  3.0824 },
-  { file: 'building_casablanca-mar.jpg',                   title: 'Building',                          place: 'Casablanca',   country: 'Morocco', lat: 33.5731, lng: -7.5898 },
-  { file: 'mosquee_hassan2_from_plane_casablanca-mar.jpg', title: 'Mosquée Hassan II',                 place: 'Casablanca',   country: 'Morocco', lat: 33.6086, lng: -7.6325 },
-  { file: 'plane_casablanca-mar.jpg',                      title: 'Casablanca from the Air',           place: 'Casablanca',   country: 'Morocco', lat: 33.5731, lng: -7.5898 },
-  { file: 'tower_mohammed6_rabat-morocco.jpg',             title: 'Mohammed VI Tower',                 place: 'Salé',         country: 'Morocco', lat: 34.0191, lng: -6.8051 },
-  { file: 'building_stuttgaret-Germany.jpg',               title: 'Building',                          place: 'Stuttgart',    country: 'Germany', lat: 48.7758, lng:  9.1829 },
-  { file: 'porche_museum_stuttgart-ger.jpg',               title: 'Porsche Museum',                    place: 'Stuttgart',    country: 'Germany', lat: 48.8340, lng:  9.1529 },
-  { file: 'porche_museum2_stuttgart-ger.jpg',              title: 'Porsche Museum',                    place: 'Stuttgart',    country: 'Germany', lat: 48.8340, lng:  9.1529 },
-  { file: 'tv_tower_stuttgart-ger.jpg',                    title: 'Fernsehturm Stuttgart',             place: 'Stuttgart',    country: 'Germany', lat: 48.7557, lng:  9.1902 },
-];
+const items = photos.map((p) => ({
+  file: p.file,
+  title: titleNames[p.title] ?? p.title,
+  place: placeNames[p.place] ?? p.place,
+  placeKey: p.place,
+  country: countryNames[p.country] ?? p.country,
+  lat: p.lat,
+  lng: p.lng,
+}));
 ---
 
 <BaseLayout title="Photography" description="Photography by Ismail El Jamiy — architecture and travel across France, Morocco, and Germany.">
@@ -48,16 +33,16 @@ const photos = [
       <div id="photo-map"></div>
       <div id="filter-bar" class="filter-bar" hidden>
         <span id="filter-text"></span>
-        <button id="clear-filter" type="button">Clear filter</button>
+        <button id="clear-filter" type="button">{ui.clear}</button>
       </div>
     </section>
 
     <div class="masonry" id="photo-grid">
-      {photos.map((p) => (
-        <div class="masonry-item" data-place={p.place}>
+      {items.map((p) => (
+        <div class="masonry-item" data-place={p.placeKey}>
           <div class="photo-card">
             <Image
-              src={byName[p.file]}
+              src={photoImages[p.file]}
               alt={`${p.title} — ${p.place}, ${p.country}`}
               widths={[280, 560, 840]}
               sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 340px"
@@ -76,7 +61,7 @@ const photos = [
   </div>
 </BaseLayout>
 
-<script is:inline define:vars={{ photos }}>
+<script is:inline define:vars={{ photos: items, ui }}>
   (function () {
     const cssLink = document.createElement('link');
     cssLink.rel = 'stylesheet';
@@ -99,13 +84,13 @@ const photos = [
       maxZoom: 19,
     }).addTo(map);
 
-    // Build location groups from photo data
+    // Build location groups from photo data (keyed by canonical placeKey)
     const groups = {};
     photos.forEach(function (p) {
-      if (!groups[p.place]) {
-        groups[p.place] = { place: p.place, country: p.country, lat: p.lat, lng: p.lng, count: 0 };
+      if (!groups[p.placeKey]) {
+        groups[p.placeKey] = { placeKey: p.placeKey, place: p.place, lat: p.lat, lng: p.lng, count: 0 };
       }
-      groups[p.place].count++;
+      groups[p.placeKey].count++;
     });
 
     const styleDefault = { radius: 9,  fillColor: '#6b7c2e', color: '#fff', weight: 2, fillOpacity: 0.85 };
@@ -119,32 +104,32 @@ const photos = [
       const marker = L.circleMarker([loc.lat, loc.lng], Object.assign({}, styleDefault)).addTo(map);
 
       marker.bindTooltip(
-        '<strong>' + loc.place + '</strong><br>' + loc.count + ' photo' + (loc.count > 1 ? 's' : ''),
+        '<strong>' + loc.place + '</strong><br>' + loc.count + ' ' + (loc.count > 1 ? ui.photos : ui.photo),
         { direction: 'top', offset: L.point(0, -10) }
       );
 
-      markers[loc.place] = marker;
+      markers[loc.placeKey] = marker;
 
       marker.on('click', function () {
-        if (activePlace === loc.place) {
+        if (activePlace === loc.placeKey) {
           clearFilter();
         } else {
-          setFilter(loc.place);
+          setFilter(loc.placeKey, loc.place);
         }
       });
     });
 
-    function setFilter(place) {
-      activePlace = place;
+    function setFilter(placeKey, placeLabel) {
+      activePlace = placeKey;
 
       Object.entries(markers).forEach(function (entry) {
-        entry[1].setStyle(entry[0] === place ? styleActive : styleFaded);
+        entry[1].setStyle(entry[0] === placeKey ? styleActive : styleFaded);
       });
 
-      var items = document.querySelectorAll('.masonry-item');
+      var cards = document.querySelectorAll('.masonry-item');
       var count = 0;
-      items.forEach(function (item) {
-        if (item.dataset.place === place) {
+      cards.forEach(function (item) {
+        if (item.dataset.place === placeKey) {
           item.style.display = '';
           count++;
         } else {
@@ -154,7 +139,7 @@ const photos = [
 
       var bar = document.getElementById('filter-bar');
       var text = document.getElementById('filter-text');
-      text.textContent = count + ' photo' + (count !== 1 ? 's' : '') + ' from ' + place;
+      text.textContent = count + ' ' + (count !== 1 ? ui.photos : ui.photo) + ' ' + ui.from + ' ' + placeLabel;
       bar.hidden = false;
     }
 

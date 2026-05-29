@@ -47,6 +47,19 @@ body {
   transition: background-color 0.3s, color 0.3s;
 }
 
+/* ── Keyboard focus ring ──────────────────────────── */
+/* Visible focus for keyboard users in every theme; mouse clicks stay clean. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
 /* ── Parchment mode ───────────────────────────────── */
 [data-theme="parchment"] {
   --bg:       var(--color-parchment);
@@ -275,5 +288,20 @@ body {
   .fade-up {
     animation: none;
     opacity: 1;
+  }
+
+  /* Collapse all animation/transition timing for users who opt out. */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Neutralise hover transforms so nothing shifts on pointer/focus. */
+  .card:hover,
+  .photo-card:hover img,
+  .interest-chip:hover,
+  .lang-pill:hover {
+    transform: none !important;
   }
 }
