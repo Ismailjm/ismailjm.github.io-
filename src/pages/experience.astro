@@ -86,20 +86,24 @@ const techIcons: Record<string, string> = {
   "Python":         "python",
   "Pandas":         "pandas",
   "NumPy":          "numpy",
+  "Matplotlib":     "matplotlib",
   "Plotly":         "plotly",
   "Selenium":       "selenium",
-  "Scrapy":         "scrapy",
-  "Matplotlib":     "matplotlib",
   "Scikit-learn":   "scikitlearn",
   "Keras":          "keras",
   "TensorFlow":     "tensorflow",
   "PyTorch":        "pytorch",
   "OpenCV":         "opencv",
   "HF Transformers":"huggingface",
-  "spaCy":          "spacy",
   "JavaScript":     "javascript",
   "Bash":           "gnubash",
-  "SQL":            "postgresql",
+  "SQL":            "sqlite",
+  "PyTorch Lightning": "pytorchlightning",
+  "Streamlit":      "streamlit",
+  "Flask":          "flask",
+  "FastAPI":        "fastapi",
+  "Docker":         "docker",
+  "Git":            "git",
 };
 
 const certs = [
@@ -195,6 +199,7 @@ const certs = [
                         alt=""
                         aria-hidden="true"
                         class="skill-icon"
+                        onerror="this.closest('.has-icon')?.classList.remove('has-icon'); this.remove()"
                       />
                     )}
                     {tag}

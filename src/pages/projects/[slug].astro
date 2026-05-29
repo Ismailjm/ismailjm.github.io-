@@ -9,6 +9,16 @@ export async function getStaticPaths() {
 
 const { project } = Astro.props;
 const { Content } = await render(project);
+
+const techIcons: Record<string, string> = {
+  "Python": "python", "PyTorch": "pytorch", "TensorFlow": "tensorflow",
+  "Keras": "keras", "Scikit-learn": "scikitlearn", "OpenCV": "opencv",
+  "Pandas": "pandas", "NumPy": "numpy", "Matplotlib": "matplotlib",
+  "Plotly": "plotly", "Selenium": "selenium", "YOLOv8": "ultralytics",
+  "Ultralytics": "ultralytics", "Streamlit": "streamlit", "Flask": "flask",
+  "LangChain": "langchain", "OpenAI": "openai", "Ollama": "ollama",
+  "HF Transformers": "huggingface", "JavaScript": "javascript", "Bash": "gnubash",
+};
 ---
 
 <BaseLayout title={project.data.title} description={project.data.summary}>
@@ -36,7 +46,19 @@ const { Content } = await render(project);
       </div>
 
       <div class="stack-tags">
-        {project.data.stack.map(tag => <span class="stack-tag">{tag}</span>)}
+        {project.data.stack.map(tag => {
+          const icon = techIcons[tag];
+          return (
+            <span class={`stack-tag${icon ? " has-icon" : ""}`}>
+              {icon && (
+                <img src={`https://cdn.simpleicons.org/${icon}`}
+                  width="13" height="13" alt="" aria-hidden="true" class="stack-icon"
+                  onerror="this.closest('.has-icon')?.classList.remove('has-icon'); this.remove()" />
+              )}
+              {tag}
+            </span>
+          );
+        })}
       </div>
     </header>
 
@@ -137,6 +159,23 @@ const { Content } = await render(project);
     border-radius: 0.25rem;
     color: var(--fg-muted);
   }
+
+  .stack-tag.has-icon {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .stack-icon {
+    display: block;
+    flex-shrink: 0;
+    width: 13px;
+    height: 13px;
+    object-fit: contain;
+  }
+
+  [data-theme="dark"] .stack-icon { filter: brightness(1.2); }
 
   .project-hero-img {
     width: 100%;
