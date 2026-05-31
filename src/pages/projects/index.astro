@@ -33,14 +33,18 @@ const techIcons: Record<string, string> = {
 ---
 
 <BaseLayout title="Projects" description="Engineering and research projects by Ismail El Jamiy.">
-  <div class="page-container">
 
-    <header class="page-header">
-      <div class="page-eyebrow">Engineering &amp; Research</div>
-      <h1 class="page-title">Projects</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
+  <!-- ── Page hero ─────────────────────────────────── -->
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <span class="ph-eyebrow">Engineering &amp; Research</span>
+      <h1 class="ph-title">Projects</h1>
+      <p class="ph-sub">Computer vision, full-stack applications, and AI tooling — built from first principles.</p>
+    </div>
+  </section>
 
+  <div class="page-body">
     <div class="projects-grid">
       {projects.map(project => (
         <div class="project-card card" data-href={`/projects/${project.id}`} role="article">
@@ -93,11 +97,28 @@ const techIcons: Record<string, string> = {
         </div>
       ))}
     </div>
-
   </div>
+
 </BaseLayout>
 
 <script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  gsap.from('.ph-inner > *', { y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+
+  inView('.project-card', (element) => {
+    gsap.from(element, { y: 28, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+
   document.querySelectorAll<HTMLElement>('.project-card[data-href]').forEach(card => {
     card.addEventListener('click', (e) => {
       if (!(e.target as Element).closest('a')) {
@@ -108,22 +129,6 @@ const techIcons: Record<string, string> = {
 </script>
 
 <style>
-  .page-container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
-  }
-
-  .page-header { margin-bottom: 2.5rem; }
-
-  .page-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    color: var(--fg);
-    margin-bottom: 0.75rem;
-  }
-
   /* ── Grid ──────────────────────────────────────────── */
   .projects-grid {
     display: grid;
@@ -137,6 +142,12 @@ const techIcons: Record<string, string> = {
     flex-direction: column;
     cursor: pointer;
     overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25,1,.5,1),
+                box-shadow 0.4s cubic-bezier(0.25,1,.5,1);
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px color-mix(in srgb, var(--color-ink) 12%, transparent) !important;
   }
 
   .project-cover {

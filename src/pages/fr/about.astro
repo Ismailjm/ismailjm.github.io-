@@ -4,28 +4,37 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="À propos" description="À propos d'Ismail El Jamiy — doctorant en IA, ingénieur et photographe amateur, originaire de Casablanca, basé à Toulouse.">
 
-  <article class="page-container">
-
-    <header class="page-header">
-      <div class="page-eyebrow">Ismail El Jamiy</div>
-      <h1 class="page-title">À propos</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
-
-    <div class="fact-row">
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>Toulouse, France</span>
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <div class="ph-split">
+        <div>
+          <span class="ph-eyebrow">Ismail El Jamiy</span>
+          <h1 class="ph-title">À propos</h1>
+          <p class="ph-sub">Doctorant en IA, ingénieur et photographe — à l'intersection du patrimoine médiéval et de l'intelligence artificielle moderne.</p>
+        </div>
+        <div class="hero-chips">
+          <div class="fact-chip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Toulouse, France
+          </div>
+          <div class="fact-chip">Marocain, originaire de Casablanca</div>
+          <div class="fact-chip">ENSAM Casablanca</div>
+        </div>
       </div>
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span>Marocain, originaire de Casablanca</span>
-      </div>
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        <span>ENSAM Casablanca</span>
+      <div class="stats-strip">
+        <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Années de thèse</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-number">6</span><span class="stat-label">Témoins manuscrits</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Langues parlées</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat-item"><span class="stat-number">3</span><span class="stat-label">Laboratoires</span></div>
       </div>
     </div>
+  </section>
+
+  <div class="page-body-narrow">
 
     <div class="prose">
 
@@ -148,35 +157,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     </div>
 
-  </article>
+  </div>
 
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
-  }
-
-  .page-header { margin-bottom: 2.5rem; }
-
-  .page-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    color: var(--fg);
-    margin-bottom: 1rem;
-  }
-
-  /* ── Fact chips ─────────────────────────────────── */
-  .fact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-  }
-
+  /* ── Fact chips ─────────────────────────────── */
   .fact-chip {
     display: flex;
     align-items: center;

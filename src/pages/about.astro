@@ -4,41 +4,77 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout title="About" description="About Ismail El Jamiy — PhD candidate in AI, engineer, and photographer from Casablanca, based in Toulouse.">
 
-  <article class="page-container">
+  <!-- ── Page hero ─────────────────────────────────── -->
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <div class="ph-split">
+        <div>
+          <span class="ph-eyebrow">Ismail El Jamiy</span>
+          <h1 class="ph-title">About</h1>
+          <p class="ph-sub">
+            PhD candidate, engineer, and photographer — working at the
+            intersection of medieval heritage and modern AI.
+          </p>
+        </div>
+        <div class="hero-chips">
+          <div class="fact-chip reveal">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Toulouse, France
+          </div>
+          <div class="fact-chip reveal" data-delay="0.06">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Moroccan, from Casablanca
+          </div>
+          <div class="fact-chip reveal" data-delay="0.12">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            ENSAM Casablanca
+          </div>
+        </div>
+      </div>
 
-    <header class="page-header">
-      <div class="page-eyebrow">Ismail El Jamiy</div>
-      <h1 class="page-title">About</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
+      <!-- Stats -->
+      <div class="stats-strip">
+        <div class="stat-item reveal">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Years PhD</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item reveal" data-delay="0.08">
+          <span class="stat-number">6</span>
+          <span class="stat-label">Manuscript witnesses</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item reveal" data-delay="0.16">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Languages spoken</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat-item reveal" data-delay="0.24">
+          <span class="stat-number">3</span>
+          <span class="stat-label">Research labs</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <div class="prose">
+  <!-- ── Page body ──────────────────────────────────── -->
+  <div class="page-body-narrow">
 
+    <!-- Bio -->
+    <section class="bio-section reveal">
       <p class="drop-cap">
         I'm a PhD candidate in AI at the University of Toulouse, working at the intersection of
         computer vision and large language models. My research makes medieval Arabic manuscripts
         readable by machines, and by researchers everywhere.
       </p>
+    </section>
 
-      <!-- ── Quick facts ──────────────────────────── -->
-      <div class="fact-row">
-        <div class="fact-chip">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Toulouse, France</span>
-        </div>
-        <div class="fact-chip">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          <span>Moroccan, from Casablanca</span>
-        </div>
-        <div class="fact-chip">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-          <span>ENSAM Casablanca</span>
-        </div>
-      </div>
-
-      <!-- ── Background ──────────────────────────── -->
-      <h2>Background</h2>
-      <p>
+    <!-- Background -->
+    <section class="content-section reveal" data-delay="0.05">
+      <span class="section-label">Background</span>
+      <h2 class="section-h2">From Casablanca to Toulouse</h2>
+      <p class="body-text">
         I trained as an AI engineer at the École Nationale Supérieure d'Arts et Métiers
         (ENSAM Casablanca). My final year brought me to Toulouse for an internship at IRIT
         on few-shot medical image segmentation, and I never quite left. Before the PhD I also
@@ -49,100 +85,149 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         See my research
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </a>
+    </section>
 
-      <!-- ── Beyond the lab ──────────────────────── -->
-      <h2>Beyond the lab</h2>
-      <p>
+    <!-- Pull quote -->
+    <blockquote class="pull-quote reveal" data-delay="0.05">
+      <p>"Making medieval Arabic manuscripts readable by machines — and by researchers everywhere."</p>
+    </blockquote>
+
+    <!-- Beyond the lab -->
+    <section class="content-section reveal" data-delay="0.05">
+      <span class="section-label">Beyond the lab</span>
+      <h2 class="section-h2">Other pursuits</h2>
+      <p class="body-text">
         I photograph with my phone, drawn to moments over perfection. Light through a medina
-        street, the geometry of a facade I wasn't expecting. I have a soft spot for medieval
+        street, the geometry of a façade I wasn't expecting. I have a soft spot for medieval
         architecture, story-driven games and films, and music of every genre.
       </p>
-
       <div class="interests-grid">
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          <span>Photography</span>
-        </div>
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          <span>Architecture</span>
-        </div>
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
-          <span>Films &amp; Series</span>
-        </div>
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Story games</span>
-        </div>
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          <span>Running</span>
-        </div>
-        <div class="interest-chip">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
-          <span>Music</span>
-        </div>
+        {[
+          { icon: 'M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z M12 9a4 4 0 1 0 0 8 4 4 0 0 0 0-8z', label: 'Photography' },
+          { icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z M9 22V12h6v10', label: 'Architecture' },
+          { icon: 'M2 2m0 2a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2z M7 2v20 M17 2v20 M2 12h20', label: 'Films & Series' },
+          { icon: 'M5 3l14 9-14 9V3z', label: 'Story games' },
+          { icon: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M12 6v6l4 2', label: 'Running' },
+          { icon: 'M9 18V5l12-2v13 M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M18 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', label: 'Music' },
+        ].map(item => (
+          <div class="interest-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              {item.icon.split(' M').map((d, i) => <path d={i === 0 ? d : 'M' + d} />)}
+            </svg>
+            <span>{item.label}</span>
+          </div>
+        ))}
       </div>
+    </section>
 
-      <!-- ── Languages ─────────────────────────────── -->
-      <h2>Languages</h2>
-      <div class="lang-row">
-        <div class="lang-pill">
+    <!-- Languages -->
+    <section class="content-section reveal" data-delay="0.05">
+      <span class="section-label">Languages</span>
+      <h2 class="section-h2">Multilingual</h2>
+      <div class="lang-grid">
+        <div class="lang-card reveal">
+          <div class="lang-flag" aria-hidden="true">ع</div>
           <span class="lang-name">Arabic</span>
           <span class="lang-level">Native</span>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div>
         </div>
-        <div class="lang-pill">
+        <div class="lang-card reveal" data-delay="0.1">
+          <div class="lang-flag" aria-hidden="true">FR</div>
           <span class="lang-name">French</span>
           <span class="lang-level">C1 · TCF 543</span>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:88%"></div></div>
         </div>
-        <div class="lang-pill">
+        <div class="lang-card reveal" data-delay="0.2">
+          <div class="lang-flag" aria-hidden="true">EN</div>
           <span class="lang-name">English</span>
           <span class="lang-level">Advanced</span>
+          <div class="lang-bar"><div class="lang-bar-fill" style="width:80%"></div></div>
         </div>
       </div>
+    </section>
 
-    </div>
-
-  </article>
+  </div>
 
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // Hero entrance
+  gsap.from('.ph-inner > *', {
+    y: 22, opacity: 0, stagger: 0.12, duration: 0.85, ease: 'power3.out', delay: 0.12,
+  });
+
+  // Scroll reveals
+  inView('.reveal', (element) => {
+    const el = element as HTMLElement;
+    const delay = parseFloat(el.dataset?.delay ?? '0');
+    gsap.from(el, { y: 28, opacity: 0, duration: 0.65, delay, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.15 });
+
+  // Lang bar animation
+  inView('.lang-bar-fill', (element) => {
+    const el = element as HTMLElement;
+    const target = el.style.width;
+    gsap.from(el, { width: 0, duration: 1.0, ease: 'power2.out', delay: 0.2 });
+  }, { amount: 0.8 });
+</script>
+
 <style>
-  .page-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
+  /* ── Hero chips (top-right) ─────────────────────── */
+  .hero-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-self: start;
+    padding-top: 1.5rem;
   }
 
-  .page-header { margin-bottom: 2.5rem; }
-
-  .page-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 600;
-    color: var(--fg);
-    margin-bottom: 1rem;
+  .fact-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    padding: 0.3rem 0.875rem 0.3rem 0.6rem;
+    white-space: nowrap;
   }
 
-  /* ── Prose ──────────────────────────────────────── */
-  .prose {
+  /* Stats divider */
+  .stat-divider {
+    width: 1px;
+    height: 3rem;
+    background: var(--border);
+    align-self: center;
+  }
+
+  /* ── Bio / prose ────────────────────────────────── */
+  .bio-section { margin-bottom: 3rem; }
+
+  .drop-cap {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1.8;
     color: var(--fg);
   }
-
-  .prose p { margin-bottom: 1.3em; }
-
-  .prose h2 {
-    font-family: var(--font-serif);
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--color-olive);
-    margin: 2.5rem 0 0.75rem;
-  }
-
   .drop-cap::first-letter {
     font-size: 4.5em;
     line-height: 0.78;
@@ -153,64 +238,60 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-family: var(--font-serif);
   }
 
-  /* ── Fact chips ──────────────────────────────────── */
-  .fact-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
+  /* ── Content sections ───────────────────────────── */
+  .content-section { margin-bottom: 3.5rem; }
+
+  .body-text {
+    font-family: var(--font-serif);
+    font-size: 1.08rem;
+    line-height: 1.82;
+    color: var(--fg);
+    margin: 0 0 1.25rem;
   }
 
-  .fact-chip {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--fg-muted);
-    background: var(--bg-panel);
-    border: 1px solid var(--border);
-    border-radius: 9999px;
-    padding: 0.3rem 0.75rem;
-  }
-
-  .fact-chip svg { flex-shrink: 0; display: block; }
-
-  /* ── Inline link ─────────────────────────────────── */
   .inline-link {
     display: inline-flex;
-    flex-direction: row;
     align-items: center;
     gap: 0.3rem;
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--accent);
     text-decoration: none;
     border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
     padding-bottom: 1px;
-    margin-bottom: 0.5rem;
     transition: border-color 0.15s;
   }
   .inline-link:hover { border-color: var(--accent); }
-  .inline-link svg { display: block; }
 
-  /* ── Interests ───────────────────────────────────── */
+  /* ── Pull quote ─────────────────────────────────── */
+  .pull-quote {
+    border-left: 3px solid var(--color-olive);
+    padding: 1.25rem 1.75rem;
+    margin: 0 0 3.5rem;
+    background: color-mix(in srgb, var(--color-olive) 4%, transparent);
+    border-radius: 0 6px 6px 0;
+  }
+  .pull-quote p {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    margin: 0;
+  }
+  [data-theme="dark"] .pull-quote { border-color: var(--color-gold); }
+
+  /* ── Interests ──────────────────────────────────── */
   .interests-grid {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 0.75rem;
-    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
   }
 
   .interest-chip {
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     font-family: var(--font-sans);
@@ -219,50 +300,53 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--fg);
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    border-radius: 0.375rem;
-    padding: 0.4rem 0.75rem;
-    transition: border-color 0.15s, transform 0.15s;
+    border-radius: 6px;
+    padding: 0.45rem 0.875rem;
+    transition: border-color 0.2s, transform 0.2s, color 0.2s;
     cursor: default;
   }
-
   .interest-chip:hover {
     border-color: var(--color-olive);
-    transform: translateY(-1px);
+    color: var(--color-olive);
+    transform: translateY(-2px);
+  }
+  .interest-chip svg { flex-shrink: 0; color: var(--fg-muted); }
+
+  /* ── Languages ──────────────────────────────────── */
+  .lang-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
   }
 
-  .interest-chip svg { display: block; flex-shrink: 0; color: var(--fg-muted); }
-  .interest-chip span { white-space: nowrap; }
-
-  /* ── Languages ───────────────────────────────────── */
-  .lang-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-  }
-
-  .lang-pill {
+  .lang-card {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    padding: 0.8rem 1.5rem;
+    gap: 0.35rem;
+    padding: 1.25rem 1.5rem;
     background: var(--bg-panel);
     border: 1px solid var(--border);
-    border-radius: 0.5rem;
-    min-width: 110px;
-    transition: border-color 0.15s, transform 0.15s;
+    border-radius: 8px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .lang-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
-  .lang-pill:hover {
-    border-color: var(--accent);
-    transform: translateY(-1px);
+  .lang-flag {
+    font-family: var(--font-arabic);
+    font-size: 1.4rem;
+    color: var(--color-gold);
+    line-height: 1;
+    margin-bottom: 0.25rem;
   }
 
   .lang-name {
     font-family: var(--font-serif);
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--fg);
   }
@@ -272,5 +356,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 0.72rem;
     color: var(--fg-muted);
     letter-spacing: 0.02em;
+  }
+
+  .lang-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 0.25rem;
+  }
+
+  .lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--color-olive), var(--color-gold));
+    border-radius: 2px;
+    transform-origin: left;
+  }
+  [data-theme="dark"] .lang-bar-fill {
+    background: linear-gradient(to right, var(--color-gold), var(--color-terracotta));
+  }
+
+  /* ── Responsive ─────────────────────────────────── */
+  @media (max-width: 800px) {
+    .ph-split { grid-template-columns: 1fr; }
+    .hero-chips { flex-direction: row; flex-wrap: wrap; padding-top: 0; }
+    .stats-strip { gap: 1.5rem; }
+    .stat-divider { display: none; }
+    .lang-grid { grid-template-columns: 1fr; }
   }
 </style>

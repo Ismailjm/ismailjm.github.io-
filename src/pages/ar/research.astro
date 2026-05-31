@@ -4,17 +4,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="البحث" description="بحث دكتوراه اسماعيل الجامعي في التعرف الآلي على الخط المخطوط في المخطوطات العلمية العربية الوسيطة ونماذج اللغة الكبيرة المتخصصة.">
 
-  <article class="page-container">
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <span class="ph-eyebrow">بحث الدكتوراه · 2025–2028</span>
+      <h1 class="ph-title">البحث</h1>
+      <p class="ph-sub">جعل ثمانية قرون من المخطوطات العلمية العربية متاحةً حسابياً — بدءاً من القانون المسعودي للبيروني.</p>
+    </div>
+  </section>
 
-    <header class="page-header">
-      <div class="page-eyebrow">بحث الدكتوراه</div>
-      <h1 class="page-title">البحث</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-      <p class="page-subtitle">
-        <span class="page-badge">دكتوراه في الذكاء الاصطناعي · 2025–2028</span>
-        &ensp;جامعة تولوز (IRIT / IMT / CLLE)
-      </p>
-    </header>
+  <div class="page-body">
 
     <div class="prose">
 
@@ -163,11 +162,25 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     </div>
 
-  </article>
+  </div>
 
 </BaseLayout>
 
 <script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+
   const tabs = document.querySelectorAll('.approach-tab');
   const panels = document.querySelectorAll('.approach-panel');
 
@@ -184,29 +197,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 </script>
 
 <style>
-  .page-container {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
-  }
-
-  .page-header { margin-bottom: 2.5rem; }
-
-  .page-title {
-    font-family: var(--font-arabic);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 700;
-    color: var(--fg);
-    margin-bottom: 0.5rem;
-  }
-
-  .page-subtitle {
-    font-family: var(--font-arabic);
-    font-size: 0.95rem;
-    color: var(--fg-muted);
-    margin: 0;
-  }
-
   /* ── Prose ───────────────────────────────────────── */
   .prose {
     font-family: var(--font-arabic);

@@ -25,7 +25,7 @@ function isActive(path: string) {
 ---
 
 <header class="site-header sticky top-0 z-50">
-  <nav class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3" aria-label="Main navigation">
+  <nav id="main-nav" class="mx-auto flex max-w-6xl items-center justify-between px-6 py-3" aria-label="Main navigation">
 
     <a href={localizePath('/', lang)} class="wordmark font-serif text-xl font-semibold">
       Ismail El Jamiy
@@ -92,7 +92,75 @@ function isActive(path: string) {
   });
 
   const header = document.querySelector('.site-header') as HTMLElement;
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 10);
-  }, { passive: true });
+  // Transparent-over-hero only on pages that have a full-bleed dark hero
+  const hasDarkHero = !!document.querySelector('#hero');
+
+  function updateNav() {
+    const scrolled = window.scrollY > 60;
+    header.classList.toggle('scrolled', scrolled);
+    // at-top = transparent state, only over the dark hero on the home page
+    if (hasDarkHero) {
+      header.classList.toggle('at-top', !scrolled);
+    }
+  }
+
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
 </script>
+
+<style>
+  /* ── At top: transparent — overlays the dark hero ── */
+  :global(header.site-header.at-top) {
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  :global(header.site-header.at-top) .wordmark {
+    color: #F6F1E4 !important;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  }
+  :global(header.site-header.at-top) .nav-link {
+    color: rgba(246, 241, 228, 0.95) !important;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+  }
+  :global(header.site-header.at-top) .nav-link:hover,
+  :global(header.site-header.at-top) .nav-link[aria-current="page"] {
+    color: #F6F1E4 !important;
+    border-bottom-color: rgba(246,241,228,0.6) !important;
+  }
+  /* Icons in at-top state */
+  :global(header.site-header.at-top) button,
+  :global(header.site-header.at-top) a.nav-link {
+    filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+  }
+
+  /* ── Scrolled: floating pill nav ─────────────────── */
+  :global(header.site-header.scrolled) {
+    background-color: transparent !important;
+    border-bottom-color: transparent !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+  :global(header.site-header.scrolled) #main-nav {
+    max-width: 1000px;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.07), 0 1px 4px rgba(0,0,0,0.04);
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    margin: 0.5rem auto;
+  }
+
+  /* Smooth transition for both states */
+  :global(header.site-header) {
+    transition: background-color 0.35s ease, border-color 0.35s ease;
+  }
+  :global(header.site-header) #main-nav {
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+</style>

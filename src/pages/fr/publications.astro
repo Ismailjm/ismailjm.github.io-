@@ -30,13 +30,25 @@ const statusMeta: Record<string, { label: string; color: string }> = {
 ---
 
 <BaseLayout title="Publications" description="Publications, prépublications et posters d'Ismail El Jamiy.">
-  <div class="page-container">
 
-    <header class="page-header">
-      <div class="page-eyebrow">Résultats de recherche</div>
-      <h1 class="page-title">Publications</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <div class="ph-split">
+        <div>
+          <span class="ph-eyebrow">Production scientifique</span>
+          <h1 class="ph-title">Publications</h1>
+          <p class="ph-sub">Articles, prépublications et posters de conférences sur la RTH des manuscrits arabes et l'évaluation des grands modèles de langage.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.25rem;padding-top:1rem;">
+          <span style="font-family:var(--font-serif);font-size:3.5rem;font-weight:600;color:var(--fg);letter-spacing:-0.03em;line-height:1;">{papers.length}</span>
+          <span style="font-family:var(--font-sans);font-size:0.72rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--fg-muted);">Publications</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-body">
 
     <p class="intro">
       Mon doctorat a débuté en novembre 2025. Vous trouverez ci-dessous mes publications
@@ -86,10 +98,23 @@ const statusMeta: Record<string, { label: string; color: string }> = {
   </div>
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
-  .page-header { margin-bottom: 1.5rem; }
-  .page-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; color: var(--fg); margin-bottom: 0.75rem; }
   .intro { font-family: var(--font-serif); font-size: 1.05rem; line-height: 1.75; color: var(--fg-muted); margin-bottom: 2.5rem; }
   .intro a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
   .papers-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 1.25rem; }

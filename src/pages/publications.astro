@@ -3,148 +3,197 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('publications');
-const papers = entries
-  .map((e) => e.data)
-  .sort((a, b) => b.date.localeCompare(a.date));
+const papers = entries.map((e) => e.data).sort((a, b) => b.date.localeCompare(a.date));
 
-const MONTHS = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+const MONTHS = ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'];
 function formatDate(d: string) {
   const [y, m] = d.split('-');
   return `${MONTHS[Number(m) - 1]} ${y}`;
 }
 
 const typeLabel: Record<string, string> = {
-  journal: 'Journal',
-  conference: 'Conference',
-  workshop: 'Workshop',
-  preprint: 'Preprint',
-  poster: 'Poster',
+  journal: 'Journal', conference: 'Conference', workshop: 'Workshop',
+  preprint: 'Preprint', poster: 'Poster',
 };
 
-const statusMeta: Record<string, { label: string; color: string }> = {
-  "accepted":     { label: "Accepted",     color: "status-accepted" },
-  "under-review": { label: "Under Review", color: "status-review" },
-  "preprint":     { label: "Preprint",     color: "status-preprint" },
-  "published":    { label: "Published",    color: "status-published" },
+const statusMeta: Record<string, { label: string; cls: string }> = {
+  'accepted':     { label: 'Accepted',     cls: 'status-accepted' },
+  'under-review': { label: 'Under Review', cls: 'status-review' },
+  'preprint':     { label: 'Preprint',     cls: 'status-preprint' },
+  'published':    { label: 'Published',    cls: 'status-published' },
 };
 ---
 
 <BaseLayout title="Publications" description="Publications, preprints, and posters by Ismail El Jamiy.">
-  <div class="page-container">
 
-    <header class="page-header">
-      <div class="page-eyebrow">Research output</div>
-      <h1 class="page-title">Publications</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
+  <!-- ── Page hero ─────────────────────────────────── -->
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <div class="ph-split">
+        <div>
+          <span class="ph-eyebrow">Research output</span>
+          <h1 class="ph-title">Publications</h1>
+          <p class="ph-sub">
+            Papers, preprints, and workshop posters on HTR of Arabic manuscripts
+            and evaluation of large language models.
+          </p>
+        </div>
+        <div class="pub-count-block">
+          <span class="pub-count-num">{papers.length}</span>
+          <span class="pub-count-label">Publications</span>
+          <div class="pub-scholar-links">
+            <a href="https://scholar.google.com/citations?user=QDB_Lh4AAAAJ&hl=en" target="_blank" rel="noopener" class="scholar-link">Google Scholar ↗</a>
+            <a href="https://orcid.org/0009-0004-0166-1115" target="_blank" rel="noopener" class="scholar-link">ORCID ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <p class="intro">
-      My PhD began in November 2025. Below are my current publications and submissions.
-      Follow my work on
-      <a href="https://scholar.google.com/citations?user=QDB_Lh4AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
-      and <a href="https://orcid.org/0009-0004-0166-1115" target="_blank" rel="noopener">ORCID</a>.
-    </p>
-
+  <!-- ── Publication list ───────────────────────────── -->
+  <div class="page-body">
     <ol class="papers-list" reversed>
       {papers.map((paper, i) => {
         const meta = statusMeta[paper.status];
         return (
-          <li class="paper-item card">
-            <div class="paper-meta-top">
-              <span class={`status-badge ${meta.color}`}>{meta.label}</span>
-              <span class="paper-type">{typeLabel[paper.type]}</span>
-              <span class="paper-year">{formatDate(paper.date)}</span>
-            </div>
-
-            <h2 class="paper-title">{paper.title}</h2>
-
-            <p class="paper-authors">
-              {paper.authors.map((a, j) => (
-                <span>
-                  <span class={a === "Ismail El Jamiy" ? "author-me" : ""}>{a}</span>
-                  {j < paper.authors.length - 1 ? ", " : ""}
-                </span>
-              ))}
-            </p>
-
-            <p class="paper-venue">
-              {paper.venue}
-              {paper.location && <span class="paper-location"> · {paper.location}</span>}
-            </p>
-
-            {(paper.doi || paper.pdf) && (
-              <div class="paper-links">
-                {paper.pdf && (
-                  <a href={paper.pdf} target="_blank" rel="noopener" class="paper-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                      <polyline points="14 2 14 8 20 8"/>
-                    </svg>
-                    PDF
-                  </a>
-                )}
-                {paper.doi && (
-                  <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener" class="paper-link">
-                    DOI
-                  </a>
-                )}
+          <li class="paper-item reveal" data-delay={String(Math.min(i * 0.06, 0.3))}>
+            <div class="paper-accent" aria-hidden="true"></div>
+            <div class="paper-content">
+              <div class="paper-meta-top">
+                <span class={`status-badge ${meta.cls}`}>{meta.label}</span>
+                <span class="paper-type">{typeLabel[paper.type]}</span>
+                <span class="paper-year">{formatDate(paper.date)}</span>
               </div>
-            )}
+              <h2 class="paper-title">{paper.title}</h2>
+              <p class="paper-authors">
+                {paper.authors.map((a, j) => (
+                  <span>
+                    <span class={a === 'Ismail El Jamiy' ? 'author-me' : ''}>{a}</span>
+                    {j < paper.authors.length - 1 ? ', ' : ''}
+                  </span>
+                ))}
+              </p>
+              <p class="paper-venue">
+                {paper.venue}
+                {paper.location && <span class="paper-location"> · {paper.location}</span>}
+              </p>
+              {(paper.doi || paper.pdf) && (
+                <div class="paper-links">
+                  {paper.pdf && (
+                    <a href={paper.pdf} target="_blank" rel="noopener" class="paper-link">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      PDF
+                    </a>
+                  )}
+                  {paper.doi && (
+                    <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener" class="paper-link">DOI</a>
+                  )}
+                </div>
+              )}
+            </div>
           </li>
         );
       })}
     </ol>
-
   </div>
+
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  gsap.from('.ph-inner > *', { y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+
+  inView('.reveal', (element) => {
+    const el = element as HTMLElement;
+    const delay = parseFloat(el.dataset?.delay ?? '0');
+    gsap.from(el, { y: 24, opacity: 0, duration: 0.6, delay, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
+  /* ── Hero extras ────────────────────────────────── */
+  .pub-count-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    text-align: right;
+    padding-top: 1rem;
   }
-
-  .page-header { margin-bottom: 1.5rem; }
-
-  .page-title {
+  .pub-count-num {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: 3.5rem;
     font-weight: 600;
     color: var(--fg);
-    margin-bottom: 0.75rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
   }
-
-  .intro {
-    font-family: var(--font-serif);
-    font-size: 1.05rem;
-    line-height: 1.75;
+  .pub-count-label {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     color: var(--fg-muted);
-    margin-bottom: 2.5rem;
   }
-
-  .intro a {
+  .pub-scholar-links {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .scholar-link {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
     color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 2px;
+    text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.15s;
   }
+  .scholar-link:hover { opacity: 1; }
 
+  /* ── Papers list ────────────────────────────────── */
   .papers-list {
     list-style: none;
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-    counter-reset: paper-counter;
+    gap: 0;
   }
 
   .paper-item {
-    padding: 1.5rem 1.75rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 0;
+    transition: background 0.2s;
   }
+  .paper-item:first-child { border-top: 1px solid var(--border); }
+  .paper-item:hover { background: color-mix(in srgb, var(--color-olive) 2%, transparent); }
+
+  .paper-accent {
+    width: 3px;
+    border-radius: 2px;
+    background: transparent;
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+    transition: background 0.2s;
+    min-height: 100%;
+  }
+  .paper-item:hover .paper-accent { background: var(--accent); }
+
+  .paper-content { flex: 1; display: flex; flex-direction: column; gap: 0.5rem; }
 
   .paper-meta-top {
     display: flex;
@@ -156,19 +205,17 @@ const statusMeta: Record<string, { label: string; color: string }> = {
   .status-badge {
     display: inline-block;
     font-family: var(--font-sans);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
     padding: 0.2rem 0.65rem;
     border-radius: 9999px;
   }
-
   .status-accepted  { background: #d1fae5; color: #065f46; }
   .status-review    { background: #dbeafe; color: #1e40af; }
   .status-preprint  { background: #fef3c7; color: #92400e; }
   .status-published { background: #ede9fe; color: #5b21b6; }
-
   [data-theme="dark"] .status-accepted  { background: #064e3b; color: #6ee7b7; }
   [data-theme="dark"] .status-review    { background: #1e3a5f; color: #93c5fd; }
   [data-theme="dark"] .status-preprint  { background: #451a03; color: #fcd34d; }
@@ -176,28 +223,18 @@ const statusMeta: Record<string, { label: string; color: string }> = {
 
   .paper-type, .paper-year {
     font-family: var(--font-sans);
-    font-size: 0.775rem;
+    font-size: 0.78rem;
     color: var(--fg-muted);
   }
-
-  .paper-type::before {
-    content: "·";
-    margin-right: 0.6rem;
-    color: var(--border);
-  }
-
-  .paper-year::before {
-    content: "·";
-    margin-right: 0.6rem;
-    color: var(--border);
-  }
+  .paper-type::before, .paper-year::before { content: "·"; margin-right: 0.6rem; opacity: 0.4; }
 
   .paper-title {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 600;
     line-height: 1.45;
     color: var(--fg);
+    margin: 0;
   }
 
   .paper-authors {
@@ -207,11 +244,7 @@ const statusMeta: Record<string, { label: string; color: string }> = {
     line-height: 1.5;
     margin: 0;
   }
-
-  .author-me {
-    color: var(--fg);
-    font-weight: 600;
-  }
+  .author-me { color: var(--fg); font-weight: 600; }
 
   .paper-venue {
     font-family: var(--font-sans);
@@ -220,25 +253,15 @@ const statusMeta: Record<string, { label: string; color: string }> = {
     color: var(--accent);
     margin: 0;
   }
+  .paper-location { font-style: normal; color: var(--fg-muted); font-size: 0.82rem; }
 
-  .paper-location {
-    font-style: normal;
-    color: var(--fg-muted);
-    font-size: 0.82rem;
-  }
-
-  .paper-links {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 0.25rem;
-  }
-
+  .paper-links { display: flex; gap: 0.75rem; }
   .paper-link {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
     font-family: var(--font-sans);
-    font-size: 0.775rem;
+    font-size: 0.75rem;
     font-weight: 600;
     color: var(--accent);
     text-decoration: none;
@@ -247,9 +270,10 @@ const statusMeta: Record<string, { label: string; color: string }> = {
     padding: 0.2rem 0.6rem;
     transition: background 0.15s, color 0.15s;
   }
+  .paper-link:hover { background: var(--accent); color: white; }
 
-  .paper-link:hover {
-    background: var(--accent);
-    color: white;
+  @media (max-width: 700px) {
+    .ph-split { grid-template-columns: 1fr; }
+    .pub-count-block { align-items: flex-start; text-align: left; }
   }
 </style>

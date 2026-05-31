@@ -3,42 +3,111 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCalligraphy from '../components/HeroCalligraphy.astro';
 ---
 
-<BaseLayout title="Home" description="Ismail El Jamiy — PhD candidate in AI researching Handwritten Text Recognition of medieval Arabic scientific manuscripts.">
+<BaseLayout
+  title="Home"
+  description="Ismail El Jamiy — PhD candidate in AI researching Handwritten Text Recognition of medieval Arabic scientific manuscripts."
+>
 
-  <!-- ── Hero ───────────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
+  <!-- ── Hero ── full-bleed, always dark, cinematic ─── -->
+  <section class="hero" id="hero">
 
-      <div class="hero-text">
-        <p class="hero-eyebrow">PhD Candidate in AI · Toulouse</p>
-        <h1 class="hero-name">Ismail<br>El&nbsp;Jamiy</h1>
-        <p class="hero-tagline">
-          Handwritten Text Recognition of medieval Arabic scientific manuscripts
-          and dedicated Large Language Models.
-        </p>
-        <div class="hero-ctas">
-          <a href="/research" class="btn-primary">View Research</a>
-          <a href="/Resume.pdf" class="btn-secondary" target="_blank" rel="noopener">Download CV</a>
-        </div>
+    <!-- Background layer: calligraphy fills right side when no photo -->
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-calli-wrap">
+        <HeroCalligraphy />
+      </div>
+      <!-- Drop portrait.jpg into /public/ — it overlays the calligraphy -->
+      <img
+        src="/portrait.jpg"
+        alt=""
+        class="hero-photo"
+        loading="eager"
+        decoding="async"
+        onerror="this.style.display='none'"
+      />
+    </div>
+
+    <!-- Gradient overlays for legibility -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Noise grain -->
+    <div class="hero-grain" aria-hidden="true"></div>
+
+    <!-- Arabic calligraphy watermark — behind the Latin name, above the gradient -->
+    <div class="hero-ar-wm" aria-hidden="true">
+      <HeroCalligraphy />
+    </div>
+
+    <!-- Content grid (absolute, 4-corner) -->
+    <div class="hero-content">
+
+      <!-- top-left -->
+      <div class="hc-tl">
+        <span class="hero-eyebrow">PhD Candidate · AI · Toulouse</span>
       </div>
 
-      <div class="hero-calligraphy" aria-hidden="true">
-        <HeroCalligraphy />
+      <!-- top-right: empty intentionally -->
+      <div class="hc-tr"></div>
+
+      <!-- bottom-left: THE NAME -->
+      <div class="hc-bl">
+        <h1 class="hero-name">
+          <span class="name-clip"><span class="name-l1">Ismail</span></span>
+          <span class="name-clip"><span class="name-l2">El&nbsp;Jamiy</span></span>
+        </h1>
+      </div>
+
+      <!-- bottom-right: role / meta -->
+      <div class="hc-br">
+        <span class="hero-role">IRIT · Université de Toulouse</span>
+        <span class="hero-role-sub">Handwritten Text Recognition</span>
       </div>
 
     </div>
 
-    <div class="scroll-hint" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-           class="scroll-arrow">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
+    <!-- Scroll indicator -->
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
+      <span class="scroll-label">Scroll</span>
+    </div>
+
+  </section>
+
+  <!-- Dark → page-bg transition gradient bridge -->
+  <div class="hero-page-fade" aria-hidden="true"></div>
+
+  <!-- ── Intro strip: tagline + CTAs ───────────────────── -->
+  <section class="intro-strip js-reveal">
+    <div class="intro-inner">
+      <p class="intro-tagline">
+        Handwritten Text Recognition of medieval Arabic scientific manuscripts
+        and dedicated Large Language Models — bridging classical heritage with modern AI.
+      </p>
+      <div class="intro-ctas">
+        <a href="/research" class="btn-primary">
+          View Research
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="/Resume.pdf" class="btn-ghost" target="_blank" rel="noopener">
+          Download CV
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- ── Latest publication strip ───────────────────────────────── -->
-  <div class="pub-strip">
+  <!-- ── Publication strip ─────────────────────────────── -->
+  <div class="pub-strip js-reveal" data-delay="0.1">
     <div class="pub-strip-inner">
       <span class="pub-strip-badge">Under Review</span>
       <span class="pub-strip-text">
@@ -49,194 +118,542 @@ import HeroCalligraphy from '../components/HeroCalligraphy.astro';
     </div>
   </div>
 
-  <!-- ── Featured section cards ─────────────────────────────────── -->
+  <!-- ── Featured section ───────────────────────────────── -->
   <section class="featured">
-    <div class="ornament-divider" aria-hidden="true">
-      <span>✦</span>
-    </div>
+    <div class="ornament-divider" aria-hidden="true"><span>✦</span></div>
     <div class="featured-inner">
-      <a href="/research" class="feature-card card fade-up">
-        <div class="feature-card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-          </svg>
+
+      <a href="/research" class="fc js-reveal" data-delay="0">
+        <div class="fc-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=900&q=80&fit=crop"
+            alt="Library books"
+            class="fc-img"
+            loading="lazy"
+          />
+          <div class="fc-img-overlay"></div>
+          <span class="fc-tag">PhD Research · AI</span>
         </div>
-        <h2 class="feature-card-title">Research</h2>
-        <p class="feature-card-desc">Building benchmarks and evaluating vision-language models for HTR of ancient Arabic scientific manuscripts.</p>
+        <div class="fc-body">
+          <h2 class="fc-title">Research</h2>
+          <p class="fc-desc">Building benchmarks and evaluating vision-language models for HTR of ancient Arabic scientific manuscripts.</p>
+          <span class="fc-cta">
+            Explore
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
       </a>
 
-      <a href="/publications" class="feature-card card fade-up">
-        <div class="feature-card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/>
-            <line x1="16" y1="17" x2="8" y2="17"/>
-            <polyline points="10 9 9 9 8 9"/>
-          </svg>
+      <a href="/publications" class="fc js-reveal" data-delay="0.12">
+        <div class="fc-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=900&q=80&fit=crop"
+            alt="Academic reading"
+            class="fc-img"
+            loading="lazy"
+          />
+          <div class="fc-img-overlay"></div>
+          <span class="fc-tag">Papers · Conferences</span>
         </div>
-        <h2 class="feature-card-title">Publications</h2>
-        <p class="feature-card-desc">Papers, preprints, and posters from conferences and workshops.</p>
+        <div class="fc-body">
+          <h2 class="fc-title">Publications</h2>
+          <p class="fc-desc">Papers, preprints, and workshop posters — from HTR benchmarks to LLM evaluation for Arabic.</p>
+          <span class="fc-cta">
+            Explore
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
       </a>
 
-      <a href="/projects" class="feature-card card fade-up">
-        <div class="feature-card-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="16 18 22 12 16 6"/>
-            <polyline points="8 6 2 12 8 18"/>
-          </svg>
+      <a href="/projects" class="fc js-reveal" data-delay="0.24">
+        <div class="fc-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=900&q=80&fit=crop"
+            alt="Software project code"
+            class="fc-img"
+            loading="lazy"
+          />
+          <div class="fc-img-overlay"></div>
+          <span class="fc-tag">Engineering · Open-source</span>
         </div>
-        <h2 class="feature-card-title">Projects</h2>
-        <p class="feature-card-desc">Footvision, Marathon Photo Finder, and other engineering work.</p>
+        <div class="fc-body">
+          <h2 class="fc-title">Projects</h2>
+          <p class="fc-desc">Footvision, Marathon Photo Finder, and other engineering work spanning CV and full-stack.</p>
+          <span class="fc-cta">
+            Explore
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </div>
       </a>
+
     </div>
   </section>
+
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Lenis smooth scroll ──────────────────────────────────────
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── Hero entrance ─────────────────────────────────────────────
+  const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.1 });
+
+  tl
+    .from('.hero-calli-wrap', { opacity: 0, scale: 1.04, duration: 1.8 })
+    .from('.hero-photo', { opacity: 0, scale: 1.04, duration: 1.8 }, '<')
+    .from('.hero-eyebrow', { y: -18, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=1.2')
+    .from('.hero-ar-wm', { opacity: 0, duration: 1.4 }, '-=0.8')
+    .from('.name-l1', { yPercent: 110, opacity: 0, duration: 1.1 }, '-=1.0')
+    .from('.name-l2', { yPercent: 110, opacity: 0, duration: 1.1 }, '-=0.95')
+    .from('.hc-br', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.8')
+    .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.4');
+
+  // ── Subtle parallax on photo/calli ───────────────────────────
+  gsap.to('.hero-bg', {
+    yPercent: 8,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.2,
+    },
+  });
+
+  // ── Below-fold scroll reveals ────────────────────────────────
+  inView(
+    '.js-reveal',
+    (element) => {
+      const el = element as HTMLElement;
+      const delay = parseFloat(el.dataset?.delay ?? '0');
+      gsap.from(el, {
+        opacity: 0,
+        y: 36,
+        duration: 0.7,
+        delay,
+        ease: 'power2.out',
+        clearProps: 'all',
+      });
+    },
+    { amount: 0.15 }
+  );
+</script>
+
 <style>
-  /* ── Hero ─────────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════
+     HERO — full-bleed, always dark, cinematic
+  ═══════════════════════════════════════════════════ */
   .hero {
-    min-height: calc(100svh - 53px);
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+    background-color: #14130F;
+    /* Pull hero behind sticky nav so photo shows through the transparent header */
+    margin-top: -53px;
+  }
+
+  /* ── Background ─────────────────────────────────── */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Calligraphy fills the right ~60% as identity element */
+  .hero-calli-wrap {
+    position: absolute;
+    right: -4%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 62%;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .hero-calli-wrap :global(.calligraphy-svg) {
+    clip-path: none !important;
+    animation: none !important;
+    fill: #B8860B !important;
+  }
+
+  /* Portrait photo (full-bleed, covers calligraphy when present) */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.6) saturate(1.2) contrast(1.1) sepia(0.32);
+  }
+
+  /* ── Overlays ────────────────────────────────────── */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      /* heavy dark crush at bottom */
+      linear-gradient(to top, rgba(10,9,6,0.97) 0%, rgba(10,9,6,0.70) 28%, rgba(10,9,6,0.2) 55%, transparent 80%),
+      /* left vignette */
+      linear-gradient(to right, rgba(10,9,6,0.45) 0%, transparent 55%),
+      /* top fade — ensures nav text reads on any photo */
+      linear-gradient(to bottom, rgba(10,9,6,0.55) 0%, rgba(10,9,6,0.15) 18%, transparent 35%);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* ── Arabic calligraphy watermark ───────────────── */
+  /* Shows THROUGH the Latin name — same bottom-left anchor */
+  .hero-ar-wm {
+    position: absolute;
+    bottom: clamp(3.75rem, 5vw, 5rem);
+    left: clamp(1.5rem, 4vw, 3rem);
+    width: 72%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.12;
+    transform: translateY(24%);
+  }
+  .hero-ar-wm :global(.calligraphy-svg) {
+    clip-path: none !important;
+    animation: none !important;
+    fill: rgba(237, 228, 202, 0.9) !important;
+  }
+
+  /* ── Content grid ────────────────────────────────── */
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-areas:
+      "tl tr"
+      "bl br";
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr auto;
+    /* top pad = nav height (53px) + breathing room so eyebrow clears nav */
+    padding: calc(53px + clamp(1rem, 2vw, 1.5rem)) clamp(1.5rem, 4vw, 3rem)
+             clamp(3.75rem, 5vw, 5rem)              clamp(1.5rem, 4vw, 3rem);
+    gap: 0;
+  }
+
+  .hc-tl {
+    grid-area: tl;
+    align-self: start;
+    padding-top: 0;
+  }
+  .hc-tr {
+    grid-area: tr;
+    align-self: start;
+    justify-self: end;
+  }
+  .hc-bl {
+    grid-area: bl;
+    align-self: end;
+  }
+  .hc-br {
+    grid-area: br;
+    align-self: end;
+    justify-self: end;
+    text-align: right;
+  }
+
+  /* ── Top labels ──────────────────────────────────── */
+  .hero-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(246, 241, 228, 0.55);
+  }
+
+  /* ── THE NAME ────────────────────────────────────── */
+  .hero-name {
+    margin: 0;
+    line-height: 0.88;
+  }
+
+  .name-clip {
+    display: block;
+    /* overflow: visible so descenders (J, y) never get clipped.
+       GSAP entrance uses opacity 0 → 1 to hide off-screen start. */
+    overflow: visible;
+    line-height: 1;
+    padding-bottom: 0.08em;
+  }
+
+  .name-l1,
+  .name-l2 {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(5rem, 17.5vw, 22rem);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 0.86;
+    color: #EDE4CA;
+  }
+
+  .name-l2 {
+    color: color-mix(in srgb, #EDE4CA 62%, #C8921A);
+  }
+
+  /* ── Bottom-right meta ───────────────────────────── */
+  .hero-role {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(246, 241, 228, 0.55);
+    line-height: 1.6;
+  }
+
+  .hero-role-sub {
+    display: block;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.75rem;
+    color: rgba(246, 241, 228, 0.38);
+    line-height: 1.6;
+  }
+
+  /* ── Scroll indicator ────────────────────────────── */
+  .scroll-cue {
+    position: absolute;
+    bottom: clamp(1.25rem, 2.5vw, 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 5rem 2rem 3rem;
-    background: radial-gradient(ellipse 70% 60% at 70% 40%, color-mix(in srgb, var(--color-olive) 5%, transparent), transparent);
+    gap: 0.5rem;
   }
 
-  .hero-inner {
+  .scroll-track {
+    width: 1px;
+    height: 48px;
+    background: rgba(246, 241, 228, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scroll-thumb {
+    position: absolute;
+    inset: 0;
+    background: rgba(184, 134, 11, 0.85);
+    animation: scroll-drop 2s cubic-bezier(0.4, 0, 0.2, 1) 2.5s infinite;
+  }
+
+  @keyframes scroll-drop {
+    0%   { transform: translateY(-100%); opacity: 1; }
+    60%  { transform: translateY(0);     opacity: 1; }
+    100% { transform: translateY(110%);  opacity: 0; }
+  }
+
+  .scroll-label {
+    font-family: var(--font-sans);
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(246, 241, 228, 0.35);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     HERO → PAGE TRANSITION GRADIENT
+  ═══════════════════════════════════════════════════ */
+  .hero-page-fade {
+    height: 90px;
+    margin-top: -90px;
+    position: relative;
+    z-index: 20;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--bg) 100%
+    );
+  }
+
+  /* ═══════════════════════════════════════════════════
+     INTRO STRIP — tagline + CTAs, themed
+  ═══════════════════════════════════════════════════ */
+  .intro-strip {
+    padding: 5rem clamp(1.5rem, 4vw, 3rem) 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .intro-inner {
     max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    grid-template-columns: 1fr auto;
+    align-items: end;
     gap: 5rem;
   }
 
-  .hero-text {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-start;
+  .intro-tagline {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    color: var(--fg-muted);
+    line-height: 1.85;
+    max-width: 56ch;
+    margin: 0;
+    font-style: italic;
   }
 
-  .hero-eyebrow {
+  .intro-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    align-items: flex-end;
+  }
+
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    background: linear-gradient(
+      160deg,
+      var(--color-olive) 0%,
+      color-mix(in srgb, var(--color-olive) 82%, black) 100%
+    );
+    color: #fff;
     font-family: var(--font-sans);
     font-size: 0.78rem;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: var(--color-terracotta);
-    margin: 0;
-  }
-
-  .hero-name {
-    font-family: var(--font-serif);
-    font-size: clamp(3rem, 5.5vw, 5rem);
-    font-weight: 600;
-    color: var(--fg);
-    letter-spacing: 0.06em;
-    line-height: 1.08;
-    margin: 0;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-serif);
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-    color: var(--fg-muted);
-    line-height: 1.75;
-    max-width: 42ch;
-    margin: 0;
-  }
-
-  .hero-calligraphy {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-  }
-
-  /* ── CTAs ─────────────────────────────────────────── */
-  .hero-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.875rem;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    padding: 0.7rem 1.75rem;
-    background: var(--color-olive);
-    color: #fff;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 0.25rem;
-    transition: background 0.2s, transform 0.15s;
     text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow:
+      0 1px 3px color-mix(in srgb, var(--color-olive) 20%, transparent),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.22s cubic-bezier(0.25,1,.5,1),
+                box-shadow 0.22s cubic-bezier(0.25,1,.5,1);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.22s;
   }
   .btn-primary:hover {
-    background: color-mix(in srgb, var(--color-olive) 85%, black);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 18px color-mix(in srgb, var(--color-olive) 28%, transparent),
+      inset 0 1px 0 rgba(255,255,255,0.12);
   }
+  .btn-primary:hover::after { opacity: 1; }
 
-  .btn-secondary {
-    display: inline-block;
-    padding: 0.7rem 1.75rem;
-    border: 1.5px solid var(--color-olive);
-    color: var(--color-olive);
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    font-weight: 500;
-    border-radius: 0.25rem;
-    transition: background 0.2s, color 0.2s, transform 0.15s;
-    text-decoration: none;
-  }
-  .btn-secondary:hover {
-    background: var(--color-olive);
-    color: #fff;
-    transform: translateY(-1px);
-  }
-
-  /* ── Scroll hint ──────────────────────────────────── */
-  .scroll-hint {
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent);
     color: var(--fg-muted);
-    opacity: 0;
-    margin-top: 3rem;
-    animation: fade-in 0.6s ease 2.4s forwards;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3px;
+    background: transparent;
+    transition: border-color 0.22s, color 0.22s, transform 0.22s cubic-bezier(0.25,1,.5,1);
   }
-  .scroll-arrow {
-    animation: bounce 2s ease-in-out 2.4s infinite;
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50%       { transform: translateY(6px); }
-  }
-  @keyframes fade-in {
-    to { opacity: 1; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-hint { animation: none; opacity: 0.5; }
-    .scroll-arrow { animation: none; }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
   }
 
-  /* ── Publication strip ────────────────────────────── */
+  /* svg icon size inside buttons */
+  .btn-primary svg, .btn-ghost svg {
+    flex-shrink: 0;
+    transition: transform 0.22s;
+  }
+  .btn-primary:hover svg { transform: translateX(3px); }
+  .btn-ghost:hover svg { transform: translateY(2px); }
+
+  [data-theme="dark"] .btn-primary {
+    background: linear-gradient(
+      160deg,
+      var(--color-gold) 0%,
+      color-mix(in srgb, var(--color-gold) 78%, black) 100%
+    );
+    color: var(--color-night);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--color-gold) 25%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  [data-theme="dark"] .btn-primary:hover {
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-gold) 30%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  [data-theme="dark"] .btn-ghost {
+    border-color: color-mix(in srgb, var(--color-gold) 25%, transparent);
+    color: color-mix(in srgb, var(--color-ivory) 60%, transparent);
+  }
+  [data-theme="dark"] .btn-ghost:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PUB STRIP
+  ═══════════════════════════════════════════════════ */
   .pub-strip {
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 0.875rem 2rem;
+    padding: 0.875rem clamp(1.5rem, 4vw, 3rem);
     background: color-mix(in srgb, var(--color-olive) 3%, transparent);
   }
 
   .pub-strip-inner {
     max-width: 1100px;
-    margin: 0 auto;
+    margin-inline: auto;
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -256,28 +673,11 @@ import HeroCalligraphy from '../components/HeroCalligraphy.astro';
     color: #1e40af;
     flex-shrink: 0;
   }
+  [data-theme="dark"] .pub-strip-badge { background: #1e3a5f; color: #93c5fd; }
 
-  [data-theme="dark"] .pub-strip-badge {
-    background: #1e3a5f;
-    color: #93c5fd;
-  }
-
-  .pub-strip-text {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .pub-strip-title {
-    font-family: var(--font-serif);
-    font-size: 0.92rem;
-    color: var(--fg);
-  }
-
-  .pub-strip-venue {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    color: var(--fg-muted);
-  }
+  .pub-strip-text  { flex: 1; min-width: 0; }
+  .pub-strip-title { font-family: var(--font-serif); font-size: 0.92rem; color: var(--fg); }
+  .pub-strip-venue { font-family: var(--font-sans); font-size: 0.85rem; color: var(--fg-muted); }
 
   .pub-strip-link {
     font-family: var(--font-sans);
@@ -291,9 +691,12 @@ import HeroCalligraphy from '../components/HeroCalligraphy.astro';
   }
   .pub-strip-link:hover { opacity: 0.7; }
 
-  /* ── Feature cards ────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════
+     FEATURE CARDS — image-cover, hover-reveal pattern
+     Inspired by 21st.dev Project Card + Reveal on hover
+  ═══════════════════════════════════════════════════ */
   .featured {
-    padding: 2rem 2rem 5rem;
+    padding: 2rem clamp(1.5rem, 4vw, 3rem) 5rem;
   }
 
   .featured .ornament-divider {
@@ -303,86 +706,165 @@ import HeroCalligraphy from '../components/HeroCalligraphy.astro';
 
   .featured-inner {
     max-width: 1100px;
-    margin: 0 auto;
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 
-  .feature-card {
+  /* Card container */
+  .fc {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding: 2rem;
-    border-left: 3px solid var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
     text-decoration: none;
+    background: var(--bg-panel);
+    transition:
+      transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .fc:hover {
+    transform: translateY(-7px);
+    box-shadow:
+      0 20px 48px color-mix(in srgb, var(--color-ink) 14%, transparent),
+      0 6px 16px color-mix(in srgb, var(--color-ink) 8%, transparent);
   }
 
-  .feature-card-icon {
-    color: var(--accent);
-    width: 44px;
-    height: 44px;
+  /* Image section */
+  .fc-img-wrap {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+  }
+
+  .fc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.1) saturate(0.88) brightness(0.96);
+    transition: transform 0.65s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 0.45s;
+  }
+  .fc:hover .fc-img {
+    transform: scale(1.07);
+    filter: sepia(0.05) saturate(1.0) brightness(0.98);
+  }
+
+  /* Gradient overlay on image */
+  .fc-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 35%,
+      rgba(20, 19, 15, 0.45) 100%
+    );
+    pointer-events: none;
+  }
+
+  /* Category tag overlaid on image */
+  .fc-tag {
+    position: absolute;
+    bottom: 0.875rem;
+    left: 0.875rem;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(246, 241, 228, 0.82);
+    background: rgba(20, 19, 15, 0.5);
+    backdrop-filter: blur(4px);
+    padding: 0.2rem 0.55rem;
+    border-radius: 2px;
+  }
+
+  /* Text body */
+  .fc-body {
+    padding: 1.25rem 1.5rem 1.5rem;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1;
   }
 
-  .feature-card-title {
+  .fc-title {
     font-family: var(--font-serif);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 600;
     color: var(--fg);
+    margin: 0;
+    line-height: 1.1;
+    transition: color 0.2s;
   }
+  .fc:hover .fc-title { color: var(--accent); }
 
-  .feature-card-desc {
+  .fc-desc {
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     color: var(--fg-muted);
     line-height: 1.65;
+    flex: 1;
+    margin: 0;
   }
 
-  /* dark mode overrides (Astro scoping workaround) */
-  /* live in global.css */
+  .fc-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    transition: gap 0.25s;
+  }
+  .fc-cta svg { transition: transform 0.25s cubic-bezier(0.25,1,.5,1); }
+  .fc:hover .fc-cta { gap: 0.6rem; }
+  .fc:hover .fc-cta svg { transform: translateX(3px); }
 
-  /* ── Mobile ───────────────────────────────────────── */
   @media (max-width: 800px) {
-    .hero {
-      padding: 3rem 1.5rem 2rem;
+    .featured-inner { grid-template-columns: 1fr; }
+  }
+
+  /* ═══════════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .name-l1, .name-l2 {
+      font-size: clamp(3.5rem, 16vw, 6rem);
     }
 
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
+    .hero-calli-wrap {
+      width: 90%;
+      right: -8%;
+      opacity: 0.15;
     }
 
-    .hero-text {
-      order: 2;
-      align-items: center;
-      text-align: center;
+    .hero-content {
+      grid-template-rows: auto 1fr;
     }
 
-    .hero-name {
-      font-size: clamp(2.5rem, 10vw, 3.5rem);
-      letter-spacing: 0.04em;
+    .hc-br {
+      display: none;
     }
 
-    .hero-tagline {
-      max-width: 100%;
+    .intro-inner {
+      flex-direction: column;
+      gap: 2rem;
     }
 
-    .hero-calligraphy {
-      order: 1;
+    .intro-ctas {
+      flex-direction: row;
+      flex-wrap: wrap;
     }
+  }
 
-    .hero-ctas {
-      justify-content: center;
-    }
-
-    .pub-strip {
-      padding: 0.875rem 1.5rem;
-    }
-
-    .featured {
-      padding: 2rem 1.5rem 4rem;
-    }
+  /* ── Reduced motion ──────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-thumb { animation: none; opacity: 0.4; }
   }
 </style>

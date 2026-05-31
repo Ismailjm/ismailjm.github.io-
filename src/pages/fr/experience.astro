@@ -91,26 +91,24 @@ const certs = [
 ---
 
 <BaseLayout title="Expérience" description="Formation, expérience professionnelle et compétences techniques d'Ismail El Jamiy.">
-  <div class="page-container">
 
-    <header class="page-header">
-      <div class="page-header-row">
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <div class="ph-split">
         <div>
-          <div class="page-eyebrow">CV &amp; Parcours</div>
-          <h1 class="page-title">Expérience</h1>
-          <div class="page-rule-short" aria-hidden="true"></div>
+          <span class="ph-eyebrow">CV &amp; Parcours</span>
+          <h1 class="ph-title">Expérience</h1>
+          <p class="ph-sub">De Casablanca à Toulouse — un parcours en ingénierie IA, vision par ordinateur et numérisation de manuscrits.</p>
         </div>
-        <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          Télécharger le CV
-        </a>
+        <div style="display:flex;align-items:flex-end;padding-top:1rem;">
+          <a href="/Resume.pdf" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.5rem;background:linear-gradient(160deg,var(--color-olive),color-mix(in srgb,var(--color-olive) 78%,black));color:#fff;font-family:var(--font-sans);font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;border-radius:4px;">Télécharger le CV</a>
+        </div>
       </div>
-    </header>
+    </div>
+  </section>
+
+  <div class="page-body">
 
     <section class="cv-section">
       <h2 class="section-title">Formation</h2>
@@ -184,13 +182,23 @@ const certs = [
   </div>
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container { max-width: 820px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
-  .page-header { margin-bottom: 3rem; }
-  .page-header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .page-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; color: var(--fg); margin-bottom: 0.75rem; }
-  .cv-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-sans); font-size: 0.85rem; font-weight: 600; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 0.375rem; padding: 0.5rem 1rem; text-decoration: none; white-space: nowrap; transition: background 0.2s, color 0.2s; margin-top: 0.5rem; }
-  .cv-btn:hover { background: var(--accent); color: white; }
   .cv-section { margin-bottom: 3.5rem; }
   .section-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--color-olive); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
   .timeline { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--border); padding-left: 1.5rem; margin-left: 0.5rem; }

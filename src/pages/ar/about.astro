@@ -4,28 +4,16 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout title="عن الباحث" description="اسماعيل الجامعي — طالب دكتوراه في الذكاء الاصطناعي، مهندس ومصوّر هاوٍ، من الدار البيضاء، مقيم في تولوز.">
 
-  <article class="page-container">
-
-    <header class="page-header">
-      <div class="page-eyebrow">اسماعيل الجامعي</div>
-      <h1 class="page-title">عن الباحث</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
-
-    <div class="fact-row">
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>تولوز، فرنسا</span>
-      </div>
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        <span>مغربي، من الدار البيضاء</span>
-      </div>
-      <div class="fact-chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        <span>ENSAM الدار البيضاء</span>
-      </div>
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <span class="ph-eyebrow">اسماعيل الجامعي</span>
+      <h1 class="ph-title">عن الباحث</h1>
+      <p class="ph-sub">طالب دكتوراه في الذكاء الاصطناعي، مهندس ومصوّر — عند تقاطع التراث العربي الوسيط والذكاء الاصطناعي الحديث.</p>
     </div>
+  </section>
+
+  <div class="page-body-narrow">
 
     <div class="prose">
 
@@ -138,27 +126,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
     </div>
 
-  </article>
+  </div>
 
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
-  }
-
-  .page-header { margin-bottom: 2.5rem; }
-
-  .page-title {
-    font-family: var(--font-arabic);
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    font-weight: 700;
-    color: var(--fg);
-    margin-bottom: 1rem;
-  }
-
   .prose {
     font-family: var(--font-arabic);
     font-size: 1.15rem;
@@ -174,13 +162,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     font-weight: 700;
     color: var(--color-olive);
     margin: 2.5rem 0 0.75rem;
-  }
-
-  .fact-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
   }
 
   .fact-chip {
@@ -294,10 +275,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     margin-left: 0.08em;
     color: var(--color-terracotta);
     font-weight: 700;
-    font-family: var(--font-arabic);
-  }
-
-  .page-eyebrow {
     font-family: var(--font-arabic);
   }
 </style>

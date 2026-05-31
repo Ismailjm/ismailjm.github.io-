@@ -36,12 +36,17 @@ const links = [
 ---
 
 <BaseLayout title="Contact" description="Prendre contact avec Ismail El Jamiy.">
-  <div class="page-container">
-    <header class="page-header">
-      <div class="page-eyebrow">Me contacter</div>
-      <h1 class="page-title">Contact</h1>
-      <div class="page-rule-short" aria-hidden="true"></div>
-    </header>
+
+  <section class="page-hero">
+    <div class="ph-ambient" aria-hidden="true"></div>
+    <div class="ph-inner">
+      <span class="ph-eyebrow">Prendre contact</span>
+      <h1 class="ph-title">Contact</h1>
+      <p class="ph-sub">Ouvert aux collaborations avec des chercheurs, ingénieurs et toute personne travaillant sur le patrimoine arabe, la RTH ou la vision par ordinateur.</p>
+    </div>
+  </section>
+
+  <div class="page-body" style="max-width:860px">
     <p class="intro">
       Je suis heureux d'échanger avec des chercheurs, collaborateurs et toute personne
       intéressée par le patrimoine arabe, la HTR ou la vision par ordinateur. Le meilleur
@@ -76,10 +81,23 @@ const links = [
   </div>
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+  inView('.page-body > *, .page-body-narrow > *', (element) => {
+    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+  }, { amount: 0.12 });
+</script>
+
 <style>
-  .page-container { max-width: 640px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
-  .page-header { margin-bottom: 2rem; }
-  .page-title { font-family: var(--font-serif); font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 600; color: var(--fg); margin-bottom: 0.75rem; }
   .intro { font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.75; color: var(--fg-muted); margin-bottom: 2.5rem; }
   .links-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
   .contact-row { display: flex; align-items: center; gap: 1.25rem; padding: 1.125rem 1.25rem; text-decoration: none; color: var(--fg); }
