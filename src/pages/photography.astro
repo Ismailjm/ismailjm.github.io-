@@ -9,16 +9,17 @@ const placeNames: Record<string, string> = {};
 const countryNames: Record<string, string> = {};
 
 const items = photos.map((p) => ({
-  file:     p.file,
-  title:    titleNames[p.title]   ?? p.title,
-  place:    placeNames[p.place]   ?? p.place,
-  placeKey: p.place,
-  country:  countryNames[p.country] ?? p.country,
-  lat:      p.lat,
-  lng:      p.lng,
+  file:       p.file,
+  title:      titleNames[p.title]   ?? p.title,
+  place:      placeNames[p.place]   ?? p.place,
+  placeKey:   p.place,
+  country:    countryNames[p.country] ?? p.country,
+  countryKey: p.country,
+  lat:        p.lat,
+  lng:        p.lng,
 }));
 
-// Unique locations for globe markers
+// Globe markers — place-level for visual richness
 const locations = Object.values(
   items.reduce<Record<string, { place: string; placeKey: string; country: string; lat: number; lng: number; count: number }>>((acc, p) => {
     if (!acc[p.placeKey]) acc[p.placeKey] = { place: p.place, placeKey: p.placeKey, country: p.country, lat: p.lat, lng: p.lng, count: 0 };
@@ -27,11 +28,14 @@ const locations = Object.values(
   }, {})
 );
 
-// Pick one photo per location for polaroid cards
-const polaroids = locations.map(loc => {
-  const photo = items.find(p => p.placeKey === loc.placeKey)!;
-  return { ...loc, file: photo.file, title: photo.title };
-});
+// One polaroid card per country
+const countryList = Object.values(
+  items.reduce<Record<string, { country: string; countryKey: string; file: string; title: string; count: number }>>((acc, p) => {
+    if (!acc[p.countryKey]) acc[p.countryKey] = { country: p.country, countryKey: p.countryKey, file: p.file, title: p.title, count: 0 };
+    acc[p.countryKey].count++;
+    return acc;
+  }, {})
+);
 ---
 
 <BaseLayout title="Photography" description="Photography by Ismail El Jamiy — architecture and travel across France, Morocco, and Germany.">
@@ -50,15 +54,15 @@ const polaroids = locations.map(loc => {
   <section class="globe-section" aria-label="Photo locations on globe">
     <div class="globe-wrap">
 
-      <!-- Left: polaroid cards -->
+      <!-- Left: polaroid cards (France, Morocco) -->
       <div class="polaroids-left" id="polaroids-left" aria-hidden="true">
-        {polaroids.slice(0, 4).map((p) => (
-          <button class="polaroid" data-place={p.placeKey} type="button" aria-label={`Filter by ${p.place}`}>
+        {countryList.slice(0, 2).map((c) => (
+          <button class="polaroid" data-country={c.countryKey} type="button" aria-label={`Filter by ${c.country}`}>
             <div class="polaroid-img">
-              <Image src={photoImages[p.file]} alt={p.title} width={120} height={90} loading="lazy" />
+              <Image src={photoImages[c.file]} alt={c.title} width={120} height={90} loading="lazy" />
             </div>
-            <span class="polaroid-label">{p.place}</span>
-            <span class="polaroid-country">{p.country}</span>
+            <span class="polaroid-label">{c.country}</span>
+            <span class="polaroid-count">{c.count} photos</span>
           </button>
         ))}
       </div>
@@ -66,18 +70,18 @@ const polaroids = locations.map(loc => {
       <!-- Center: Cobe globe -->
       <div class="globe-container">
         <canvas id="globe-canvas" width="520" height="520"></canvas>
-        <div class="globe-hint" id="globe-hint">Drag to explore · click a marker to filter</div>
+        <div class="globe-hint" id="globe-hint">Drag to explore</div>
       </div>
 
-      <!-- Right: polaroid cards -->
+      <!-- Right: polaroid cards (Germany) -->
       <div class="polaroids-right" id="polaroids-right" aria-hidden="true">
-        {polaroids.slice(4, 8).map((p) => (
-          <button class="polaroid" data-place={p.placeKey} type="button" aria-label={`Filter by ${p.place}`}>
+        {countryList.slice(2).map((c) => (
+          <button class="polaroid" data-country={c.countryKey} type="button" aria-label={`Filter by ${c.country}`}>
             <div class="polaroid-img">
-              <Image src={photoImages[p.file]} alt={p.title} width={120} height={90} loading="lazy" />
+              <Image src={photoImages[c.file]} alt={c.title} width={120} height={90} loading="lazy" />
             </div>
-            <span class="polaroid-label">{p.place}</span>
-            <span class="polaroid-country">{p.country}</span>
+            <span class="polaroid-label">{c.country}</span>
+            <span class="polaroid-count">{c.count} photos</span>
           </button>
         ))}
       </div>
@@ -95,7 +99,7 @@ const polaroids = locations.map(loc => {
   <div class="photo-grid-wrap">
     <div class="masonry" id="photo-grid">
       {items.map((p) => (
-        <div class="masonry-item" data-place={p.placeKey}>
+        <div class="masonry-item" data-country={p.countryKey}>
           <div class="photo-card">
             <Image
               src={photoImages[p.file]}
@@ -123,6 +127,19 @@ const polaroids = locations.map(loc => {
     hidden>
   </div>
 
+  <!-- ── Lightbox ──────────────────────────────────── -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+    <figure class="lightbox-fig">
+      <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+      <figcaption class="lightbox-caption">
+        <p class="lightbox-title" id="lightbox-title"></p>
+        <p class="lightbox-place" id="lightbox-place"></p>
+      </figcaption>
+    </figure>
+  </div>
+
 </BaseLayout>
 
 <script>
@@ -130,7 +147,7 @@ const polaroids = locations.map(loc => {
 
   // ── Read server-side data from DOM ───────────────────
   const dataEl = document.getElementById('globe-data') as HTMLElement;
-  const items: { file: string; title: string; place: string; placeKey: string; country: string; lat: number; lng: number }[] = JSON.parse(dataEl.dataset.items!);
+  const items: { file: string; title: string; place: string; placeKey: string; country: string; countryKey: string; lat: number; lng: number }[] = JSON.parse(dataEl.dataset.items!);
   const locations: { place: string; placeKey: string; country: string; lat: number; lng: number; count: number }[] = JSON.parse(dataEl.dataset.locations!);
   const ui: { photo: string; photos: string; from: string; clear: string } = JSON.parse(dataEl.dataset.ui!);
 
@@ -145,10 +162,17 @@ const polaroids = locations.map(loc => {
     size: Math.min(0.06 + loc.count * 0.012, 0.1),
   }));
 
+  // Derive country groups from items for filter display
+  const countryGroups: Record<string, { country: string; count: number }> = {};
+  items.forEach((p) => {
+    if (!countryGroups[p.countryKey]) countryGroups[p.countryKey] = { country: p.country, count: 0 };
+    countryGroups[p.countryKey].count++;
+  });
+
   let phi = 0.5;
   let dragging = false;
   let lastX = 0;
-  let activePlace: string | null = null;
+  let activeCountry: string | null = null;
 
   const globe = createGlobe(canvas, {
     devicePixelRatio: Math.min(window.devicePixelRatio, 2),
@@ -200,24 +224,26 @@ const polaroids = locations.map(loc => {
   window.addEventListener('touchend', () => { dragging = false; });
 
   // ── Filter logic ──────────────────────────────────
-  function setFilter(placeKey: string, placeLabel: string) {
-    activePlace = placeKey;
+  function setFilter(countryKey: string) {
+    activeCountry = countryKey;
+    const group = countryGroups[countryKey];
     let count = 0;
     document.querySelectorAll<HTMLElement>('.masonry-item').forEach((item) => {
-      if (item.dataset.place === placeKey) { item.style.display = ''; count++; }
+      if (item.dataset.country === countryKey) { item.style.display = ''; count++; }
       else { item.style.display = 'none'; }
     });
     document.querySelectorAll<HTMLElement>('.polaroid').forEach(p => {
-      p.classList.toggle('polaroid-active', p.dataset.place === placeKey);
+      p.classList.toggle('polaroid-active', p.dataset.country === countryKey);
     });
     const bar = document.getElementById('filter-bar') as HTMLElement;
     const text = document.getElementById('filter-text') as HTMLElement;
-    text.textContent = `${count} ${count !== 1 ? ui.photos : ui.photo} ${ui.from} ${placeLabel}`;
+    text.textContent = `${count} ${count !== 1 ? ui.photos : ui.photo} ${ui.from} ${group?.country ?? countryKey}`;
     bar.hidden = false;
+    document.querySelector<HTMLElement>('.photo-grid-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   function clearFilter() {
-    activePlace = null;
+    activeCountry = null;
     document.querySelectorAll<HTMLElement>('.masonry-item').forEach(i => { i.style.display = ''; });
     document.querySelectorAll('.polaroid').forEach(p => p.classList.remove('polaroid-active'));
     (document.getElementById('filter-bar') as HTMLElement).hidden = true;
@@ -228,12 +254,40 @@ const polaroids = locations.map(loc => {
   // Polaroid buttons trigger filter
   document.querySelectorAll<HTMLElement>('.polaroid').forEach(btn => {
     btn.addEventListener('click', () => {
-      const pk = btn.dataset.place!;
-      if (activePlace === pk) { clearFilter(); return; }
-      const loc = locations.find(l => l.placeKey === pk);
-      if (loc) setFilter(pk, loc.place);
+      const ck = btn.dataset.country!;
+      if (activeCountry === ck) { clearFilter(); return; }
+      setFilter(ck);
     });
   });
+
+  // ── Lightbox ──────────────────────────────────────
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxTitle = document.getElementById('lightbox-title') as HTMLElement;
+  const lightboxPlace = document.getElementById('lightbox-place') as HTMLElement;
+
+  document.querySelectorAll<HTMLElement>('.photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img')!;
+      lightboxImg.srcset = img.srcset;
+      lightboxImg.sizes = '90vw';
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
+      lightboxTitle.textContent = card.querySelector('.photo-title')?.textContent ?? '';
+      lightboxPlace.textContent = card.querySelector('.photo-place')?.textContent ?? '';
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightbox-close')!.addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-backdrop')!.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
   // Adapt globe when theme changes
   const observer = new MutationObserver(() => {
@@ -355,7 +409,7 @@ const polaroids = locations.map(loc => {
     line-height: 1.2;
   }
 
-  .polaroid-country {
+  .polaroid-count {
     display: block;
     font-family: var(--font-sans);
     font-size: 0.6rem;
@@ -455,6 +509,78 @@ const polaroids = locations.map(loc => {
     color: rgba(245,240,232,0.72);
     margin: 0;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ── Lightbox ───────────────────────────────────── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox[hidden] { display: none; }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 8, 5, 0.92);
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 2;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.7);
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: #f5f0e8; }
+
+  .lightbox-fig {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  .lightbox-caption { text-align: center; }
+
+  .lightbox-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f5f0e8;
+    margin: 0 0 0.2rem;
+  }
+
+  .lightbox-place {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.65);
+    margin: 0;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
   }
 

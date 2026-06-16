@@ -19,36 +19,96 @@ const countryNames: Record<string, string> = {
 };
 
 const items = photos.map((p) => ({
-  file: p.file,
-  title: titleNames[p.title] ?? p.title,
-  place: placeNames[p.place] ?? p.place,
-  placeKey: p.place,
-  country: countryNames[p.country] ?? p.country,
-  lat: p.lat,
-  lng: p.lng,
+  file:       p.file,
+  title:      titleNames[p.title]   ?? p.title,
+  place:      placeNames[p.place]   ?? p.place,
+  placeKey:   p.place,
+  country:    countryNames[p.country] ?? p.country,
+  countryKey: p.country,
+  lat:        p.lat,
+  lng:        p.lng,
 }));
+
+// Globe markers — place-level for visual richness
+const locations = Object.values(
+  items.reduce<Record<string, { place: string; placeKey: string; country: string; lat: number; lng: number; count: number }>>((acc, p) => {
+    if (!acc[p.placeKey]) acc[p.placeKey] = { place: p.place, placeKey: p.placeKey, country: p.country, lat: p.lat, lng: p.lng, count: 0 };
+    acc[p.placeKey].count++;
+    return acc;
+  }, {})
+);
+
+// One polaroid card per country
+const countryList = Object.values(
+  items.reduce<Record<string, { country: string; countryKey: string; file: string; title: string; count: number }>>((acc, p) => {
+    if (!acc[p.countryKey]) acc[p.countryKey] = { country: p.country, countryKey: p.countryKey, file: p.file, title: p.title, count: 0 };
+    acc[p.countryKey].count++;
+    return acc;
+  }, {})
+);
 ---
 
 <BaseLayout title="Photographie" description="Photographie d'Ismail El Jamiy — architecture et voyages en France, au Maroc et en Allemagne.">
-  <div class="page-container">
 
+  <!-- ── Page header ──────────────────────────────── -->
+  <div class="page-header-wrap">
     <header class="page-header">
       <h1 class="page-title">Photographie</h1>
       <div class="page-rule" aria-hidden="true"></div>
       <p class="page-subtitle">Instants capturés en France, au Maroc et en Allemagne.</p>
     </header>
+  </div>
 
-    <section class="map-section" aria-label="Lieux des photos">
-      <div id="photo-map"></div>
-      <div id="filter-bar" class="filter-bar" hidden>
-        <span id="filter-text"></span>
-        <button id="clear-filter" type="button">{ui.clear}</button>
+  <!-- ── Globe section ─────────────────────────────── -->
+  <section class="globe-section" aria-label="Lieux des photos sur le globe">
+    <div class="globe-wrap">
+
+      <!-- Left: France, Morocco -->
+      <div class="polaroids-left" id="polaroids-left" aria-hidden="true">
+        {countryList.slice(0, 2).map((c) => (
+          <button class="polaroid" data-country={c.countryKey} type="button" aria-label={`Filtrer par ${c.country}`}>
+            <div class="polaroid-img">
+              <Image src={photoImages[c.file]} alt={c.title} width={120} height={90} loading="lazy" />
+            </div>
+            <span class="polaroid-label">{c.country}</span>
+            <span class="polaroid-count">{c.count} photos</span>
+          </button>
+        ))}
       </div>
-    </section>
 
+      <!-- Center: Globe -->
+      <div class="globe-container">
+        <canvas id="globe-canvas" width="520" height="520"></canvas>
+        <div class="globe-hint" id="globe-hint">Faire glisser pour explorer</div>
+      </div>
+
+      <!-- Right: Germany -->
+      <div class="polaroids-right" id="polaroids-right" aria-hidden="true">
+        {countryList.slice(2).map((c) => (
+          <button class="polaroid" data-country={c.countryKey} type="button" aria-label={`Filtrer par ${c.country}`}>
+            <div class="polaroid-img">
+              <Image src={photoImages[c.file]} alt={c.title} width={120} height={90} loading="lazy" />
+            </div>
+            <span class="polaroid-label">{c.country}</span>
+            <span class="polaroid-count">{c.count} photos</span>
+          </button>
+        ))}
+      </div>
+
+    </div>
+
+    <!-- Filter bar -->
+    <div id="filter-bar" class="filter-bar" hidden>
+      <span id="filter-text"></span>
+      <button id="clear-filter" type="button">{ui.clear}</button>
+    </div>
+  </section>
+
+  <!-- ── Photo grid ─────────────────────────────────── -->
+  <div class="photo-grid-wrap">
     <div class="masonry" id="photo-grid">
       {items.map((p) => (
-        <div class="masonry-item" data-place={p.placeKey}>
+        <div class="masonry-item" data-country={p.countryKey}>
           <div class="photo-card">
             <Image
               src={photoImages[p.file]}
@@ -66,110 +126,182 @@ const items = photos.map((p) => ({
         </div>
       ))}
     </div>
-
   </div>
+
+  <!-- Data bridge -->
+  <div id="globe-data"
+    data-items={JSON.stringify(items)}
+    data-locations={JSON.stringify(locations)}
+    data-ui={JSON.stringify(ui)}
+    hidden>
+  </div>
+
+  <!-- ── Lightbox ──────────────────────────────────── -->
+  <div id="lightbox" class="lightbox" hidden role="dialog" aria-modal="true" aria-label="Visionneuse de photos">
+    <div class="lightbox-backdrop"></div>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Fermer">×</button>
+    <figure class="lightbox-fig">
+      <img id="lightbox-img" src="" alt="" class="lightbox-img" />
+      <figcaption class="lightbox-caption">
+        <p class="lightbox-title" id="lightbox-title"></p>
+        <p class="lightbox-place" id="lightbox-place"></p>
+      </figcaption>
+    </figure>
+  </div>
+
 </BaseLayout>
 
-<script is:inline define:vars={{ photos: items, ui }}>
-  (function () {
-    const cssLink = document.createElement('link');
-    cssLink.rel = 'stylesheet';
-    cssLink.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    document.head.appendChild(cssLink);
+<script>
+  import createGlobe from 'cobe';
 
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.onload = initMap;
-    document.body.appendChild(script);
-  })();
+  // ── Read server-side data from DOM ───────────────────
+  const dataEl = document.getElementById('globe-data') as HTMLElement;
+  const items: { file: string; title: string; place: string; placeKey: string; country: string; countryKey: string; lat: number; lng: number }[] = JSON.parse(dataEl.dataset.items!);
+  const locations: { place: string; placeKey: string; country: string; lat: number; lng: number; count: number }[] = JSON.parse(dataEl.dataset.locations!);
+  const ui: { photo: string; photos: string; from: string; clear: string } = JSON.parse(dataEl.dataset.ui!);
 
-  function initMap() {
-    const map = L.map('photo-map', { scrollWheelZoom: false }).setView([44, 2], 4);
+  // Derive country groups for filter display
+  const countryGroups: Record<string, { country: string; count: number }> = {};
+  items.forEach((p) => {
+    if (!countryGroups[p.countryKey]) countryGroups[p.countryKey] = { country: p.country, count: 0 };
+    countryGroups[p.countryKey].count++;
+  });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19,
-    }).addTo(map);
+  // ── Cobe Globe ──────────────────────────────────────
+  const canvas = document.getElementById('globe-canvas') as HTMLCanvasElement;
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
 
-    const groups = {};
-    photos.forEach(function (p) {
-      if (!groups[p.placeKey]) {
-        groups[p.placeKey] = { placeKey: p.placeKey, place: p.place, lat: p.lat, lng: p.lng, count: 0 };
-      }
-      groups[p.placeKey].count++;
-    });
+  const markers = locations.map(loc => ({
+    location: [loc.lat, loc.lng] as [number, number],
+    size: Math.min(0.06 + loc.count * 0.012, 0.1),
+  }));
 
-    const styleDefault = { radius: 9,  fillColor: '#6b7c2e', color: '#fff', weight: 2, fillOpacity: 0.85 };
-    const styleActive  = { radius: 11, fillColor: '#b85c2e', color: '#fff', weight: 2, fillOpacity: 1   };
-    const styleFaded   = { radius: 8,  fillColor: '#6b7c2e', color: '#fff', weight: 2, fillOpacity: 0.3  };
+  let phi = 0.5;
+  let dragging = false;
+  let lastX = 0;
+  let activeCountry: string | null = null;
 
-    let activePlace = null;
-    const markers = {};
+  const globe = createGlobe(canvas, {
+    devicePixelRatio: Math.min(window.devicePixelRatio, 2),
+    width:  520,
+    height: 520,
+    phi,
+    theta: 0.28,
+    dark:          isDark ? 1 : 0,
+    diffuse:       1.4,
+    mapSamples:    20000,
+    mapBrightness: isDark ? 4 : 7,
+    baseColor:     isDark ? [0.08, 0.07, 0.05] : [0.96, 0.93, 0.89],
+    markerColor:   [0.34, 0.42, 0.18],
+    glowColor:     isDark ? [0.08, 0.07, 0.05] : [0.96, 0.93, 0.89],
+    opacity:       0.85,
+    markers,
+  });
 
-    Object.values(groups).forEach(function (loc) {
-      const marker = L.circleMarker([loc.lat, loc.lng], Object.assign({}, styleDefault)).addTo(map);
-
-      marker.bindTooltip(
-        '<strong>' + loc.place + '</strong><br>' + loc.count + ' ' + (loc.count > 1 ? ui.photos : ui.photo),
-        { direction: 'top', offset: L.point(0, -10) }
-      );
-
-      markers[loc.placeKey] = marker;
-
-      marker.on('click', function () {
-        if (activePlace === loc.placeKey) {
-          clearFilter();
-        } else {
-          setFilter(loc.placeKey, loc.place);
-        }
-      });
-    });
-
-    function setFilter(placeKey, placeLabel) {
-      activePlace = placeKey;
-
-      Object.entries(markers).forEach(function (entry) {
-        entry[1].setStyle(entry[0] === placeKey ? styleActive : styleFaded);
-      });
-
-      var cards = document.querySelectorAll('.masonry-item');
-      var count = 0;
-      cards.forEach(function (item) {
-        if (item.dataset.place === placeKey) {
-          item.style.display = '';
-          count++;
-        } else {
-          item.style.display = 'none';
-        }
-      });
-
-      var bar = document.getElementById('filter-bar');
-      var text = document.getElementById('filter-text');
-      text.textContent = count + ' ' + (count !== 1 ? ui.photos : ui.photo) + ' ' + ui.from + ' ' + placeLabel;
-      bar.hidden = false;
-    }
-
-    function clearFilter() {
-      activePlace = null;
-      Object.values(markers).forEach(function (m) { m.setStyle(styleDefault); });
-      document.querySelectorAll('.masonry-item').forEach(function (item) { item.style.display = ''; });
-      document.getElementById('filter-bar').hidden = true;
-    }
-
-    document.getElementById('clear-filter').addEventListener('click', clearFilter);
+  function tick() {
+    if (!dragging) phi += 0.003;
+    globe.update({ phi, theta: 0.28 });
+    requestAnimationFrame(tick);
   }
+  requestAnimationFrame(tick);
+
+  // ── Drag to rotate ────────────────────────────────
+  canvas.addEventListener('mousedown', (e) => {
+    dragging = true;
+    lastX = e.clientX;
+    (document.getElementById('globe-hint') as HTMLElement).style.opacity = '0';
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    phi += (e.clientX - lastX) * 0.005;
+    lastX = e.clientX;
+  });
+  window.addEventListener('mouseup', () => { dragging = false; });
+
+  canvas.addEventListener('touchstart', (e) => {
+    dragging = true;
+    lastX = e.touches[0].clientX;
+  }, { passive: true });
+  window.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    phi += (e.touches[0].clientX - lastX) * 0.005;
+    lastX = e.touches[0].clientX;
+  }, { passive: true });
+  window.addEventListener('touchend', () => { dragging = false; });
+
+  // ── Filter logic ──────────────────────────────────
+  function setFilter(countryKey: string) {
+    activeCountry = countryKey;
+    const group = countryGroups[countryKey];
+    let count = 0;
+    document.querySelectorAll<HTMLElement>('.masonry-item').forEach((item) => {
+      if (item.dataset.country === countryKey) { item.style.display = ''; count++; }
+      else { item.style.display = 'none'; }
+    });
+    document.querySelectorAll<HTMLElement>('.polaroid').forEach(p => {
+      p.classList.toggle('polaroid-active', p.dataset.country === countryKey);
+    });
+    const bar = document.getElementById('filter-bar') as HTMLElement;
+    const text = document.getElementById('filter-text') as HTMLElement;
+    text.textContent = `${count} ${count !== 1 ? ui.photos : ui.photo} ${ui.from} ${group?.country ?? countryKey}`;
+    bar.hidden = false;
+    document.querySelector<HTMLElement>('.photo-grid-wrap')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function clearFilter() {
+    activeCountry = null;
+    document.querySelectorAll<HTMLElement>('.masonry-item').forEach(i => { i.style.display = ''; });
+    document.querySelectorAll('.polaroid').forEach(p => p.classList.remove('polaroid-active'));
+    (document.getElementById('filter-bar') as HTMLElement).hidden = true;
+  }
+
+  (document.getElementById('clear-filter') as HTMLElement).addEventListener('click', clearFilter);
+
+  document.querySelectorAll<HTMLElement>('.polaroid').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const ck = btn.dataset.country!;
+      if (activeCountry === ck) { clearFilter(); return; }
+      setFilter(ck);
+    });
+  });
+
+  // ── Lightbox ──────────────────────────────────────
+  const lightbox = document.getElementById('lightbox') as HTMLElement;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxTitle = document.getElementById('lightbox-title') as HTMLElement;
+  const lightboxPlace = document.getElementById('lightbox-place') as HTMLElement;
+
+  document.querySelectorAll<HTMLElement>('.photo-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const img = card.querySelector('img')!;
+      lightboxImg.srcset = img.srcset;
+      lightboxImg.sizes = '90vw';
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
+      lightboxTitle.textContent = card.querySelector('.photo-title')?.textContent ?? '';
+      lightboxPlace.textContent = card.querySelector('.photo-place')?.textContent ?? '';
+      lightbox.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightbox-close')!.addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-backdrop')!.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
 <style>
-  .page-container {
+  /* ── Page header ────────────────────────────────── */
+  .page-header-wrap {
     max-width: 1100px;
     margin: 0 auto;
-    padding: 4rem 1.5rem 5rem;
+    padding: 4rem 1.5rem 2rem;
   }
-
-  .page-header { margin-bottom: 2.5rem; }
 
   .page-title {
     font-family: var(--font-serif);
@@ -193,20 +325,133 @@ const items = photos.map((p) => ({
     margin: 0;
   }
 
-  .map-section { margin-bottom: 2.5rem; }
-
-  #photo-map {
-    height: 340px;
-    border-radius: 0.5rem;
-    border: 1px solid var(--border);
-    overflow: hidden;
+  /* ── Globe section ───────────────────────────────── */
+  .globe-section {
+    padding: 3rem clamp(1.5rem, 4vw, 3rem) 2rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
   }
 
+  .globe-wrap {
+    max-width: 1100px;
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr 520px 1fr;
+    align-items: center;
+    gap: 2rem;
+    min-height: 520px;
+  }
+
+  .globe-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  #globe-canvas {
+    border-radius: 50%;
+    cursor: grab;
+    transition: opacity 0.3s;
+  }
+  #globe-canvas:active { cursor: grabbing; }
+
+  .globe-hint {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    text-align: center;
+    transition: opacity 0.4s;
+  }
+
+  /* ── Polaroid cards ──────────────────────────────── */
+  .polaroids-left,
+  .polaroids-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .polaroid {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.5rem 0.5rem 0.75rem;
+    cursor: pointer;
+    width: 138px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+    transition: transform 0.3s cubic-bezier(0.25,1,.5,1),
+                box-shadow 0.3s cubic-bezier(0.25,1,.5,1),
+                border-color 0.2s;
+    text-align: center;
+  }
+  .polaroids-left .polaroid:nth-child(odd)  { transform: rotate(-2deg); }
+  .polaroids-left .polaroid:nth-child(even) { transform: rotate(1.5deg); }
+  .polaroids-right .polaroid:nth-child(odd) { transform: rotate(1.8deg); }
+  .polaroids-right .polaroid:nth-child(even){ transform: rotate(-1.2deg); }
+
+  .polaroid:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.05) !important;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18), 0 4px 8px rgba(0,0,0,0.1);
+    border-color: var(--color-olive);
+    z-index: 10;
+  }
+
+  .polaroid-active {
+    transform: rotate(0deg) translateY(-8px) scale(1.06) !important;
+    box-shadow: 0 14px 36px color-mix(in srgb, var(--color-olive) 25%, transparent) !important;
+    border-color: var(--color-olive) !important;
+    z-index: 10;
+  }
+
+  .polaroid-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    background: var(--border);
+  }
+  .polaroid-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+  }
+  .polaroid:hover .polaroid-img img { transform: scale(1.08); }
+
+  .polaroid-label {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--fg);
+    line-height: 1.2;
+  }
+
+  .polaroid-count {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin-top: 0.1rem;
+  }
+
+  /* ── Filter bar ──────────────────────────────────── */
   .filter-bar {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-top: 0.65rem;
+    margin-top: 1rem;
+    max-width: 1100px;
+    margin-inline: auto;
     font-family: var(--font-sans);
     font-size: 0.875rem;
     color: var(--fg-muted);
@@ -216,17 +461,21 @@ const items = photos.map((p) => ({
   #clear-filter {
     background: none;
     border: 1px solid var(--border);
-    border-radius: 0.25rem;
-    padding: 0.15rem 0.625rem;
+    border-radius: 4px;
+    padding: 0.18rem 0.65rem;
     font-family: var(--font-sans);
     font-size: 0.8rem;
     color: var(--fg-muted);
     cursor: pointer;
     transition: border-color 0.2s, color 0.2s;
   }
-  #clear-filter:hover {
-    border-color: var(--color-olive);
-    color: var(--fg);
+  #clear-filter:hover { border-color: var(--color-olive); color: var(--fg); }
+
+  /* ── Photo grid ──────────────────────────────────── */
+  .photo-grid-wrap {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding: 2.5rem clamp(1.5rem, 4vw, 3rem) 5rem;
   }
 
   .masonry {
@@ -242,9 +491,15 @@ const items = photos.map((p) => ({
   .photo-card {
     position: relative;
     overflow: hidden;
-    border-radius: 0.375rem;
+    border-radius: 6px;
     background: var(--bg-panel);
     cursor: zoom-in;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .photo-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+    transform: translateY(-2px);
   }
 
   .photo-card img {
@@ -252,23 +507,17 @@ const items = photos.map((p) => ({
     display: block;
     transition: transform 0.45s ease;
   }
-
-  .photo-card:hover img {
-    transform: scale(1.05);
-  }
+  .photo-card:hover img { transform: scale(1.05); }
 
   .photo-overlay {
     position: absolute;
     inset: auto 0 0;
     padding: 2.5rem 0.875rem 0.875rem;
-    background: linear-gradient(to top, rgba(18, 12, 4, 0.8) 0%, transparent 100%);
+    background: linear-gradient(to top, rgba(18,12,4,0.82) 0%, transparent 100%);
     transform: translateY(100%);
     transition: transform 0.32s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-
-  .photo-card:hover .photo-overlay {
-    transform: translateY(0);
-  }
+  .photo-card:hover .photo-overlay { transform: translateY(0); }
 
   .photo-title {
     font-family: var(--font-serif);
@@ -278,13 +527,97 @@ const items = photos.map((p) => ({
     margin: 0 0 0.2rem;
     line-height: 1.3;
   }
-
   .photo-place {
     font-family: var(--font-sans);
     font-size: 0.75rem;
-    color: rgba(245, 240, 232, 0.72);
+    color: rgba(245,240,232,0.72);
     margin: 0;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+  }
+
+  /* ── Lightbox ───────────────────────────────────── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox[hidden] { display: none; }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 8, 5, 0.92);
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 2;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,0.7);
+    font-size: 2.5rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: #f5f0e8; }
+
+  .lightbox-fig {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+
+  .lightbox-img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  .lightbox-caption { text-align: center; }
+
+  .lightbox-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #f5f0e8;
+    margin: 0 0 0.2rem;
+  }
+
+  .lightbox-place {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: rgba(245,240,232,0.65);
+    margin: 0;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  /* ── Responsive ──────────────────────────────────── */
+  @media (max-width: 1000px) {
+    .globe-wrap {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+      min-height: auto;
+    }
+    .polaroids-left  { order: 2; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .polaroids-right { order: 3; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .globe-container { order: 1; }
+    #globe-canvas { width: 320px; height: 320px; }
   }
 </style>
