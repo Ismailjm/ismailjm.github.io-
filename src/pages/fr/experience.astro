@@ -75,11 +75,18 @@ const experience = [
   },
 ];
 
-const skills = {
+const skills: Record<string, string[]> = {
   "Data Science": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
   "IA / Outils ML": ["Scikit-learn", "Keras", "TensorFlow", "PyTorch", "MONAI", "SimpleITK", "OpenCV", "HF Transformers", "spaCy", "NLTK", "pyarabic"],
   "Architectures": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM"],
   "Langages": ["Python", "JavaScript", "SQL", "Bash"],
+};
+
+const techIcons: Record<string, string> = {
+  "Python":"python","Pandas":"pandas","NumPy":"numpy","Matplotlib":"matplotlib","Plotly":"plotly",
+  "Selenium":"selenium","Scikit-learn":"scikitlearn","Keras":"keras","TensorFlow":"tensorflow",
+  "PyTorch":"pytorch","OpenCV":"opencv","HF Transformers":"huggingface","JavaScript":"javascript",
+  "Bash":"gnubash","SQL":"sqlite",
 };
 
 const certs = [
@@ -92,6 +99,7 @@ const certs = [
 
 <BaseLayout title="Expérience" description="Formation, expérience professionnelle et compétences techniques d'Ismail El Jamiy.">
 
+  <!-- ── Page hero ─────────────────────────────────── -->
   <section class="page-hero">
     <div class="ph-ambient" aria-hidden="true"></div>
     <div class="ph-inner">
@@ -99,53 +107,74 @@ const certs = [
         <div>
           <span class="ph-eyebrow">CV &amp; Parcours</span>
           <h1 class="ph-title">Expérience</h1>
-          <p class="ph-sub">De Casablanca à Toulouse — un parcours en ingénierie IA, vision par ordinateur et numérisation de manuscrits.</p>
+          <p class="ph-sub">
+            De Casablanca à Toulouse — un parcours en ingénierie IA,
+            vision par ordinateur et numérisation de manuscrits.
+          </p>
         </div>
-        <div style="display:flex;align-items:flex-end;padding-top:1rem;">
-          <a href="/Resume.pdf" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.5rem;background:linear-gradient(160deg,var(--color-olive),color-mix(in srgb,var(--color-olive) 78%,black));color:#fff;font-family:var(--font-sans);font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-decoration:none;border-radius:4px;">Télécharger le CV</a>
+        <div class="cv-btn-wrap">
+          <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-dl-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Télécharger le CV
+          </a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ── Page body ──────────────────────────────────── -->
   <div class="page-body">
 
+    <!-- Education -->
     <section class="cv-section">
-      <h2 class="section-title">Formation</h2>
+      <div class="cv-section-header reveal">
+        <span class="section-label">Parcours académique</span>
+        <h2 class="section-h2">Formation</h2>
+      </div>
+
       <div class="timeline">
-        {education.map(ed => (
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-body">
-              <div class="tl-header">
-                <span class="tl-role">{ed.degree}</span>
-                <span class="tl-period">{ed.period}</span>
+        <div class="timeline-line" aria-hidden="true"></div>
+        {education.map((item, i) => (
+          <div class="timeline-item reveal" data-delay={String(i * 0.12)}>
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-card">
+              <div class="tl-period">{item.period}</div>
+              <h3 class="tl-role">{item.degree}</h3>
+              <div class="tl-org">{item.institution}</div>
+              <div class="tl-loc">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {item.location}
               </div>
-              <span class="tl-org">{ed.institution}</span>
-              <span class="tl-location">{ed.location}</span>
-              {ed.note && <p class="tl-note">{ed.note}</p>}
+              {item.note && <p class="tl-note">{item.note}</p>}
             </div>
           </div>
         ))}
       </div>
     </section>
 
+    <!-- Work Experience -->
     <section class="cv-section">
-      <h2 class="section-title">Expérience professionnelle</h2>
+      <div class="cv-section-header reveal">
+        <span class="section-label">Secteur</span>
+        <h2 class="section-h2">Expérience professionnelle</h2>
+      </div>
+
       <div class="timeline">
-        {experience.map(exp => (
-          <div class="timeline-item">
-            <div class="timeline-dot"></div>
-            <div class="timeline-body">
-              <div class="tl-header">
-                <span class="tl-role">{exp.role}</span>
-                <span class="tl-period">{exp.period}</span>
+        <div class="timeline-line" aria-hidden="true"></div>
+        {experience.map((item, i) => (
+          <div class="timeline-item reveal" data-delay={String(i * 0.1)}>
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-card">
+              <div class="tl-period">{item.period}</div>
+              <h3 class="tl-role">{item.role}</h3>
+              <div class="tl-org">{item.org}</div>
+              <div class="tl-loc">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {item.location}
               </div>
-              <span class="tl-org">{exp.org}</span>
-              <span class="tl-location">{exp.location}</span>
-              {exp.objective && <p class="tl-objective"><strong>Objectif :</strong> {exp.objective}</p>}
+              <p class="tl-objective"><strong>Objectif :</strong> {item.objective}</p>
               <ul class="tl-bullets">
-                {exp.bullets.map(b => <li>{b}</li>)}
+                {item.bullets.map(b => <li>{b}</li>)}
               </ul>
             </div>
           </div>
@@ -153,33 +182,59 @@ const certs = [
       </div>
     </section>
 
+    <!-- Technical Skills -->
     <section class="cv-section">
-      <h2 class="section-title">Compétences techniques</h2>
-      <div class="skills-grid">
-        {Object.entries(skills).map(([cat, items]) => (
+      <div class="cv-section-header reveal">
+        <span class="section-label">Technique</span>
+        <h2 class="section-h2">Compétences</h2>
+      </div>
+      <div class="skills-grid reveal">
+        {Object.entries(skills).map(([category, items]) => (
           <div class="skill-group">
-            <h3 class="skill-cat">{cat}</h3>
+            <h3 class="skill-category">{category}</h3>
             <div class="skill-tags">
-              {items.map(s => <span class="tag">{s}</span>)}
+              {items.map(tag => {
+                const icon = techIcons[tag];
+                return (
+                  <span class={`skill-tag${icon ? ' has-icon' : ''}`}>
+                    {icon && (
+                      <img src={`https://cdn.simpleicons.org/${icon}`} width="12" height="12"
+                           alt="" aria-hidden="true" class="skill-icon"
+                           onerror="this.closest('.has-icon')?.classList.remove('has-icon'); this.remove()" />
+                    )}
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           </div>
         ))}
       </div>
     </section>
 
+    <!-- Certifications -->
     <section class="cv-section">
-      <h2 class="section-title">Certifications</h2>
-      <ul class="cert-list">
-        {certs.map(c => (
-          <li class="cert-item card">
-            <span class="cert-name">{c.name}</span>
-            <span class="cert-meta">{c.issuer} · {c.date}</span>
-          </li>
+      <div class="cv-section-header reveal">
+        <span class="section-label">Références</span>
+        <h2 class="section-h2">Certifications</h2>
+      </div>
+      <div class="cert-grid">
+        {certs.map((c, i) => (
+          <div class="cert-card reveal" data-delay={String(i * 0.08)}>
+            <div class="cert-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <div class="cert-body">
+              <span class="cert-name">{c.name}</span>
+              <span class="cert-meta">{c.issuer} · {c.date}</span>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
 
   </div>
+
 </BaseLayout>
 
 <script>
@@ -187,40 +242,273 @@ const certs = [
   import gsap from 'gsap';
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import { inView } from 'motion';
+
   gsap.registerPlugin(ScrollTrigger);
   const lenis = new Lenis({ duration: 1.2, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
-  gsap.from('.ph-inner > *', { y: 22, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
-  inView('.page-body > *, .page-body-narrow > *', (element) => {
-    gsap.from(element as HTMLElement, { y: 26, opacity: 0, duration: 0.6, ease: 'power2.out', clearProps: 'all' });
+
+  gsap.from('.ph-inner > *', { y: 20, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', delay: 0.1 });
+
+  inView('.reveal', (element) => {
+    const el = element as HTMLElement;
+    const delay = parseFloat(el.dataset?.delay ?? '0');
+    gsap.from(el, { y: 28, opacity: 0, duration: 0.65, delay, ease: 'power2.out', clearProps: 'all' });
   }, { amount: 0.12 });
+
+  // Animate timeline line on scroll
+  inView('.timeline-line', (element) => {
+    const el = element as HTMLElement;
+    gsap.from(el, { scaleY: 0, duration: 1.2, ease: 'power2.out', transformOrigin: 'top' });
+  }, { amount: 0.1 });
 </script>
 
 <style>
-  .cv-section { margin-bottom: 3.5rem; }
-  .section-title { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; color: var(--color-olive); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-  .timeline { display: flex; flex-direction: column; gap: 0; border-left: 2px solid var(--border); padding-left: 1.5rem; margin-left: 0.5rem; }
-  .timeline-item { position: relative; padding-bottom: 2rem; }
-  .timeline-dot { position: absolute; left: -1.75rem; top: 0.3rem; width: 14px; height: 14px; border-radius: 50%; background: linear-gradient(135deg, var(--color-olive), var(--color-terracotta)); border: 2px solid var(--bg); box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-olive) 30%, transparent); }
-  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
-  .tl-role { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; color: var(--fg); }
-  .tl-period { font-family: var(--font-sans); font-size: 0.7rem; font-weight: 500; color: var(--color-olive); background: color-mix(in srgb, var(--color-olive) 8%, transparent); border: 1px solid color-mix(in srgb, var(--color-olive) 22%, transparent); border-radius: 9999px; padding: 0.15rem 0.65rem; white-space: nowrap; }
-  .tl-org { display: block; font-family: var(--font-sans); font-size: 0.875rem; font-weight: 600; color: var(--accent); }
-  .tl-location { display: block; font-family: var(--font-sans); font-size: 0.8rem; color: var(--fg-muted); margin-bottom: 0.5rem; }
-  .tl-objective { font-family: var(--font-sans); font-size: 0.875rem; color: var(--fg-muted); margin: 0.5rem 0; }
-  .tl-note { font-family: var(--font-sans); font-size: 0.85rem; color: var(--fg-muted); font-style: italic; margin: 0.4rem 0 0; }
-  .tl-bullets { list-style: none; padding: 0; margin: 0; }
-  .tl-bullets li { font-family: var(--font-sans); font-size: 0.875rem; color: var(--fg-muted); padding-left: 1rem; position: relative; margin-bottom: 0.3em; }
-  .tl-bullets li::before { content: "–"; position: absolute; left: 0; color: var(--color-terracotta); }
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
-  .skill-group { padding: 1.25rem; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 0.5rem; }
-  .skill-cat { font-family: var(--font-sans); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-muted); margin-bottom: 0.75rem; }
+  /* ── Hero extras ─────────────────────────────────── */
+  .cv-btn-wrap { display: flex; align-items: flex-end; padding-top: 1rem; }
+  .cv-dl-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    background: linear-gradient(160deg, var(--color-olive), color-mix(in srgb, var(--color-olive) 78%, black));
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--color-olive) 22%, transparent);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cv-dl-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px color-mix(in srgb, var(--color-olive) 28%, transparent); }
+  [data-theme="dark"] .cv-dl-btn { background: linear-gradient(160deg, var(--color-gold), color-mix(in srgb, var(--color-gold) 78%, black)); color: var(--color-night); }
+
+  /* ── CV sections ─────────────────────────────────── */
+  .cv-section { margin-bottom: 4.5rem; }
+  .cv-section-header { margin-bottom: 2rem; }
+
+  /* ── Vertical timeline ───────────────────────────── */
+  .timeline {
+    position: relative;
+    padding-left: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 7px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-olive), color-mix(in srgb, var(--color-olive) 20%, transparent));
+    border-radius: 1px;
+    transform-origin: top;
+  }
+  [data-theme="dark"] .timeline-line {
+    background: linear-gradient(to bottom, var(--color-gold), color-mix(in srgb, var(--color-gold) 15%, transparent));
+  }
+
+  .timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2.5rem;
+    top: 1.1rem;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--color-olive);
+    background: var(--bg);
+    z-index: 1;
+    transform: translateX(0);
+    transition: background 0.2s, transform 0.2s;
+  }
+  [data-theme="dark"] .timeline-dot { border-color: var(--color-gold); }
+  .timeline-item:hover .timeline-dot {
+    background: var(--color-olive);
+    transform: scale(1.25);
+  }
+  [data-theme="dark"] .timeline-item:hover .timeline-dot { background: var(--color-gold); }
+
+  .timeline-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  }
+  .timeline-item:hover .timeline-card {
+    border-color: var(--accent);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 12%, transparent);
+    transform: translateX(4px);
+  }
+
+  .tl-period {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--color-terracotta);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .tl-role {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0 0 0.25rem;
+    line-height: 1.3;
+  }
+
+  .tl-org {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  [data-theme="dark"] .tl-org { color: var(--color-gold); }
+
+  .tl-loc {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .tl-note, .tl-objective {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--fg-muted);
+    line-height: 1.65;
+    margin: 0 0 0.75rem;
+  }
+
+  .tl-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .tl-bullets li {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+    padding-left: 1.25rem;
+    position: relative;
+  }
+  .tl-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--color-olive);
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  [data-theme="dark"] .tl-bullets li::before { color: var(--color-gold); }
+
+  /* ── Skills ──────────────────────────────────────── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .skill-group {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+
+  .skill-category {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    margin: 0 0 0.875rem;
+  }
+
   .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-  .tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.15rem 0.5rem; background: color-mix(in srgb, var(--color-olive) 10%, transparent); color: var(--color-olive); border-radius: 4px; }
-  .cert-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
-  .cert-item { display: flex; flex-direction: column; gap: 0.25rem; padding: 1rem 1.25rem; }
-  .cert-name { font-family: var(--font-serif); font-size: 0.975rem; font-weight: 600; color: var(--fg); }
-  .cert-meta { font-family: var(--font-sans); font-size: 0.8rem; color: var(--fg-muted); }
+
+  .skill-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-family: var(--font-sans);
+    font-size: 0.76rem;
+    font-weight: 500;
+    color: var(--fg);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .skill-tag:hover { border-color: var(--color-olive); color: var(--color-olive); }
+  .skill-icon { width: 12px; height: 12px; object-fit: contain; }
+
+  /* ── Certifications ──────────────────────────────── */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .cert-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .cert-card:hover { border-color: var(--color-olive); transform: translateY(-2px); }
+
+  .cert-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: color-mix(in srgb, var(--color-gold) 10%, transparent);
+    border-radius: 6px;
+    color: var(--color-gold);
+    margin-top: 2px;
+  }
+
+  .cert-body { display: flex; flex-direction: column; gap: 0.25rem; }
+  .cert-name { font-family: var(--font-sans); font-size: 0.85rem; font-weight: 600; color: var(--fg); line-height: 1.4; }
+  .cert-meta { font-family: var(--font-sans); font-size: 0.75rem; color: var(--fg-muted); }
+
+  /* ── Responsive ─────────────────────────────────── */
+  @media (max-width: 800px) {
+    .ph-split { grid-template-columns: 1fr; }
+    .cv-btn-wrap { padding-top: 0; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: 1fr; }
+  }
 </style>

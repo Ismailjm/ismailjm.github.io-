@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://ieljamiy.vercel.app',
+  build: {
+    format: 'file',
+  },
   vite: {
     plugins: [tailwindcss()],
   },

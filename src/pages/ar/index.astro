@@ -5,41 +5,106 @@ import HeroCalligraphy from '../../components/HeroCalligraphy.astro';
 
 <BaseLayout title="الرئيسية" description="اسماعيل الجامعي — طالب دكتوراه في الذكاء الاصطناعي بجامعة تولوز. بحث في التعرف على المخطوطات العلمية العربية الوسيطة.">
 
-  <!-- ── Hero ───────────────────────────────────────────────────── -->
-  <section class="hero">
-    <div class="hero-inner">
+  <!-- ── Hero ── full-bleed, always dark, cinematic ─── -->
+  <section class="hero" id="hero">
 
-      <!-- In RTL grid, first child lands on the right — natural Arabic start -->
-      <div class="hero-calligraphy" aria-hidden="true">
+    <!-- Background layer: calligraphy fills right side when no photo -->
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-calli-wrap">
         <HeroCalligraphy />
       </div>
+      <!-- Drop portrait.jpg into /public/ — it overlays the calligraphy -->
+      <img
+        src="/portrait.jpg"
+        alt=""
+        class="hero-photo"
+        loading="eager"
+        decoding="async"
+        onerror="this.style.display='none'"
+      />
+    </div>
 
-      <div class="hero-text">
-        <p class="hero-eyebrow">طالب دكتوراه في الذكاء الاصطناعي · تولوز</p>
-        <h1 class="hero-name">اسماعيل<br>الجامعي</h1>
-        <p class="hero-tagline">
-          التعرف الآلي على الخط المخطوط في المخطوطات العلمية العربية الوسيطة
-          وبناء نماذج لغوية متخصصة.
-        </p>
-        <div class="hero-ctas">
-          <a href="/ar/research" class="btn-primary">استعراض البحث</a>
-          <a href="/Resume.pdf" class="btn-secondary" target="_blank" rel="noopener">تحميل السيرة الذاتية</a>
-        </div>
+    <!-- Gradient overlays for legibility -->
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <!-- Noise grain -->
+    <div class="hero-grain" aria-hidden="true"></div>
+
+    <!-- Arabic calligraphy watermark — behind the Latin name, above the gradient -->
+    <div class="hero-ar-wm" aria-hidden="true">
+      <HeroCalligraphy />
+    </div>
+
+    <!-- Content grid (absolute, 4-corner) -->
+    <div class="hero-content">
+
+      <!-- top-left (renders top-right under RTL) -->
+      <div class="hc-tl">
+        <span class="hero-eyebrow">طالب دكتوراه في الذكاء الاصطناعي · تولوز</span>
+      </div>
+
+      <!-- top-right: empty intentionally -->
+      <div class="hc-tr"></div>
+
+      <!-- bottom-left: THE NAME (renders bottom-right under RTL) -->
+      <div class="hc-bl">
+        <h1 class="hero-name">
+          <span class="name-clip"><span class="name-l1">اسماعيل</span></span>
+          <span class="name-clip"><span class="name-l2">الجامعي</span></span>
+        </h1>
+      </div>
+
+      <!-- bottom-right: role / meta (renders bottom-left under RTL) -->
+      <div class="hc-br">
+        <span class="hero-role">معهد IRIT · جامعة تولوز</span>
+        <span class="hero-role-sub">التعرف على الخط المخطوط</span>
       </div>
 
     </div>
 
-    <div class="scroll-hint" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-           class="scroll-arrow">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
+    <!-- Scroll indicator -->
+    <div class="scroll-cue" aria-hidden="true">
+      <div class="scroll-track"><div class="scroll-thumb"></div></div>
+      <span class="scroll-label">مرر للأسفل</span>
+    </div>
+
+  </section>
+
+  <!-- Dark → page-bg transition gradient bridge -->
+  <div class="hero-page-fade" aria-hidden="true"></div>
+
+  <!-- ── Intro strip: tagline + CTAs ───────────────────── -->
+  <section class="intro-strip js-reveal">
+    <div class="intro-inner">
+      <p class="intro-tagline">
+        التعرف الآلي على الخط المخطوط في المخطوطات العلمية العربية الوسيطة
+        وبناء نماذج لغوية متخصصة.
+      </p>
+      <div class="intro-ctas">
+        <a href="/ar/research" class="btn-primary">
+          استعراض البحث
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="/Resume.pdf" class="btn-ghost" target="_blank" rel="noopener">
+          تحميل السيرة الذاتية
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- ── Latest publication strip ───────────────────────────────── -->
-  <div class="pub-strip">
+  <div class="pub-strip js-reveal" data-delay="0.1">
     <div class="pub-strip-inner">
       <span class="pub-strip-badge">قيد المراجعة</span>
       <span class="pub-strip-text">
@@ -96,123 +161,450 @@ import HeroCalligraphy from '../../components/HeroCalligraphy.astro';
   </section>
 </BaseLayout>
 
+<script>
+  import Lenis from 'lenis';
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { inView } from 'motion';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Lenis smooth scroll ──────────────────────────────────────
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // ── Hero entrance ─────────────────────────────────────────────
+  const tl = gsap.timeline({ defaults: { ease: 'expo.out' }, delay: 0.1 });
+
+  tl
+    .from('.hero-calli-wrap', { opacity: 0, scale: 1.04, duration: 1.8 })
+    .from('.hero-photo', { opacity: 0, scale: 1.04, duration: 1.8 }, '<')
+    .from('.hero-eyebrow', { y: -18, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=1.2')
+    .from('.hero-ar-wm', { opacity: 0, duration: 1.4 }, '-=0.8')
+    .from('.name-l1', { yPercent: 110, opacity: 0, duration: 1.1 }, '-=1.0')
+    .from('.name-l2', { yPercent: 110, opacity: 0, duration: 1.1 }, '-=0.95')
+    .from('.hc-br', { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.8')
+    .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.4');
+
+  // ── Subtle parallax on photo/calli ───────────────────────────
+  gsap.to('.hero-bg', {
+    yPercent: 8,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.2,
+    },
+  });
+
+  // ── Below-fold scroll reveals ────────────────────────────────
+  inView(
+    '.js-reveal',
+    (element) => {
+      const el = element as HTMLElement;
+      const delay = parseFloat(el.dataset?.delay ?? '0');
+      gsap.from(el, {
+        opacity: 0,
+        y: 36,
+        duration: 0.7,
+        delay,
+        ease: 'power2.out',
+        clearProps: 'all',
+      });
+    },
+    { amount: 0.15 }
+  );
+</script>
+
 <style>
+  /* ═══════════════════════════════════════════════════
+     HERO — full-bleed, always dark, cinematic
+  ═══════════════════════════════════════════════════ */
   .hero {
-    min-height: calc(100svh - 56px);
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 560px;
+    overflow: hidden;
+    background-color: #14130F;
+    /* Pull hero behind sticky nav so photo shows through the transparent header */
+    margin-top: -53px;
+  }
+
+  /* ── Background ─────────────────────────────────── */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  /* Calligraphy fills the right ~60% as identity element */
+  .hero-calli-wrap {
+    position: absolute;
+    right: -4%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 62%;
+    opacity: 0.22;
+    pointer-events: none;
+  }
+  .hero-calli-wrap :global(.calligraphy-svg) {
+    clip-path: none !important;
+    animation: none !important;
+    fill: #B8860B !important;
+  }
+
+  /* Portrait photo (full-bleed, covers calligraphy when present) */
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.6) saturate(1.2) contrast(1.1) sepia(0.32);
+  }
+
+  /* ── Overlays ────────────────────────────────────── */
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      /* heavy dark crush at bottom */
+      linear-gradient(to top, rgba(10,9,6,0.97) 0%, rgba(10,9,6,0.70) 28%, rgba(10,9,6,0.2) 55%, transparent 80%),
+      /* left vignette */
+      linear-gradient(to right, rgba(10,9,6,0.45) 0%, transparent 55%),
+      /* top fade — ensures nav text reads on any photo */
+      linear-gradient(to bottom, rgba(10,9,6,0.55) 0%, rgba(10,9,6,0.15) 18%, transparent 35%);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px;
+  }
+
+  /* ── Arabic calligraphy watermark ───────────────── */
+  /* Shows THROUGH the Latin name — same bottom-left anchor */
+  .hero-ar-wm {
+    position: absolute;
+    bottom: clamp(3.75rem, 5vw, 5rem);
+    left: clamp(1.5rem, 4vw, 3rem);
+    width: 72%;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.12;
+    transform: translateY(24%);
+  }
+  .hero-ar-wm :global(.calligraphy-svg) {
+    clip-path: none !important;
+    animation: none !important;
+    fill: rgba(237, 228, 202, 0.9) !important;
+  }
+
+  /* ── Content grid ────────────────────────────────── */
+  .hero-content {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: grid;
+    grid-template-areas:
+      "tl tr"
+      "bl br";
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr auto;
+    /* top pad = nav height (53px) + breathing room so eyebrow clears nav */
+    padding: calc(53px + clamp(1rem, 2vw, 1.5rem)) clamp(1.5rem, 4vw, 3rem)
+             clamp(3.75rem, 5vw, 5rem)              clamp(1.5rem, 4vw, 3rem);
+    gap: 0;
+  }
+
+  .hc-tl {
+    grid-area: tl;
+    align-self: start;
+    padding-top: 0;
+  }
+  .hc-tr {
+    grid-area: tr;
+    align-self: start;
+    justify-self: end;
+  }
+  .hc-bl {
+    grid-area: bl;
+    align-self: end;
+  }
+  .hc-br {
+    grid-area: br;
+    align-self: end;
+    justify-self: end;
+    /* Grid areas auto-mirror under dir="rtl": "br" physically renders bottom-LEFT here,
+       so left-align the text to hug that physical edge (right-align would float it inward). */
+    text-align: left;
+  }
+
+  /* ── Top labels ──────────────────────────────────── */
+  .hero-eyebrow {
+    font-family: var(--font-arabic);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(246, 241, 228, 0.55);
+  }
+
+  /* ── THE NAME ────────────────────────────────────── */
+  .hero-name {
+    margin: 0;
+    line-height: 0.88;
+  }
+
+  .name-clip {
+    display: block;
+    /* overflow: visible so extended letterforms never get clipped.
+       GSAP entrance uses opacity 0 → 1 to hide off-screen start. */
+    overflow: visible;
+    line-height: 1;
+    padding-bottom: 0.08em;
+  }
+
+  .name-l1,
+  .name-l2 {
+    display: block;
+    font-family: var(--font-arabic);
+    font-size: clamp(4rem, 14vw, 17rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: #EDE4CA;
+  }
+
+  .name-l2 {
+    color: color-mix(in srgb, #EDE4CA 62%, #C8921A);
+  }
+
+  /* ── Bottom-left meta (physical, under RTL) ──────── */
+  .hero-role {
+    display: block;
+    font-family: var(--font-arabic);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: rgba(246, 241, 228, 0.55);
+    line-height: 1.6;
+  }
+
+  .hero-role-sub {
+    display: block;
+    font-family: var(--font-arabic);
+    font-style: italic;
+    font-size: 0.78rem;
+    color: rgba(246, 241, 228, 0.38);
+    line-height: 1.6;
+  }
+
+  /* ── Scroll indicator ────────────────────────────── */
+  .scroll-cue {
+    position: absolute;
+    bottom: clamp(1.25rem, 2.5vw, 2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 5rem 2rem 3rem;
-    background: radial-gradient(ellipse 70% 60% at 30% 40%, color-mix(in srgb, var(--color-olive) 5%, transparent), transparent);
+    gap: 0.5rem;
   }
 
-  .hero-inner {
+  .scroll-track {
+    width: 1px;
+    height: 48px;
+    background: rgba(246, 241, 228, 0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scroll-thumb {
+    position: absolute;
+    inset: 0;
+    background: rgba(184, 134, 11, 0.85);
+    animation: scroll-drop 2s cubic-bezier(0.4, 0, 0.2, 1) 2.5s infinite;
+  }
+
+  @keyframes scroll-drop {
+    0%   { transform: translateY(-100%); opacity: 1; }
+    60%  { transform: translateY(0);     opacity: 1; }
+    100% { transform: translateY(110%);  opacity: 0; }
+  }
+
+  .scroll-label {
+    font-family: var(--font-arabic);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: rgba(246, 241, 228, 0.35);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     HERO → PAGE TRANSITION GRADIENT
+  ═══════════════════════════════════════════════════ */
+  .hero-page-fade {
+    height: 90px;
+    margin-top: -90px;
+    position: relative;
+    z-index: 20;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--bg) 100%
+    );
+  }
+
+  /* ═══════════════════════════════════════════════════
+     INTRO STRIP — tagline + CTAs, themed
+  ═══════════════════════════════════════════════════ */
+  .intro-strip {
+    padding: 5rem clamp(1.5rem, 4vw, 3rem) 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .intro-inner {
     max-width: 1100px;
-    width: 100%;
-    margin: 0 auto;
+    margin-inline: auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
+    grid-template-columns: 1fr auto;
+    align-items: end;
     gap: 5rem;
   }
 
-  .hero-text {
+  .intro-tagline {
+    font-family: var(--font-arabic);
+    font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+    color: var(--fg-muted);
+    line-height: 2;
+    max-width: 56ch;
+    margin: 0;
+  }
+
+  .intro-ctas {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    align-items: flex-end;
-    text-align: right;
+    gap: 0.75rem;
+    flex-shrink: 0;
+    align-items: flex-start;
   }
 
-  .hero-eyebrow {
+  /* ── Buttons ─────────────────────────────────────── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    background: linear-gradient(
+      160deg,
+      var(--color-olive) 0%,
+      color-mix(in srgb, var(--color-olive) 82%, black) 100%
+    );
+    color: #fff;
     font-family: var(--font-arabic);
     font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--color-terracotta);
-    margin: 0;
-  }
-
-  .hero-name {
-    font-family: var(--font-arabic);
-    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
-    font-weight: 700;
-    color: var(--fg);
-    line-height: 1.2;
-    margin: 0;
-  }
-
-  .hero-tagline {
-    font-family: var(--font-arabic);
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
-    color: var(--fg-muted);
-    line-height: 1.9;
-    margin: 0;
-  }
-
-  .hero-calligraphy {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.9;
-  }
-
-  .hero-ctas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: flex-end;
-  }
-
-  .btn-primary {
-    font-family: var(--font-arabic);
-    font-size: 0.95rem;
     font-weight: 600;
-    padding: 0.7rem 1.75rem;
-    background: var(--color-olive);
-    color: #fff;
-    border-radius: 0.375rem;
     text-decoration: none;
-    transition: opacity 0.2s, transform 0.15s;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow:
+      0 1px 3px color-mix(in srgb, var(--color-olive) 20%, transparent),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.22s cubic-bezier(0.25,1,.5,1),
+                box-shadow 0.22s cubic-bezier(0.25,1,.5,1);
   }
-  .btn-primary:hover { opacity: 0.87; transform: translateY(-1px); }
-
-  .btn-secondary {
-    font-family: var(--font-arabic);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 0.7rem 1.75rem;
-    border: 1.5px solid var(--border);
-    color: var(--fg);
-    border-radius: 0.375rem;
-    text-decoration: none;
-    transition: border-color 0.2s, color 0.2s, transform 0.15s;
-  }
-  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-
-  .scroll-hint {
-    color: var(--fg-muted);
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent);
     opacity: 0;
-    margin-top: 3rem;
-    animation: fade-in 0.6s ease 2.4s forwards;
+    transition: opacity 0.22s;
   }
-  .scroll-arrow { animation: bounce-down 2s ease-in-out 2.4s infinite; }
-  @keyframes bounce-down {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 18px color-mix(in srgb, var(--color-olive) 28%, transparent),
+      inset 0 1px 0 rgba(255,255,255,0.12);
   }
-  @keyframes fade-in { to { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-hint { animation: none; opacity: 0.4; }
-    .scroll-arrow { animation: none; }
+  .btn-primary:hover::after { opacity: 1; }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.75rem;
+    border: 1px solid color-mix(in srgb, var(--fg) 20%, transparent);
+    color: var(--fg-muted);
+    font-family: var(--font-arabic);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 3px;
+    background: transparent;
+    transition: border-color 0.22s, color 0.22s, transform 0.22s cubic-bezier(0.25,1,.5,1);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
   }
 
-  /* ── Publication strip ────────────────────────────── */
+  /* svg icon size inside buttons */
+  .btn-primary svg, .btn-ghost svg {
+    flex-shrink: 0;
+    transition: transform 0.22s;
+  }
+  .btn-primary:hover svg { transform: translateX(-3px); }
+  .btn-ghost:hover svg { transform: translateY(2px); }
+
+  [data-theme="dark"] .btn-primary {
+    background: linear-gradient(
+      160deg,
+      var(--color-gold) 0%,
+      color-mix(in srgb, var(--color-gold) 78%, black) 100%
+    );
+    color: var(--color-night);
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--color-gold) 25%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+  [data-theme="dark"] .btn-primary:hover {
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-gold) 30%, transparent),
+                inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+  [data-theme="dark"] .btn-ghost {
+    border-color: color-mix(in srgb, var(--color-gold) 25%, transparent);
+    color: color-mix(in srgb, var(--color-ivory) 60%, transparent);
+  }
+  [data-theme="dark"] .btn-ghost:hover {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     PUB STRIP
+  ═══════════════════════════════════════════════════ */
   .pub-strip {
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
-    padding: 0.875rem 2rem;
+    padding: 0.875rem clamp(1.5rem, 4vw, 3rem);
     background: color-mix(in srgb, var(--color-olive) 3%, transparent);
   }
 
@@ -280,6 +672,11 @@ import HeroCalligraphy from '../../components/HeroCalligraphy.astro';
     margin: 0 auto;
   }
 
+  .featured .ornament-divider {
+    max-width: 1100px;
+    margin: 0 auto 2.5rem;
+  }
+
   .featured-inner {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -314,31 +711,48 @@ import HeroCalligraphy from '../../components/HeroCalligraphy.astro';
     margin: 0;
   }
 
-  /* ── Mobile ───────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .name-l1, .name-l2 {
+      font-size: clamp(3rem, 15vw, 5.5rem);
+    }
+
+    .hero-calli-wrap {
+      width: 90%;
+      right: -8%;
+      opacity: 0.15;
+    }
+
+    .hero-content {
+      grid-template-rows: auto 1fr;
+    }
+
+    .hc-br {
+      display: none;
+    }
+
+    .intro-inner {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .intro-ctas {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
   @media (max-width: 800px) {
-    .hero {
-      padding: 3rem 1.5rem 2rem;
-    }
-
-    .hero-inner {
-      grid-template-columns: 1fr;
-      gap: 2.5rem;
-    }
-
-    .hero-calligraphy { order: 1; }
-
-    .hero-text {
-      order: 2;
-      align-items: center;
-      text-align: center;
-    }
-
-    .hero-ctas { justify-content: center; }
-
     .pub-strip { padding: 0.875rem 1.5rem; }
     .pub-strip-inner { flex-direction: row; }
     .pub-strip-text { text-align: start; }
-
     .featured { padding: 2rem 1.5rem 4rem; }
+  }
+
+  /* ── Reduced motion ──────────────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-thumb { animation: none; opacity: 0.4; }
   }
 </style>
