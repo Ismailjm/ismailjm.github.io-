@@ -9,5 +9,6 @@ venue: "CORIA-TALN 2026"
 location: "Nantes, France"
 date: "2026-06"
 type: conference
-status: accepted
+status: published
+hal: "https://cnrs.hal.science/hal-05708366/"
 ---

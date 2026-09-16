@@ -30,6 +30,7 @@ const publications = defineCollection({
     pdf: z.string().optional(),
     doi: z.string().optional(),
     arxiv: z.string().optional(),
+    hal: z.string().optional(),
     bibtex: z.string().optional(),
   }),
 });

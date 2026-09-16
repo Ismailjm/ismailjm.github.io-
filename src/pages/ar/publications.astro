@@ -70,13 +70,16 @@ const statusMeta: Record<string, { label: string; color: string }> = {
               {paper.venue}
               {paper.location && <span class="paper-location"> · {paper.location}</span>}
             </p>
-            {(paper.doi || paper.pdf) && (
+            {(paper.doi || paper.pdf || paper.hal) && (
               <div class="paper-links">
                 {paper.pdf && (
                   <a href={paper.pdf} target="_blank" rel="noopener" class="paper-link">PDF</a>
                 )}
                 {paper.doi && (
                   <a href={`https://doi.org/${paper.doi}`} target="_blank" rel="noopener" class="paper-link">DOI</a>
+                )}
+                {paper.hal && (
+                  <a href={paper.hal} target="_blank" rel="noopener" class="paper-link">HAL</a>
                 )}
               </div>
             )}
