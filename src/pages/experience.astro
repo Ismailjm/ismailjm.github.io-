@@ -17,6 +17,12 @@ const education = [
     note: "Selective access based on average. Graduated with Highest Distinction.",
   },
   {
+    institution: "École Nationale Supérieure d'Arts et Métiers",
+    degree: "Integrated Preparatory Cycle — Mathematics, Physics & Engineering Sciences",
+    period: "Sep. 2020 – Jul. 2022",
+    location: "Casablanca, Morocco",
+  },
+  {
     institution: "Euclid High School",
     degree: "Baccalaureate in Mathematical Sciences (French option)",
     period: "Sep. 2019 – Jul. 2020",
@@ -26,6 +32,18 @@ const education = [
 ];
 
 const experience = [
+  {
+    role: "Doctoral Researcher — ATHAAR Project",
+    org: "Institut de Recherche en Informatique de Toulouse (IRIT)",
+    period: "Nov. 2025 – Present",
+    location: "Toulouse, France",
+    objective: "Automatic recognition of al-Bīrūnī's al-Qānūn al-Masʿūdī to support its critical edition.",
+    bullets: [
+      "Building an HTR ground-truth dataset from the manuscript witnesses using Calfa Vision and PAGE-XML.",
+      "Benchmarking vision-language models and LLMs in zero-shot and few-shot settings.",
+      "Developing an error taxonomy and a rule-based automatic error classifier.",
+    ],
+  },
   {
     role: "Research Intern — AI & Medical Imaging",
     org: "Institut de Recherche en Informatique de Toulouse (IRIT)",
@@ -75,18 +93,46 @@ const experience = [
   },
 ];
 
+const teaching = [
+  {
+    role: "Teaching Assistant — 32h of lab sessions",
+    org: "Faculty of Science and Engineering, University of Toulouse",
+    period: "2025 – 2026",
+    location: "Toulouse, France",
+    objective: "Undergraduate teaching in algorithms and artificial intelligence.",
+    bullets: [
+      "Algorithms (L1): 26h of Python lab sessions covering sorting and complexity.",
+      "Artificial Intelligence (CUPGE, Year 2): 6h of lab sessions.",
+    ],
+  },
+  {
+    role: "Supervision of an M2 Research Internship",
+    org: "Institut de Mathématiques de Toulouse (IMT)",
+    period: "Jul. 2026 – Sep. 2026",
+    location: "Toulouse, France",
+    objective: "Corpus annotation for the ATHAAR project.",
+    bullets: [
+      "Defined the annotation strategy and wrote a detailed annotation guide.",
+    ],
+  },
+];
+
 const skills: Record<string, string[]> = {
-  "Data Science": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
-  "AI / ML Tools": ["Scikit-learn", "Keras", "TensorFlow", "PyTorch", "MONAI", "SimpleITK", "OpenCV", "HF Transformers", "spaCy", "NLTK", "pyarabic"],
-  "Architectures": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM"],
-  "Languages": ["Python", "JavaScript", "SQL", "Bash"],
+  "Programming & Environment": ["Python", "JavaScript", "SQL", "Bash", "LaTeX", "Git", "Linux", "HPC (Jean Zay, SLURM)"],
+  "Data & Visualisation": ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
+  "Deep Learning": ["PyTorch", "TensorFlow", "Keras", "Scikit-learn", "HF Transformers", "OpenCV", "Pillow", "MONAI", "SimpleITK"],
+  "LLMs & Agents": ["LangChain", "LangGraph", "CrewAI", "Qwen2.5-VL", "Gemini"],
+  "HTR & Document Analysis": ["Kraken", "Calfa Vision", "PAGE-XML", "jiwer"],
+  "NLP": ["spaCy", "NLTK", "pyarabic", "CAMeL Tools"],
+  "Architectures & Methods": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM", "Meta-learning (MAML)", "Few-shot learning"],
 };
 
 const techIcons: Record<string, string> = {
   "Python":"python","Pandas":"pandas","NumPy":"numpy","Matplotlib":"matplotlib","Plotly":"plotly",
   "Selenium":"selenium","Scikit-learn":"scikitlearn","Keras":"keras","TensorFlow":"tensorflow",
   "PyTorch":"pytorch","OpenCV":"opencv","HF Transformers":"huggingface","JavaScript":"javascript",
-  "Bash":"gnubash","SQL":"sqlite",
+  "Bash":"gnubash","SQL":"sqlite","LaTeX":"latex","Git":"git","Linux":"linux",
+  "LangChain":"langchain","Gemini":"googlegemini","spaCy":"spacy",
 };
 
 const certs = [
@@ -113,7 +159,7 @@ const certs = [
           </p>
         </div>
         <div class="cv-btn-wrap">
-          <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-dl-btn">
+          <a href="/Ismail_Eljamiy_ENG.pdf" target="_blank" rel="noopener" class="cv-dl-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download CV
           </a>
@@ -162,6 +208,36 @@ const certs = [
       <div class="timeline">
         <div class="timeline-line" aria-hidden="true"></div>
         {experience.map((item, i) => (
+          <div class="timeline-item reveal" data-delay={String(i * 0.1)}>
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-card">
+              <div class="tl-period">{item.period}</div>
+              <h3 class="tl-role">{item.role}</h3>
+              <div class="tl-org">{item.org}</div>
+              <div class="tl-loc">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {item.location}
+              </div>
+              <p class="tl-objective">{item.objective}</p>
+              <ul class="tl-bullets">
+                {item.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Teaching & Supervision -->
+    <section class="cv-section">
+      <div class="cv-section-header reveal">
+        <span class="section-label">Academic</span>
+        <h2 class="section-h2">Teaching &amp; supervision</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+        {teaching.map((item, i) => (
           <div class="timeline-item reveal" data-delay={String(i * 0.1)}>
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-card">

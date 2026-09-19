@@ -17,6 +17,12 @@ const education = [
     note: "قبول انتقائي على أساس المعدل. تخرج بمرتبة الشرف العليا.",
   },
   {
+    institution: "المدرسة الوطنية العليا للفنون والمهن (ENSAM)",
+    degree: "السلك التحضيري المدمج — الرياضيات والفيزياء وعلوم المهندس",
+    period: "سبتمبر 2020 – يوليو 2022",
+    location: "الدار البيضاء، المغرب",
+  },
+  {
     institution: "ثانوية إقليد",
     degree: "البكالوريا في العلوم الرياضية (الخيار الفرنسي)",
     period: "سبتمبر 2019 – يوليو 2020",
@@ -27,13 +33,25 @@ const education = [
 
 const experience = [
   {
+    role: "باحث دكتوراه — مشروع ATHAAR",
+    org: "معهد أبحاث المعلوماتية بتولوز (IRIT)",
+    period: "نوفمبر 2025 – الآن",
+    location: "تولوز، فرنسا",
+    objective: "التعرف الآلي على «القانون المسعودي» للبيروني لدعم تحقيقه العلمي.",
+    bullets: [
+      "بناء مجموعة بيانات مرجعية للتعرف على الخط اليدوي انطلاقاً من نسخ المخطوط باستخدام Calfa Vision وPAGE-XML.",
+      "تقييم مقارن لنماذج الرؤية واللغة والنماذج اللغوية الكبيرة في وضعي zero-shot وfew-shot.",
+      "وضع تصنيف للأخطاء ومصنّف آلي للأخطاء قائم على القواعد.",
+    ],
+  },
+  {
     role: "متدرب باحث — ذكاء اصطناعي وتصوير طبي",
     org: "معهد أبحاث المعلوماتية بتولوز (IRIT)",
     period: "مارس 2025 – سبتمبر 2025",
     location: "تولوز، فرنسا",
     objective: "تجزئة الصور الطبية باستخدام تقنيات التعلم المحدود.",
     bullets: [
-      "مراجعة الأدبيات العلمية في خوارزميات التجزئة بالبيانات المحدودة وميتا-التعلم.",
+      "مراجعة الأدبيات العلمية في خوارزميات التجزئة بالبيانات المحدودة والتعلم المحدود.",
       "معالجة صور الرنين المغناطيسي والتصوير المقطعي وفهم خصائصها وصيغها.",
       "تطوير نموذج تجزئة مبني على معمارية U-Net في تهيئة التعلم المحدود.",
     ],
@@ -69,24 +87,52 @@ const experience = [
     location: "الدار البيضاء، المغرب",
     objective: "كشف معدات الحماية الشخصية من الفيديو للحد من المخاطر التشغيلية في البيئات الصناعية.",
     bullets: [
-      "بناء مجموعة بيانات منظمة تحتوي على فئات متنوعة من معدات الحماية.",
-      "تصميم خوارزمية كشف معتمدة على CNN.",
+      "بناء مجموعة بيانات منظمة تحتوي على فئات متنوعة من معدات الحماية الشخصية.",
+      "تصميم خوارزمية لكشف معدات الحماية الشخصية والتعرف عليها معتمدة على CNN.",
+    ],
+  },
+];
+
+const teaching = [
+  {
+    role: "أستاذ مساعد — 32 ساعة من الأعمال التطبيقية",
+    org: "كلية العلوم والهندسة، جامعة تولوز",
+    period: "2025 – 2026",
+    location: "تولوز، فرنسا",
+    objective: "تدريس الخوارزميات والذكاء الاصطناعي في مرحلة الإجازة.",
+    bullets: [
+      "الخوارزميات (السنة الأولى): 26 ساعة من الأعمال التطبيقية بلغة Python حول الترتيب والتعقيد.",
+      "الذكاء الاصطناعي (CUPGE، السنة الثانية): 6 ساعات من الأعمال التطبيقية.",
+    ],
+  },
+  {
+    role: "الإشراف على تدريب بحثي (ماستر 2)",
+    org: "معهد الرياضيات بتولوز (IMT)",
+    period: "يوليو 2026 – سبتمبر 2026",
+    location: "تولوز، فرنسا",
+    objective: "شرح المدونة ضمن مشروع ATHAAR.",
+    bullets: [
+      "تحديد استراتيجية الشرح وتحرير دليل شرح مفصّل.",
     ],
   },
 ];
 
 const skills: Record<string, string[]> = {
-  "علم البيانات": ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
-  "أدوات الذكاء الاصطناعي": ["Scikit-learn", "Keras", "TensorFlow", "PyTorch", "MONAI", "SimpleITK", "OpenCV", "HF Transformers", "spaCy", "NLTK", "pyarabic"],
-  "المعماريات": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM"],
-  "لغات البرمجة": ["Python", "JavaScript", "SQL", "Bash"],
+  "البرمجة والبيئة التقنية": ["Python", "JavaScript", "SQL", "Bash", "LaTeX", "Git", "Linux", "HPC (Jean Zay, SLURM)"],
+  "البيانات والتصور": ["Pandas", "NumPy", "Matplotlib", "Seaborn", "Plotly", "Selenium", "Scrapy"],
+  "التعلم العميق": ["PyTorch", "TensorFlow", "Keras", "Scikit-learn", "HF Transformers", "OpenCV", "Pillow", "MONAI", "SimpleITK"],
+  "النماذج اللغوية والوكلاء": ["LangChain", "LangGraph", "CrewAI", "Qwen2.5-VL", "Gemini"],
+  "التعرف على الخط وتحليل الوثائق": ["Kraken", "Calfa Vision", "PAGE-XML", "jiwer"],
+  "معالجة اللغة الطبيعية": ["spaCy", "NLTK", "pyarabic", "CAMeL Tools"],
+  "المعماريات والمناهج": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM", "Meta-learning (MAML)", "Few-shot learning"],
 };
 
 const techIcons: Record<string, string> = {
   "Python":"python","Pandas":"pandas","NumPy":"numpy","Matplotlib":"matplotlib","Plotly":"plotly",
   "Selenium":"selenium","Scikit-learn":"scikitlearn","Keras":"keras","TensorFlow":"tensorflow",
   "PyTorch":"pytorch","OpenCV":"opencv","HF Transformers":"huggingface","JavaScript":"javascript",
-  "Bash":"gnubash","SQL":"sqlite",
+  "Bash":"gnubash","SQL":"sqlite","LaTeX":"latex","Git":"git","Linux":"linux",
+  "LangChain":"langchain","Gemini":"googlegemini","spaCy":"spacy",
 };
 
 const certs = [
@@ -113,7 +159,7 @@ const certs = [
           </p>
         </div>
         <div class="cv-btn-wrap">
-          <a href="/Resume.pdf" target="_blank" rel="noopener" class="cv-dl-btn">
+          <a href="/Ismail_Eljamiy_ENG.pdf" target="_blank" rel="noopener" class="cv-dl-btn">
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             تحميل السيرة الذاتية
           </a>
@@ -162,6 +208,36 @@ const certs = [
       <div class="timeline">
         <div class="timeline-line" aria-hidden="true"></div>
         {experience.map((item, i) => (
+          <div class="timeline-item reveal" data-delay={String(i * 0.1)}>
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-card">
+              <div class="tl-period">{item.period}</div>
+              <h3 class="tl-role">{item.role}</h3>
+              <div class="tl-org">{item.org}</div>
+              <div class="tl-loc">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {item.location}
+              </div>
+              <p class="tl-objective"><strong>الهدف:</strong> {item.objective}</p>
+              <ul class="tl-bullets">
+                {item.bullets.map(b => <li>{b}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Teaching & Supervision -->
+    <section class="cv-section">
+      <div class="cv-section-header reveal">
+        <span class="section-label">أكاديمي</span>
+        <h2 class="section-h2">التدريس والإشراف</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"></div>
+        {teaching.map((item, i) => (
           <div class="timeline-item reveal" data-delay={String(i * 0.1)}>
             <div class="timeline-dot" aria-hidden="true"></div>
             <div class="timeline-card">

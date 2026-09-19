@@ -95,7 +95,7 @@ Design tokens are declared in the `@theme {}` block at the top of `src/styles/gl
 
 ## Assets in repo
 
-- `public/Resume.pdf` — Ismail's current resume. Source of truth for Experience / Projects / Skills content.
+- `public/Ismail_Eljamiy_ENG.pdf` / `public/Ismail_Eljamiy_FR.pdf` — Ismail's current resumes (English + French). Source of truth for Experience / Projects / Skills content. EN and AR pages link to the English PDF, FR pages to the French one. `public/Resume.pdf` is the superseded version, kept only so old external links keep resolving.
 - `PLAN.md` — full implementation plan, site map, schemas, phases, verification steps.
 - `src/assets/photography/` — optimised by Astro at build time via `src/data/photos.ts`.
 

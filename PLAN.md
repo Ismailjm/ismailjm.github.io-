@@ -179,6 +179,7 @@ blog:         { title, date, tags[], lang, summary, body }
 ## Reused / existing assets
 
 - `Resume.pdf` (already in working directory) → move to `public/Resume.pdf`, link from Experience page.
+  - **Superseded (Sep. 2026):** the live resumes are now `public/Ismail_Eljamiy_ENG.pdf` and `public/Ismail_Eljamiy_FR.pdf`. EN and AR pages link to the English PDF, FR pages to the French one. `public/Resume.pdf` is retained only so previously shared links keep resolving.
 - Resume content drives initial population of About, Experience, Projects, Events, Skills.
 - Ismail's GitHub `@ismailjm` → linked Footvision & Marathon Photo Finder project repos.
 - LinkedIn profile → linked in footer + contact.
