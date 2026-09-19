@@ -38,7 +38,7 @@ const countryList = Object.values(
 );
 ---
 
-<BaseLayout title="Photography" description="Photography by Ismail El Jamiy — architecture and travel across France, Morocco, and Germany.">
+<BaseLayout title="Photography" description="Photography by Ismail El Jamiy: architecture and travel across France, Morocco, and Germany.">
 
   <!-- ── Page hero ─────────────────────────────────── -->
   <section class="page-hero">
@@ -46,7 +46,7 @@ const countryList = Object.values(
     <div class="ph-inner">
       <span class="ph-eyebrow">Visual diary</span>
       <h1 class="ph-title">Photography</h1>
-      <p class="ph-sub">Moments captured across France, Morocco, and Germany — architecture, light, and geometry.</p>
+      <p class="ph-sub">Moments captured across France, Morocco, and Germany: architecture, light, and geometry.</p>
     </div>
   </section>
 
@@ -103,7 +103,7 @@ const countryList = Object.values(
           <div class="photo-card">
             <Image
               src={photoImages[p.file]}
-              alt={`${p.title} — ${p.place}, ${p.country}`}
+              alt={`${p.title}, ${p.place}, ${p.country}`}
               widths={[280, 560, 840]}
               sizes="(max-width: 600px) 90vw, (max-width: 1100px) 45vw, 340px"
               loading="lazy"

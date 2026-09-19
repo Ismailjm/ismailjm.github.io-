@@ -11,14 +11,14 @@ const education = [
   },
   {
     institution: "École Nationale Supérieure d'Arts et Métiers",
-    degree: "Diplôme d'Ingénieur d'État — IA & Génie Informatique",
+    degree: "Diplôme d'Ingénieur d'État en IA & Génie Informatique",
     period: "sept. 2022 – sept. 2025",
     location: "Casablanca, Maroc",
     note: "Accès sélectif sur moyenne. Diplômé avec les Félicitations du jury.",
   },
   {
     institution: "École Nationale Supérieure d'Arts et Métiers",
-    degree: "Cycle Préparatoire Intégré — Mathématiques, Physique & Sciences de l'Ingénieur",
+    degree: "Cycle Préparatoire Intégré en Mathématiques, Physique & Sciences de l'Ingénieur",
     period: "sept. 2020 – juil. 2022",
     location: "Casablanca, Maroc",
   },
@@ -33,7 +33,7 @@ const education = [
 
 const experience = [
   {
-    role: "Doctorant Chercheur — Projet ATHAAR",
+    role: "Doctorant Chercheur, Projet ATHAAR",
     org: "Institut de Recherche en Informatique de Toulouse (IRIT)",
     period: "nov. 2025 – présent",
     location: "Toulouse, France",
@@ -45,7 +45,7 @@ const experience = [
     ],
   },
   {
-    role: "Stagiaire Recherche — IA & Imagerie Médicale",
+    role: "Stagiaire Recherche, IA & Imagerie Médicale",
     org: "Institut de Recherche en Informatique de Toulouse (IRIT)",
     period: "mars 2025 – sept. 2025",
     location: "Toulouse, France",
@@ -95,7 +95,7 @@ const experience = [
 
 const teaching = [
   {
-    role: "Chargé de TP — 32h de travaux pratiques",
+    role: "Chargé de TP, 32h de travaux pratiques",
     org: "Faculté des Sciences et d'Ingénierie, Université de Toulouse",
     period: "2025 – 2026",
     location: "Toulouse, France",
@@ -127,12 +127,39 @@ const skills: Record<string, string[]> = {
   "Architectures & Méthodes": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM", "Meta-learning (MAML)", "Few-shot learning"],
 };
 
+// Icon sources. si() = Simple Icons CDN (brand marks); the rest are served from
+// public/icons/ — brand/ holds third-party logos Simple Icons does not carry, and
+// skills/ holds the olive line glyphs drawn for tools and concepts that have no logo.
+const si = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
+const glyph = (name: string) => `/icons/skills/${name}.svg`;
+
 const techIcons: Record<string, string> = {
-  "Python":"python","Pandas":"pandas","NumPy":"numpy","Matplotlib":"matplotlib","Plotly":"plotly",
-  "Selenium":"selenium","Scikit-learn":"scikitlearn","Keras":"keras","TensorFlow":"tensorflow",
-  "PyTorch":"pytorch","OpenCV":"opencv","HF Transformers":"huggingface","JavaScript":"javascript",
-  "Bash":"gnubash","SQL":"sqlite","LaTeX":"latex","Git":"git","Linux":"linux",
-  "LangChain":"langchain","Gemini":"googlegemini","spaCy":"spacy",
+  // Programming & environment
+  "Python": si("python"), "JavaScript": si("javascript"), "SQL": si("sqlite"),
+  "Bash": si("gnubash"), "LaTeX": si("latex"), "Git": si("git"), "Linux": si("linux"),
+  "HPC (Jean Zay, SLURM)": glyph("server"),
+  // Data & visualisation
+  "Pandas": si("pandas"), "NumPy": si("numpy"), "Matplotlib": "/icons/brand/matplotlib.svg",
+  "Seaborn": glyph("chart-dist"), "Plotly": si("plotly"), "Selenium": si("selenium"),
+  "Scrapy": si("scrapy"),
+  // Deep learning
+  "PyTorch": si("pytorch"), "TensorFlow": si("tensorflow"), "Keras": si("keras"),
+  "Scikit-learn": si("scikitlearn"), "HF Transformers": si("huggingface"),
+  "OpenCV": si("opencv"), "Pillow": glyph("image"),
+  "MONAI": glyph("scan"), "SimpleITK": glyph("scan"),
+  // LLMs & agents
+  "LangChain": si("langchain"), "LangGraph": si("langgraph"), "CrewAI": si("crewai"),
+  "Qwen2.5-VL": si("qwen"), "Gemini": si("googlegemini"),
+  // HTR & document analysis
+  "Kraken": glyph("handwriting"), "Calfa Vision": glyph("handwriting"),
+  "PAGE-XML": glyph("xml"), "jiwer": glyph("metric"),
+  // NLP
+  "spaCy": si("spacy"), "NLTK": glyph("tree"),
+  "pyarabic": glyph("arabic"), "CAMeL Tools": glyph("arabic"),
+  // Architectures & methods
+  "CNN": glyph("cnn"), "U-Net": glyph("unet"), "RNN": glyph("rnn"), "LSTM": glyph("lstm"),
+  "Transformers": glyph("attention"), "ViT": glyph("patches"), "VLM": glyph("vlm"),
+  "Meta-learning (MAML)": glyph("meta"), "Few-shot learning": glyph("fewshot"),
 };
 
 const certs = [
@@ -154,7 +181,7 @@ const certs = [
           <span class="ph-eyebrow">CV &amp; Parcours</span>
           <h1 class="ph-title">Expérience</h1>
           <p class="ph-sub">
-            De Casablanca à Toulouse — un parcours en ingénierie IA,
+            De Casablanca à Toulouse : un parcours en ingénierie IA,
             vision par ordinateur et numérisation de manuscrits.
           </p>
         </div>
@@ -274,7 +301,7 @@ const certs = [
                 return (
                   <span class={`skill-tag${icon ? ' has-icon' : ''}`}>
                     {icon && (
-                      <img src={`https://cdn.simpleicons.org/${icon}`} width="12" height="12"
+                      <img src={icon} width="12" height="12" loading="lazy" decoding="async"
                            alt="" aria-hidden="true" class="skill-icon"
                            onerror="this.closest('.has-icon')?.classList.remove('has-icon'); this.remove()" />
                     )}

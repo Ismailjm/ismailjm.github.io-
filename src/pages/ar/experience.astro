@@ -11,14 +11,14 @@ const education = [
   },
   {
     institution: "المدرسة الوطنية العليا للفنون والمهن (ENSAM)",
-    degree: "شهادة مهندس دولة — ذكاء اصطناعي وهندسة حاسوبية",
+    degree: "شهادة مهندس دولة في الذكاء الاصطناعي والهندسة الحاسوبية",
     period: "سبتمبر 2022 – سبتمبر 2025",
     location: "الدار البيضاء، المغرب",
     note: "قبول انتقائي على أساس المعدل. تخرج بمرتبة الشرف العليا.",
   },
   {
     institution: "المدرسة الوطنية العليا للفنون والمهن (ENSAM)",
-    degree: "السلك التحضيري المدمج — الرياضيات والفيزياء وعلوم المهندس",
+    degree: "السلك التحضيري المدمج في الرياضيات والفيزياء وعلوم المهندس",
     period: "سبتمبر 2020 – يوليو 2022",
     location: "الدار البيضاء، المغرب",
   },
@@ -33,7 +33,7 @@ const education = [
 
 const experience = [
   {
-    role: "باحث دكتوراه — مشروع ATHAAR",
+    role: "باحث دكتوراه، مشروع ATHAAR",
     org: "معهد أبحاث المعلوماتية بتولوز (IRIT)",
     period: "نوفمبر 2025 – الآن",
     location: "تولوز، فرنسا",
@@ -45,7 +45,7 @@ const experience = [
     ],
   },
   {
-    role: "متدرب باحث — ذكاء اصطناعي وتصوير طبي",
+    role: "متدرب باحث، ذكاء اصطناعي وتصوير طبي",
     org: "معهد أبحاث المعلوماتية بتولوز (IRIT)",
     period: "مارس 2025 – سبتمبر 2025",
     location: "تولوز، فرنسا",
@@ -95,7 +95,7 @@ const experience = [
 
 const teaching = [
   {
-    role: "أستاذ مساعد — 32 ساعة من الأعمال التطبيقية",
+    role: "أستاذ مساعد، 32 ساعة من الأعمال التطبيقية",
     org: "كلية العلوم والهندسة، جامعة تولوز",
     period: "2025 – 2026",
     location: "تولوز، فرنسا",
@@ -127,12 +127,39 @@ const skills: Record<string, string[]> = {
   "المعماريات والمناهج": ["CNN", "U-Net", "RNN", "LSTM", "Transformers", "ViT", "VLM", "Meta-learning (MAML)", "Few-shot learning"],
 };
 
+// Icon sources. si() = Simple Icons CDN (brand marks); the rest are served from
+// public/icons/ — brand/ holds third-party logos Simple Icons does not carry, and
+// skills/ holds the olive line glyphs drawn for tools and concepts that have no logo.
+const si = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
+const glyph = (name: string) => `/icons/skills/${name}.svg`;
+
 const techIcons: Record<string, string> = {
-  "Python":"python","Pandas":"pandas","NumPy":"numpy","Matplotlib":"matplotlib","Plotly":"plotly",
-  "Selenium":"selenium","Scikit-learn":"scikitlearn","Keras":"keras","TensorFlow":"tensorflow",
-  "PyTorch":"pytorch","OpenCV":"opencv","HF Transformers":"huggingface","JavaScript":"javascript",
-  "Bash":"gnubash","SQL":"sqlite","LaTeX":"latex","Git":"git","Linux":"linux",
-  "LangChain":"langchain","Gemini":"googlegemini","spaCy":"spacy",
+  // Programming & environment
+  "Python": si("python"), "JavaScript": si("javascript"), "SQL": si("sqlite"),
+  "Bash": si("gnubash"), "LaTeX": si("latex"), "Git": si("git"), "Linux": si("linux"),
+  "HPC (Jean Zay, SLURM)": glyph("server"),
+  // Data & visualisation
+  "Pandas": si("pandas"), "NumPy": si("numpy"), "Matplotlib": "/icons/brand/matplotlib.svg",
+  "Seaborn": glyph("chart-dist"), "Plotly": si("plotly"), "Selenium": si("selenium"),
+  "Scrapy": si("scrapy"),
+  // Deep learning
+  "PyTorch": si("pytorch"), "TensorFlow": si("tensorflow"), "Keras": si("keras"),
+  "Scikit-learn": si("scikitlearn"), "HF Transformers": si("huggingface"),
+  "OpenCV": si("opencv"), "Pillow": glyph("image"),
+  "MONAI": glyph("scan"), "SimpleITK": glyph("scan"),
+  // LLMs & agents
+  "LangChain": si("langchain"), "LangGraph": si("langgraph"), "CrewAI": si("crewai"),
+  "Qwen2.5-VL": si("qwen"), "Gemini": si("googlegemini"),
+  // HTR & document analysis
+  "Kraken": glyph("handwriting"), "Calfa Vision": glyph("handwriting"),
+  "PAGE-XML": glyph("xml"), "jiwer": glyph("metric"),
+  // NLP
+  "spaCy": si("spacy"), "NLTK": glyph("tree"),
+  "pyarabic": glyph("arabic"), "CAMeL Tools": glyph("arabic"),
+  // Architectures & methods
+  "CNN": glyph("cnn"), "U-Net": glyph("unet"), "RNN": glyph("rnn"), "LSTM": glyph("lstm"),
+  "Transformers": glyph("attention"), "ViT": glyph("patches"), "VLM": glyph("vlm"),
+  "Meta-learning (MAML)": glyph("meta"), "Few-shot learning": glyph("fewshot"),
 };
 
 const certs = [
@@ -154,7 +181,7 @@ const certs = [
           <span class="ph-eyebrow">السيرة الذاتية والمسار</span>
           <h1 class="ph-title">الخبرة</h1>
           <p class="ph-sub">
-            من الدار البيضاء إلى تولوز — مسيرة في هندسة الذكاء الاصطناعي
+            من الدار البيضاء إلى تولوز: مسيرة في هندسة الذكاء الاصطناعي
             ورؤية الحاسوب وأرشفة المخطوطات.
           </p>
         </div>
@@ -274,7 +301,7 @@ const certs = [
                 return (
                   <span class={`skill-tag${icon ? ' has-icon' : ''}`}>
                     {icon && (
-                      <img src={`https://cdn.simpleicons.org/${icon}`} width="12" height="12"
+                      <img src={icon} width="12" height="12" loading="lazy" decoding="async"
                            alt="" aria-hidden="true" class="skill-icon"
                            onerror="this.closest('.has-icon')?.classList.remove('has-icon'); this.remove()" />
                     )}

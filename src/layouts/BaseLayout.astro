@@ -13,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'Ismail El Jamiy — PhD candidate in AI, University of Toulouse.',
+  description = 'Ismail El Jamiy, PhD candidate in AI at the University of Toulouse.',
   image = '/og-default.png',
   ogType = 'website',
 } = Astro.props;
@@ -35,7 +35,7 @@ const alternates = (['en', 'fr', 'ar'] as const).map((l) => ({
   href: new URL(localizePath(barePath, l), siteOrigin).href,
 }));
 
-const fullTitle = `${title} — Ismail El Jamiy`;
+const fullTitle = `${title} · Ismail El Jamiy`;
 
 // JSON-LD Person — emitted once, on the English home page.
 const isHome = barePath === '/' && lang === 'en';

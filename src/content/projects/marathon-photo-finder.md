@@ -16,9 +16,9 @@ Race photographers capture tens of thousands of images per event. Runners curren
 
 ## How it works
 
-1. **Person detection** — A CNN-based architecture locates every runner in each photo.
-2. **Bib OCR** — An optical character recognition system reads the race number from detected bounding boxes, providing a precise identifier for re-identification.
-3. **Re-identification** — Given a runner's bib number (or a reference photo), the system returns all matching images from the event gallery.
+1. **Person detection:** A CNN-based architecture locates every runner in each photo.
+2. **Bib OCR:** An optical character recognition system reads the race number from detected bounding boxes, providing a precise identifier for re-identification.
+3. **Re-identification:** Given a runner's bib number (or a reference photo), the system returns all matching images from the event gallery.
 
 ## Key challenges
 

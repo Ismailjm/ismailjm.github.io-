@@ -1,5 +1,5 @@
 ---
-title: "International Summer School — The Paradigm Shift: From Rules to Models in NLP"
+title: "International Summer School on NLP: The Paradigm Shift from Rules to Models"
 date: "2026-06"
 role: "Participant"
 location: "Universidad de Alicante, Spain"

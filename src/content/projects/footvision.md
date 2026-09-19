@@ -1,5 +1,5 @@
 ---
-title: "Footvision — Football Match Analyzer"
+title: "Footvision: Football Match Analyzer"
 date: "2024-07"
 summary: "Automated football match analysis system that detects and tracks players from video, generates tactical maps, and visualises team performance metrics through an interactive dashboard."
 stack: ["Python", "PyTorch", "YOLOv8", "Ultralytics", "OpenCV", "Streamlit", "Pandas", "Matplotlib", "NumPy", "Scikit-learn"]
@@ -9,7 +9,7 @@ cover: "../../assets/projects/footvision-landing.png"
 featured: true
 ---
 
-Footvision is an end-to-end computer vision pipeline that turns raw match footage into structured tactical intelligence — from raw video to interactive tactical dashboards.
+Footvision is an end-to-end computer vision pipeline that turns raw match footage into structured tactical intelligence, from raw video to interactive tactical dashboards.
 
 ## What it does
 
@@ -19,4 +19,4 @@ Player and ball detection runs via **YOLOv8** (Ultralytics) in real time, identi
 
 ## Technical notes
 
-Post-processing handles camera panning (homography-based pitch registration) and team assignment via jersey colour clustering. The modular pipeline design means each component — detection, tracking, visualisation — can be swapped or extended independently.
+Post-processing handles camera panning (homography-based pitch registration) and team assignment via jersey colour clustering. The modular pipeline design means each component (detection, tracking, visualisation) can be swapped or extended independently.

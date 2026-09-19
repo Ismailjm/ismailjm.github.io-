@@ -1,5 +1,5 @@
 ---
-title: "JWAL — Morocco Tourism Chatbot"
+title: "JWAL: Morocco Tourism Chatbot"
 date: "2024-06"
 summary: "Intelligent travel planning chatbot for Morocco, combining RAG and fine-tuned LLMs to deliver personalised itinerary recommendations through a conversational interface."
 stack: ["Python", "LangChain", "OpenAI", "Ollama", "Chainlit", "RAG"]
@@ -9,7 +9,7 @@ cover: "../../assets/projects/jwal-ui.png"
 featured: true
 ---
 
-JWAL is a conversational travel assistant built specifically for Morocco tourism. Ask it for a 5-day itinerary, local food recommendations, or transport options — it understands context, remembers the conversation, and responds naturally.
+JWAL is a conversational travel assistant built specifically for Morocco tourism. Ask it for a 5-day itinerary, local food recommendations, or transport options: it understands context, remembers the conversation, and responds naturally.
 
 ## How it works
 
@@ -19,4 +19,4 @@ LLM inference runs through both **OpenAI** (cloud) and **Ollama** (local open-we
 
 ## Why Morocco
 
-Morocco sits at the intersection of Amazigh, Arab, African, and Mediterranean cultures — a genuinely complex travel destination that generic travel bots handle poorly. JWAL is trained on Morocco-specific data to give accurate, culturally-aware recommendations.
+Morocco sits at the intersection of Amazigh, Arab, African, and Mediterranean cultures, a genuinely complex travel destination that generic travel bots handle poorly. JWAL is trained on Morocco-specific data to give accurate, culturally-aware recommendations.

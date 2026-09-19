@@ -1,5 +1,5 @@
 ---
-title: "Learn2Segment — Medical Imaging Framework"
+title: "Learn2Segment: Medical Imaging Framework"
 date: "2025-09"
 summary: "Meta-learning framework for few-shot medical image segmentation, enabling U-Net-based models to generalise to new organs or modalities from as few as one labelled example."
 stack: ["Python", "PyTorch", "MONAI", "SimpleITK", "U-Net", "Meta-Learning", "MAML"]
@@ -12,7 +12,7 @@ Learn2Segment is the research framework developed during my final-year internshi
 
 ## The problem
 
-Segmenting anatomical structures (organs, lesions, tumours) from MRI or CT scans requires pixel-level annotations made by radiologists — a slow, costly process. A model trained to segment the liver cannot trivially segment the spleen without starting over.
+Segmenting anatomical structures (organs, lesions, tumours) from MRI or CT scans requires pixel-level annotations made by radiologists, a slow and costly process. A model trained to segment the liver cannot trivially segment the spleen without starting over.
 
 ## The approach
 
@@ -22,4 +22,4 @@ Medical image handling uses **MONAI** (Medical Open Network for AI) for data loa
 
 ## Context
 
-This project directly informed my PhD research direction — the same challenge of data scarcity and domain-specific expertise applies to medieval Arabic manuscript recognition, just in a different modality.
+This project directly informed my PhD research direction: the same challenge of data scarcity and domain-specific expertise applies to medieval Arabic manuscript recognition, just in a different modality.

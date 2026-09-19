@@ -98,6 +98,7 @@ Design tokens are declared in the `@theme {}` block at the top of `src/styles/gl
 - `public/Ismail_Eljamiy_ENG.pdf` / `public/Ismail_Eljamiy_FR.pdf` — Ismail's current resumes (English + French). Source of truth for Experience / Projects / Skills content. EN and AR pages link to the English PDF, FR pages to the French one. `public/Resume.pdf` is the superseded version, kept only so old external links keep resolving.
 - `PLAN.md` — full implementation plan, site map, schemas, phases, verification steps.
 - `src/assets/photography/` — optimised by Astro at build time via `src/data/photos.ts`.
+- `public/icons/skills/` — olive (`#7C9448`) line glyphs drawn for skill tags that have no brand logo (concepts like CNN or ViT, niche tools like jiwer or pyarabic). `public/icons/brand/` holds third-party logos Simple Icons does not carry. Both are referenced from the `techIcons` map in the three `experience.astro` files, which must stay byte-identical across locales. Every skill tag is expected to resolve to an icon — the `onerror` handler on `.skill-icon` is a safety net, not the design.
 
 ## Working preferences
 
